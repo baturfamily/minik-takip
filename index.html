@@ -66,7 +66,8 @@ summary { cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 70
 .mono { font-family: ui-monospace, monospace; }
 
 /* EKSTRA KARTLAR (Puan & Nöbet) */
-.extra-card { background: var(--card); border-radius: 16px; padding: 12px 14px; border: 1px solid var(--line); margin-bottom: 10px; }
+.extra-card { background: var(--card); border-radius: 16px; padding: 14px; border: 1px solid var(--line); margin-bottom: 10px; }
+.extra-card details { margin-top: 0; border-top: none; padding-top: 0; } /* İŞTE HİZALAMAYI DÜZELTEN SİHİRLİ DOKUNUŞ */
 .extra-card summary { font-size: 14px; font-weight: 800; color: #fff; margin: 0; padding: 0; border: none; }
 .extra-card summary .show-text { font-size: 10px; color: var(--muted); font-weight: 700; }
 .score-row { display: flex; align-items: center; margin-bottom: 8px; }
@@ -161,7 +162,7 @@ function ekraniCiz() {
             dt: new Date(l.dt),
             drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
             dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
-            by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase() // İsimleri düzelt (Göker, Alper vb.)
+            by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase()
         })).sort((a, b) => b.dt - a.dt);
 
     const now = new Date();
@@ -276,29 +277,24 @@ function ekraniCiz() {
     document.getElementById('perf-bar').style.width = pct+'%'; document.getElementById('perf-bar').style.backgroundColor = clr;
     document.getElementById('status-grid').innerHTML = grid;
 
-    // 5. AYLIK PUAN TABLOSU HESAPLAMA (Bu Ayın 1'inden Bugüne)
+    // 5. AYLIK PUAN TABLOSU HESAPLAMA
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const totalMonthDoses = daysInMonth * 5; // Ay boyunca verilmesi gereken toplam doz
-    const ptsPerDose = 100 / totalMonthDoses; // Tam zamanında verilirse alınacak puan
+    const totalMonthDoses = daysInMonth * 5; 
+    const ptsPerDose = 100 / totalMonthDoses; 
     
     let scores = {};
     for(let d=1; d<=now.getDate(); d++) {
         allPlans.forEach(p => {
             const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
-            if (pt > now) return; // Gelecek saatleri hesaplama
+            if (pt > now) return; 
             
             const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
             if (log) {
                 const diffMin = (log.dt - pt) / 60000;
-                let pts = ptsPerDose; // Tam Puan
-                
-                // Erken veya Geç ise %25 Ceza
-                if (diffMin < -30 || diffMin > 30) {
-                    pts = ptsPerDose * 0.75; 
-                }
-                
+                let pts = ptsPerDose; 
+                if (diffMin < -30 || diffMin > 30) { pts = ptsPerDose * 0.75; }
                 if(!scores[log.by]) scores[log.by] = 0;
                 scores[log.by] += pts;
             }
@@ -317,7 +313,7 @@ function ekraniCiz() {
     if (sortedScores.length === 0) {
         leaderHTML += `<div style="text-align:center; color:var(--muted); font-size:11px;">Bu ay henüz veri yok.</div>`;
     } else {
-        const medals = ["#fbbf24", "#9ca3af", "#b45309"]; // Altın, Gümüş, Bronz
+        const medals = ["#fbbf24", "#9ca3af", "#b45309"]; 
         sortedScores.forEach((s, idx) => {
             let color = medals[idx] || "#4ade80";
             leaderHTML += `
