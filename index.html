@@ -92,7 +92,7 @@ summary { cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 70
 </div>
 
 <div class="perf-compact">
-    <div class="perf-label">📈 30 Günlük Başarı</div>
+    <div class="perf-label" id="perf-title-text">📈 Başarı</div>
     <div class="bar-bg"><div id="perf-bar" class="bar-fill" style="width: 0%"></div></div>
     <div id="perf-pct" class="perf-val">%0</div>
 </div>
@@ -103,7 +103,6 @@ summary { cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 70
 </div>
 
 <div id="app" class="cards-grid"></div>
-
 <div id="extra-cards"></div>
 
 <script>
@@ -169,6 +168,7 @@ function ekraniCiz() {
     const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
     const isToday = (d) => d.toDateString() === now.toDateString();
 
+    // 1. KALKAN
     const shield = document.getElementById('safety-shield');
     const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
     if (son60dk.length > 0) {
@@ -177,6 +177,7 @@ function ekraniCiz() {
         shield.style.display = 'block';
     } else { shield.style.display = 'none'; }
 
+    // 2. İLAÇ KARTLARI
     const keppraTimes = [{h:7,m:0},{h:15,m:0},{h:23,m:0}];
     const enalaprilTimes = [{h:10,m:30},{h:22,m:30}];
 
@@ -210,17 +211,14 @@ function ekraniCiz() {
             <div class="card">
                 <div class="drug-name">${icon} ${name}</div>
                 <div class="badge ${status.class}">${status.text}</div>
-                
                 <div class="info-group">
                     <div class="label">Son Veriliş</div>
                     <div class="val-primary">${lastGivenStr} <span class="val-sub">${last ? '('+last.by+')' : ''}</span></div>
                 </div>
-
                 <div class="timer-box">
                     <div class="label">Sıradaki (${fmt(next)})</div>
                     <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffStr}</div>
                 </div>
-
                 <details>
                     <summary><span>Geçmiş</span> <span class="show-text">Göster ▼</span></summary>
                     <ul style="list-style:none; padding:0; margin-top:5px">
@@ -232,16 +230,15 @@ function ekraniCiz() {
 
     document.getElementById('app').innerHTML = renderDrug('Keppra', '💉') + renderDrug('Enalapril', '💊');
 
+    // 3. GÜNLÜK YATAY ÇİZELGE
     const allPlans = [{n:'Keppra',h:7,m:0},{n:'Enalapril',h:10,m:30},{n:'Keppra',h:15,m:0},{n:'Enalapril',h:22,m:30},{n:'Keppra',h:23,m:0}];
-    let grid = ""; let totalP = 0; let stableC = 0;
+    let grid = ""; 
     
     allPlans.forEach(p => {
         const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
         const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
         
-        let tagText = "BEKLİYOR";
-        let pClass = "pill-waiting";
-        
+        let tagText = "BEKLİYOR"; let pClass = "pill-waiting";
         if (log) {
             const diffMin = (log.dt - pt) / 60000;
             if (diffMin < -30) { tagText = "ERKEN<br>VERİLDİ"; pClass = "pill-early"; }
@@ -250,55 +247,74 @@ function ekraniCiz() {
         } else if (now > new Date(pt.getTime() + 30*60000)) {
             tagText = "GECİKTİ"; pClass = "pill-missed";
         }
-        
         let shortName = p.n.substring(0,3).toUpperCase();
         grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
     });
     
-    let startCalc = new Date(now.getTime() - (30 * 86400000)); startCalc.setHours(0,0,0,0);
-    for(let d=new Date(startCalc); d<=now; d.setDate(d.getDate()+1)){
-        allPlans.forEach(p => {
-            const pt = new Date(d.getFullYear(), d.getMonth(), d.getDate(), p.h, p.m);
-            if(pt >= startCalc && pt <= now){
-                totalP++; if(logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt.getTime()) <= (GRACE_MIN*60000))) stableC++;
-            }
-        });
-    }
-
-    const pct = totalP > 0 ? Math.round((stableC/totalP)*100) : 0;
-    const clr = pct >= 80 ? "#4ade80" : (pct >= 50 ? "#fbbf24" : "#ff6b6b");
-    
-    document.getElementById('perf-pct').textContent = '%'+pct; document.getElementById('perf-pct').style.color = clr;
-    document.getElementById('perf-bar').style.width = pct+'%'; document.getElementById('perf-bar').style.backgroundColor = clr;
-    document.getElementById('status-grid').innerHTML = grid;
+    // 4 & 5. DİNAMİK HESAPLAMALAR (AYLIK BAŞARI VE PUAN TABLOSU)
+    const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
+    document.getElementById('perf-title-text').textContent = `📈 ${monthName} Başarısı`;
 
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const totalMonthDoses = daysInMonth * 5; 
-    const ptsPerDose = 100 / totalMonthDoses; 
+
+    // İlgili ayın en eski log kaydını bul (Logs array'i sondan başa sıralı olduğu için en sondaki eleman en eskisidir)
+    let currentMonthLogs = logs.filter(l => l.dt.getMonth() === currentMonth && l.dt.getFullYear() === currentYear);
+    let startDay = currentMonthLogs.length > 0 ? currentMonthLogs[currentMonthLogs.length - 1].dt.getDate() : now.getDate();
+
+    const daysInCompetition = daysInMonth - startDay + 1;
+    const totalMonthDoses = daysInCompetition * 5; 
+    const ptsPerDose = totalMonthDoses > 0 ? (100 / totalMonthDoses) : 0; 
     
-    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
-    for(let d=1; d<=now.getDate(); d++) {
+    let successScore = 100; // Başarı 100'den başlar, hatalar oldukça düşer
+    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 }; // Puanlar 0'dan başlar, doğru yapıldıkça artar
+    
+    for(let d=startDay; d<=now.getDate(); d++) {
         allPlans.forEach(p => {
             const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
+            // Sadece geçmiş ve şu anki zamanı değerlendir, gelecek saatleri atla
+            if (pt > now) return; 
+            
             const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
-            if (pt > now && !log) return; 
             
             if (log) {
                 const diffMin = (log.dt - pt) / 60000;
-                let pts = ptsPerDose; 
-                if (diffMin < -30 || diffMin > 30) { pts = ptsPerDose * 0.75; } 
+                let earnedPts = ptsPerDose; 
+                let penaltyPts = 0;
+
+                // Erken veya Geç ise
+                if (diffMin < -30 || diffMin > 30) { 
+                    earnedPts = ptsPerDose * 0.75; // Kişiye %75 puan verilir
+                    penaltyPts = ptsPerDose * 0.25; // Sistemden (100'den) %25 başarı düşülür
+                } 
+                
+                successScore -= penaltyPts;
+                
                 let byName = log.by;
                 if(scores[byName] === undefined) scores[byName] = 0;
-                scores[byName] += pts;
+                scores[byName] += earnedPts;
+            } else {
+                // Eğer log yoksa VE tolerans süresi (+30 dk) tamamen geçmişse
+                if (now > new Date(pt.getTime() + 30 * 60000)) {
+                    successScore -= ptsPerDose; // İlaç hiç verilmediği için o dozun tamamı 100'den düşülür
+                }
             }
         });
     }
 
-    let sortedScores = Object.keys(scores).map(k => ({name: k, score: scores[k]})).sort((a,b) => b.score - a.score);
-    const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
+    // Başarı oranını güncelle
+    if (successScore < 0) successScore = 0;
+    const clr = successScore >= 80 ? "#4ade80" : (successScore >= 50 ? "#fbbf24" : "#ff6b6b");
+    let displayScore = parseFloat(successScore.toFixed(1)); // 100.0 yerine 100 yazsın diye
+    document.getElementById('perf-pct').textContent = '%' + displayScore; 
+    document.getElementById('perf-pct').style.color = clr;
+    document.getElementById('perf-bar').style.width = displayScore + '%'; 
+    document.getElementById('perf-bar').style.backgroundColor = clr;
+    document.getElementById('status-grid').innerHTML = grid;
 
+    // Liderlik Tablosunu oluştur
+    let sortedScores = Object.keys(scores).map(k => ({name: k, score: scores[k]})).sort((a,b) => b.score - a.score);
     let leaderHTML = `
     <div class="extra-card">
         <details>
@@ -312,7 +328,7 @@ function ekraniCiz() {
             <div class="score-row">
                 <div class="score-rank" style="color:${color};">#${idx+1}</div>
                 <div class="score-name">${s.name}</div>
-                <div class="score-val" style="color:${color};">${s.score.toFixed(1)}</div>
+                <div class="score-val" style="color:${color};">${parseFloat(s.score.toFixed(1))}</div>
             </div>
             <div class="bar-bg" style="height:6px; margin-bottom:12px;">
                 <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
@@ -331,9 +347,9 @@ function ekraniCiz() {
         const lastNobet = nobetLogs[0].dt;
         const diffDays = Math.floor((now - lastNobet) / (1000 * 60 * 60 * 24));
         
-        let dayColor = "#4ade80"; // 0-30 yeşil
-        if (diffDays > 30 && diffDays <= 60) dayColor = "#fbbf24"; // 31-60 sarı/turuncu
-        else if (diffDays > 60) dayColor = "#ff6b6b"; // 60+ kırmızı
+        let dayColor = "#4ade80"; 
+        if (diffDays > 30 && diffDays <= 60) dayColor = "#fbbf24"; 
+        else if (diffDays > 60) dayColor = "#ff6b6b"; 
 
         daysBadgeHTML = `<span style="color:${dayColor}; font-size:12px; font-weight:900; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:8px;">${diffDays}. Gün</span>`;
     }
