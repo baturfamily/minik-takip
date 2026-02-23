@@ -29,14 +29,15 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
 .perf-val { font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }
 
-/* GÜNLÜK ÇİZELGE - METİNLİ KAPSÜLLER */
+/* GÜNLÜK ÇİZELGE - NET METİNLİ KAPSÜLLER */
 .daily-container { background: var(--card); border-radius: 16px; padding: 10px; margin-bottom: 10px; border: 1px solid var(--line); }
 .daily-title { font-size: 10px; font-weight: 800; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-.daily-row { display: flex; justify-content: space-between; gap: 5px; }
-.daily-pill { flex: 1; text-align: center; padding: 6px 2px; border-radius: 10px; display: flex; flex-direction: column; gap: 3px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+.daily-row { display: flex; justify-content: space-between; gap: 4px; }
+.daily-pill { flex: 1; text-align: center; padding: 6px 2px; border-radius: 10px; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); }
 .pill-name { font-size: 9px; color: #fff; font-weight: 800; }
 .pill-time { color: var(--muted); font-size: 10px; font-weight: 700; font-family: ui-monospace, monospace; }
-.pill-status-text { font-size: 8px; font-weight: 900; letter-spacing: -0.2px; padding: 2px 0; border-radius: 4px; margin: 0 2px; }
+/* İki satırlı uzun metinleri ortalayarak sığdırmak için ayarlandı */
+.pill-status-text { font-size: 7.5px; font-weight: 900; letter-spacing: -0.2px; padding: 3px 1px; border-radius: 4px; margin: 0 2px; display: flex; align-items: center; justify-content: center; min-height: 24px; text-align: center; line-height: 1.2; }
 
 /* Kapsül Renkleri */
 .pill-stable { border-color: rgba(74,222,128,0.3); } .pill-stable .pill-status-text { background: rgba(74,222,128,0.15); color: #4ade80; }
@@ -217,7 +218,7 @@ function ekraniCiz() {
 
     document.getElementById('app').innerHTML = renderDrug('Keppra', '💉') + renderDrug('Enalapril', '💊');
 
-    // GÜNLÜK YATAY ÇİZELGE (AKILLI METİNLERLE)
+    // GÜNLÜK YATAY ÇİZELGE (NET İFADELERLE)
     const allPlans = [{n:'Keppra',h:7,m:0},{n:'Enalapril',h:10,m:30},{n:'Keppra',h:15,m:0},{n:'Enalapril',h:22,m:30},{n:'Keppra',h:23,m:0}];
     let grid = ""; let totalP = 0; let stableC = 0;
     
@@ -230,9 +231,10 @@ function ekraniCiz() {
         
         if (log) {
             const diffMin = (log.dt - pt) / 60000;
-            if (diffMin < -30) { tagText = "ERKEN"; pClass = "pill-early"; }
-            else if (diffMin >= -30 && diffMin <= 30) { tagText = "ZAMANINDA"; pClass = "pill-stable"; }
-            else { tagText = "GEÇ"; pClass = "pill-delayed"; }
+            // Uzun metinler iki satırda alt alta görünsün diye aralarına <br> koyduk
+            if (diffMin < -30) { tagText = "ERKEN<br>VERİLDİ"; pClass = "pill-early"; }
+            else if (diffMin >= -30 && diffMin <= 30) { tagText = "ZAMANINDA<br>VERİLDİ"; pClass = "pill-stable"; }
+            else { tagText = "GEÇ<br>VERİLDİ"; pClass = "pill-delayed"; }
         } else if (now > new Date(pt.getTime() + 30*60000)) {
             tagText = "GECİKTİ"; pClass = "pill-missed";
         }
