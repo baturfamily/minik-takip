@@ -168,12 +168,14 @@ function ekraniCiz() {
     const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
     const isToday = (d) => d.toDateString() === now.toDateString();
 
-    // 1. KALKAN
+    // 1. KALKAN (Artık son 60 dakikadaki TÜM ilaçları gösterir)
     const shield = document.getElementById('safety-shield');
     const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
     if (son60dk.length > 0) {
-        const r = son60dk[0]; const dkOnce = Math.floor((now - r.dt) / 60000);
-        shield.innerHTML = `🚨 DİKKAT: ${r.dRaw}, ${r.by} tarafından ${dkOnce === 0 ? 'az önce' : dkOnce+' dk önce'} verildi!`;
+        shield.innerHTML = son60dk.map(r => {
+            const dkOnce = Math.floor((now - r.dt) / 60000);
+            return `<div style="padding: 4px 0;">🚨 DİKKAT: <b>${r.dRaw}</b>, ${r.by} tarafından ${dkOnce === 0 ? 'az önce' : dkOnce+' dk önce'} verildi!</div>`;
+        }).join('<div style="height:1px; background:rgba(255,255,255,0.3); margin:4px 0;"></div>');
         shield.style.display = 'block';
     } else { shield.style.display = 'none'; }
 
@@ -259,7 +261,6 @@ function ekraniCiz() {
     const currentYear = now.getFullYear();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    // İlgili ayın en eski log kaydını bul (Logs array'i sondan başa sıralı olduğu için en sondaki eleman en eskisidir)
     let currentMonthLogs = logs.filter(l => l.dt.getMonth() === currentMonth && l.dt.getFullYear() === currentYear);
     let startDay = currentMonthLogs.length > 0 ? currentMonthLogs[currentMonthLogs.length - 1].dt.getDate() : now.getDate();
 
@@ -267,13 +268,12 @@ function ekraniCiz() {
     const totalMonthDoses = daysInCompetition * 5; 
     const ptsPerDose = totalMonthDoses > 0 ? (100 / totalMonthDoses) : 0; 
     
-    let successScore = 100; // Başarı 100'den başlar, hatalar oldukça düşer
-    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 }; // Puanlar 0'dan başlar, doğru yapıldıkça artar
+    let successScore = 100; 
+    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 }; 
     
     for(let d=startDay; d<=now.getDate(); d++) {
         allPlans.forEach(p => {
             const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
-            // Sadece geçmiş ve şu anki zamanı değerlendir, gelecek saatleri atla
             if (pt > now) return; 
             
             const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
@@ -283,10 +283,9 @@ function ekraniCiz() {
                 let earnedPts = ptsPerDose; 
                 let penaltyPts = 0;
 
-                // Erken veya Geç ise
                 if (diffMin < -30 || diffMin > 30) { 
-                    earnedPts = ptsPerDose * 0.75; // Kişiye %75 puan verilir
-                    penaltyPts = ptsPerDose * 0.25; // Sistemden (100'den) %25 başarı düşülür
+                    earnedPts = ptsPerDose * 0.75; 
+                    penaltyPts = ptsPerDose * 0.25; 
                 } 
                 
                 successScore -= penaltyPts;
@@ -295,25 +294,22 @@ function ekraniCiz() {
                 if(scores[byName] === undefined) scores[byName] = 0;
                 scores[byName] += earnedPts;
             } else {
-                // Eğer log yoksa VE tolerans süresi (+30 dk) tamamen geçmişse
                 if (now > new Date(pt.getTime() + 30 * 60000)) {
-                    successScore -= ptsPerDose; // İlaç hiç verilmediği için o dozun tamamı 100'den düşülür
+                    successScore -= ptsPerDose; 
                 }
             }
         });
     }
 
-    // Başarı oranını güncelle
     if (successScore < 0) successScore = 0;
     const clr = successScore >= 80 ? "#4ade80" : (successScore >= 50 ? "#fbbf24" : "#ff6b6b");
-    let displayScore = parseFloat(successScore.toFixed(1)); // 100.0 yerine 100 yazsın diye
+    let displayScore = parseFloat(successScore.toFixed(1)); 
     document.getElementById('perf-pct').textContent = '%' + displayScore; 
     document.getElementById('perf-pct').style.color = clr;
     document.getElementById('perf-bar').style.width = displayScore + '%'; 
     document.getElementById('perf-bar').style.backgroundColor = clr;
     document.getElementById('status-grid').innerHTML = grid;
 
-    // Liderlik Tablosunu oluştur
     let sortedScores = Object.keys(scores).map(k => ({name: k, score: scores[k]})).sort((a,b) => b.score - a.score);
     let leaderHTML = `
     <div class="extra-card">
