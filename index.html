@@ -67,7 +67,7 @@ summary { cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 70
 
 /* EKSTRA KARTLAR (Puan & Nöbet) */
 .extra-card { background: var(--card); border-radius: 16px; padding: 14px; border: 1px solid var(--line); margin-bottom: 10px; }
-.extra-card details { margin-top: 0; border-top: none; padding-top: 0; } /* İŞTE HİZALAMAYI DÜZELTEN SİHİRLİ DOKUNUŞ */
+.extra-card details { margin-top: 0; border-top: none; padding-top: 0; }
 .extra-card summary { font-size: 14px; font-weight: 800; color: #fff; margin: 0; padding: 0; border: none; }
 .extra-card summary .show-text { font-size: 10px; color: var(--muted); font-weight: 700; }
 .score-row { display: flex; align-items: center; margin-bottom: 8px; }
@@ -284,19 +284,25 @@ function ekraniCiz() {
     const totalMonthDoses = daysInMonth * 5; 
     const ptsPerDose = 100 / totalMonthDoses; 
     
-    let scores = {};
+    // Sabit isimleri 0 puanla başlat (Böylece kimse tablodan kaybolmaz)
+    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    
     for(let d=1; d<=now.getDate(); d++) {
         allPlans.forEach(p => {
             const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
-            if (pt > now) return; 
-            
             const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
+            
+            // Eğer plan saati gelmediyse VE o plana ait erkenden verilmiş bir ilaç yoksa bu saati atla (BUG ÇÖZÜLDÜ)
+            if (pt > now && !log) return; 
+            
             if (log) {
                 const diffMin = (log.dt - pt) / 60000;
                 let pts = ptsPerDose; 
-                if (diffMin < -30 || diffMin > 30) { pts = ptsPerDose * 0.75; }
-                if(!scores[log.by]) scores[log.by] = 0;
-                scores[log.by] += pts;
+                if (diffMin < -30 || diffMin > 30) { pts = ptsPerDose * 0.75; } // %25 Ceza
+                
+                let byName = log.by;
+                if(scores[byName] === undefined) scores[byName] = 0;
+                scores[byName] += pts;
             }
         });
     }
@@ -310,23 +316,19 @@ function ekraniCiz() {
             <summary><span>🏆 ${monthName} Puan Tablosu</span> <span class="show-text">Göster ▼</span></summary>
             <div style="margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;">`;
     
-    if (sortedScores.length === 0) {
-        leaderHTML += `<div style="text-align:center; color:var(--muted); font-size:11px;">Bu ay henüz veri yok.</div>`;
-    } else {
-        const medals = ["#fbbf24", "#9ca3af", "#b45309"]; 
-        sortedScores.forEach((s, idx) => {
-            let color = medals[idx] || "#4ade80";
-            leaderHTML += `
-                <div class="score-row">
-                    <div class="score-rank" style="color:${color};">#${idx+1}</div>
-                    <div class="score-name">${s.name}</div>
-                    <div class="score-val" style="color:${color};">${s.score.toFixed(1)}</div>
-                </div>
-                <div class="bar-bg" style="height:6px; margin-bottom:12px;">
-                    <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
-                </div>`;
-        });
-    }
+    const medals = ["#fbbf24", "#9ca3af", "#b45309"]; 
+    sortedScores.forEach((s, idx) => {
+        let color = medals[idx] || "#4ade80";
+        leaderHTML += `
+            <div class="score-row">
+                <div class="score-rank" style="color:${color};">#${idx+1}</div>
+                <div class="score-name">${s.name}</div>
+                <div class="score-val" style="color:${color};">${s.score.toFixed(1)}</div>
+            </div>
+            <div class="bar-bg" style="height:6px; margin-bottom:12px;">
+                <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
+            </div>`;
+    });
     leaderHTML += `</div></details></div>`;
 
     // 6. NÖBET GÜNLÜĞÜ
