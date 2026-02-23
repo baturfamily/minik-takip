@@ -29,8 +29,8 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
 .perf-val { font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }
 
-/* GÜNLÜK ÇİZELGE - BÜYÜTÜLMÜŞ KAPSÜLLER */
-.daily-container { background: var(--card); border-radius: 16px; padding: 14px; margin-bottom: 12px; border: 1px solid var(--line); }
+/* GÜNLÜK ÇİZELGE - BÜYÜK KAPSÜLLER */
+.daily-container { background: var(--card); border-radius: 16px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--line); }
 .daily-title { font-size: 11px; font-weight: 800; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
 .daily-row { display: flex; justify-content: space-between; gap: 6px; }
 .daily-pill { flex: 1; text-align: center; padding: 12px 2px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; gap: 6px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); min-height: 95px; }
@@ -46,7 +46,7 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .pill-waiting { border-color: var(--line); } .pill-waiting .pill-status-text { color: var(--muted); background: rgba(255,255,255,0.05); }
 
 /* İLAÇ KARTLARI */
-.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
 .card { background: var(--card); border-radius: 16px; padding: 14px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; }
 .drug-name { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
 .badge { align-self: flex-start; padding: 4px 6px; border-radius: 6px; font-weight: 800; font-size: 9px; text-transform: uppercase; margin-bottom: 10px; }
@@ -61,9 +61,18 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .timer { font-weight: 800; color: var(--accent); font-size: 15px; font-family: ui-monospace, monospace; }
 .timer.urgent { color: var(--warning); }
 details { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; }
-summary { cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 700; list-style: none; outline: none; }
+summary { cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 700; list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; }
 .history-item { display: flex; justify-content: space-between; padding: 4px 0; font-size: 11px; color: #ccc; }
 .mono { font-family: ui-monospace, monospace; }
+
+/* EKSTRA KARTLAR (Puan & Nöbet) */
+.extra-card { background: var(--card); border-radius: 16px; padding: 12px 14px; border: 1px solid var(--line); margin-bottom: 10px; }
+.extra-card summary { font-size: 14px; font-weight: 800; color: #fff; margin: 0; padding: 0; border: none; }
+.extra-card summary .show-text { font-size: 10px; color: var(--muted); font-weight: 700; }
+.score-row { display: flex; align-items: center; margin-bottom: 8px; }
+.score-rank { width: 24px; font-weight: 900; font-size: 13px; }
+.score-name { flex: 1; font-weight: 800; font-size: 13px; color: #fff; }
+.score-val { font-weight: 900; font-size: 14px; font-family: ui-monospace, monospace; }
 
 @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
 @keyframes pulse-yellow { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
@@ -93,6 +102,8 @@ summary { cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 70
 </div>
 
 <div id="app" class="cards-grid"></div>
+
+<div id="extra-cards"></div>
 
 <script>
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbzbS3DIUOcmpUBLgvfuFhi3zIhsougq7JB93ccmnwLlGbURtHLZknu5vl6FcxSWJndIZA/exec"; 
@@ -143,19 +154,22 @@ function ekraniCiz() {
     if (hamVeri.length === 0) return;
     const detailsState = {}; document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
 
-    const logs = hamVeri.map(l => ({
-        dt: new Date(l.dt),
-        drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
-        dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
-        by: l.k
-    })).sort((a, b) => b.dt - a.dt);
+    // İLAÇ LOGLARI (Nöbetleri Filtrele)
+    const logs = hamVeri
+        .filter(l => !l.i.toLowerCase().includes('nöbet'))
+        .map(l => ({
+            dt: new Date(l.dt),
+            drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
+            dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
+            by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase() // İsimleri düzelt (Göker, Alper vb.)
+        })).sort((a, b) => b.dt - a.dt);
 
     const now = new Date();
     const GRACE_MIN = 30;
     const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
     const isToday = (d) => d.toDateString() === now.toDateString();
 
-    // KALKAN
+    // 1. KALKAN
     const shield = document.getElementById('safety-shield');
     const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
     if (son60dk.length > 0) {
@@ -164,7 +178,7 @@ function ekraniCiz() {
         shield.style.display = 'block';
     } else { shield.style.display = 'none'; }
 
-    // KARTLAR
+    // 2. KARTLAR
     const keppraTimes = [{h:7,m:0},{h:15,m:0},{h:23,m:0}];
     const enalaprilTimes = [{h:10,m:30},{h:22,m:30}];
 
@@ -209,15 +223,18 @@ function ekraniCiz() {
                     <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffStr}</div>
                 </div>
 
-                <details><summary>Geçmiş ▼</summary><ul style="list-style:none; padding:0; margin-top:5px">
-                    ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
-                </ul></details>
+                <details>
+                    <summary><span>Geçmiş</span> <span class="show-text">Göster ▼</span></summary>
+                    <ul style="list-style:none; padding:0; margin-top:5px">
+                        ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
+                    </ul>
+                </details>
             </div>`;
     }
 
     document.getElementById('app').innerHTML = renderDrug('Keppra', '💉') + renderDrug('Enalapril', '💊');
 
-    // GÜNLÜK YATAY ÇİZELGE (NET İFADELERLE)
+    // 3. GÜNLÜK YATAY ÇİZELGE
     const allPlans = [{n:'Keppra',h:7,m:0},{n:'Enalapril',h:10,m:30},{n:'Keppra',h:15,m:0},{n:'Enalapril',h:22,m:30},{n:'Keppra',h:23,m:0}];
     let grid = ""; let totalP = 0; let stableC = 0;
     
@@ -241,7 +258,7 @@ function ekraniCiz() {
         grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
     });
     
-    // 30 GÜNLÜK BAŞARI
+    // 4. BAŞARI (30 GÜNLÜK)
     let startCalc = new Date(now.getTime() - (30 * 86400000)); startCalc.setHours(0,0,0,0);
     for(let d=new Date(startCalc); d<=now; d.setDate(d.getDate()+1)){
         allPlans.forEach(p => {
@@ -259,6 +276,95 @@ function ekraniCiz() {
     document.getElementById('perf-bar').style.width = pct+'%'; document.getElementById('perf-bar').style.backgroundColor = clr;
     document.getElementById('status-grid').innerHTML = grid;
 
+    // 5. AYLIK PUAN TABLOSU HESAPLAMA (Bu Ayın 1'inden Bugüne)
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const totalMonthDoses = daysInMonth * 5; // Ay boyunca verilmesi gereken toplam doz
+    const ptsPerDose = 100 / totalMonthDoses; // Tam zamanında verilirse alınacak puan
+    
+    let scores = {};
+    for(let d=1; d<=now.getDate(); d++) {
+        allPlans.forEach(p => {
+            const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
+            if (pt > now) return; // Gelecek saatleri hesaplama
+            
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let pts = ptsPerDose; // Tam Puan
+                
+                // Erken veya Geç ise %25 Ceza
+                if (diffMin < -30 || diffMin > 30) {
+                    pts = ptsPerDose * 0.75; 
+                }
+                
+                if(!scores[log.by]) scores[log.by] = 0;
+                scores[log.by] += pts;
+            }
+        });
+    }
+
+    let sortedScores = Object.keys(scores).map(k => ({name: k, score: scores[k]})).sort((a,b) => b.score - a.score);
+    const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
+
+    let leaderHTML = `
+    <div class="extra-card">
+        <details>
+            <summary><span>🏆 ${monthName} Puan Tablosu</span> <span class="show-text">Göster ▼</span></summary>
+            <div style="margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;">`;
+    
+    if (sortedScores.length === 0) {
+        leaderHTML += `<div style="text-align:center; color:var(--muted); font-size:11px;">Bu ay henüz veri yok.</div>`;
+    } else {
+        const medals = ["#fbbf24", "#9ca3af", "#b45309"]; // Altın, Gümüş, Bronz
+        sortedScores.forEach((s, idx) => {
+            let color = medals[idx] || "#4ade80";
+            leaderHTML += `
+                <div class="score-row">
+                    <div class="score-rank" style="color:${color};">#${idx+1}</div>
+                    <div class="score-name">${s.name}</div>
+                    <div class="score-val" style="color:${color};">${s.score.toFixed(1)}</div>
+                </div>
+                <div class="bar-bg" style="height:6px; margin-bottom:12px;">
+                    <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
+                </div>`;
+        });
+    }
+    leaderHTML += `</div></details></div>`;
+
+    // 6. NÖBET GÜNLÜĞÜ
+    const nobetLogs = hamVeri
+        .filter(l => l.i.toLowerCase().includes('nöbet'))
+        .map(l => ({ dt: new Date(l.dt), by: l.k }))
+        .sort((a, b) => b.dt - a.dt);
+
+    let nobetHTML = `
+    <div class="extra-card" style="margin-bottom:0;">
+        <details>
+            <summary><span>🚨 Minik Nöbet Günlüğü</span> <span class="show-text">Göster ▼</span></summary>
+            <div style="margin-top:12px; border-top:1px dashed var(--line); padding-top:8px;">`;
+
+    if (nobetLogs.length === 0) {
+        nobetHTML += `<div style="text-align:center; color:var(--muted); font-size:11px; padding:6px 0;">Çok şükür, henüz kayıt yok! 🧿</div>`;
+    } else {
+        nobetLogs.forEach(n => {
+            const nDate = n.dt.getDate() + ' ' + n.dt.toLocaleDateString('tr-TR', {month:'long'}) + ' ' + n.dt.getFullYear();
+            nobetHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+                    <div>
+                        <div style="font-weight:800; font-size:12px; color:#ef4444;">${nDate}</div>
+                        <div style="font-size:10px; color:var(--muted); margin-top:2px;">Kayıt: ${n.by}</div>
+                    </div>
+                    <div style="font-weight:900; font-size:14px; font-family:monospace; color:#fff;">${fmt(n.dt)}</div>
+                </div>`;
+        });
+    }
+    nobetHTML += `</div></details></div>`;
+
+    document.getElementById('extra-cards').innerHTML = leaderHTML + nobetHTML;
+
+    // Hafızadaki açık menüleri geri yükle
     document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
 }
 
