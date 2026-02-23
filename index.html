@@ -10,54 +10,59 @@
 --accent:#4ade80; --warning:#fbbf24; --danger:#ff6b6b; --early:#60a5fa;
 }
 * { box-sizing: border-box; }
-body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui; padding:12px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui; padding:10px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
 /* GÜVENLİK KALKANI */
-.safety-shield { display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white; padding: 12px; text-align: center; font-weight: 900; font-size: 14px; position: sticky; top: 0; z-index: 9999; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); animation: pulse-red 1.5s infinite; letter-spacing: 0.5px; }
+.safety-shield { display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white; padding: 10px; text-align: center; font-weight: 900; font-size: 13px; position: sticky; top: 0; z-index: 9999; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); animation: pulse-red 1.5s infinite; letter-spacing: 0.5px; }
 
-/* ÜST BİLGİ (HEADER) - TEK SATIR */
-.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: var(--card); padding: 10px 15px; border-radius: 16px; border: 1px solid var(--line); }
-.app-title { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; display: flex; align-items: center; gap: 6px; }
-.top-right { text-align: right; }
-.clock-text { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 2px; }
-.sync-badge { font-size: 10px; font-weight: 800; color: var(--muted); }
+/* ORTALANMIŞ KOMPAKT BAŞLIK */
+.header-compact { text-align: center; margin-bottom: 10px; background: var(--card); padding: 8px; border-radius: 16px; border: 1px solid var(--line); }
+.app-title { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 4px; }
+.header-info { display: flex; justify-content: center; align-items: center; gap: 8px; }
+.clock-text { font-size: 12px; font-weight: 700; color: var(--muted); }
+.sync-badge { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 8px; background: rgba(0,0,0,0.3); }
 
-/* PERFORMANS BARI - KOMPAKT */
-.perf-compact { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: 16px; padding: 12px 15px; margin-bottom: 12px; border: 1px solid var(--line); }
-.perf-label { font-size: 13px; font-weight: 800; white-space: nowrap; }
+/* PERFORMANS BARI */
+.perf-compact { display: flex; align-items: center; gap: 10px; background: var(--card); border-radius: 14px; padding: 10px 12px; margin-bottom: 10px; border: 1px solid var(--line); }
+.perf-label { font-size: 12px; font-weight: 800; white-space: nowrap; }
 .bar-bg { flex: 1; background: rgba(255,255,255,0.05); height: 8px; border-radius: 4px; overflow: hidden; }
 .bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
 .perf-val { font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }
 
-/* GÜNLÜK ÇİZELGE - YATAY KAPSÜLLER */
-.daily-container { background: var(--card); border-radius: 16px; padding: 12px; margin-bottom: 12px; border: 1px solid var(--line); }
-.daily-title { font-size: 11px; font-weight: 800; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-.daily-row { display: flex; justify-content: space-between; gap: 6px; }
-.daily-pill { flex: 1; text-align: center; padding: 8px 2px; border-radius: 10px; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); }
-.pill-name { font-size: 9px; color: var(--muted); font-weight: 800; }
-.pill-time { color: #fff; font-size: 11px; font-weight: 700; font-family: ui-monospace, monospace; }
-.pill-icon { font-size: 14px; margin-top: 2px; }
-.pill-stable { border-color: rgba(74,222,128,0.4); background: rgba(74,222,128,0.1); }
-.pill-missed { border-color: rgba(255,107,107,0.4); background: rgba(255,107,107,0.1); }
+/* GÜNLÜK ÇİZELGE - METİNLİ KAPSÜLLER */
+.daily-container { background: var(--card); border-radius: 16px; padding: 10px; margin-bottom: 10px; border: 1px solid var(--line); }
+.daily-title { font-size: 10px; font-weight: 800; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.daily-row { display: flex; justify-content: space-between; gap: 5px; }
+.daily-pill { flex: 1; text-align: center; padding: 6px 2px; border-radius: 10px; display: flex; flex-direction: column; gap: 3px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+.pill-name { font-size: 9px; color: #fff; font-weight: 800; }
+.pill-time { color: var(--muted); font-size: 10px; font-weight: 700; font-family: ui-monospace, monospace; }
+.pill-status-text { font-size: 8px; font-weight: 900; letter-spacing: -0.2px; padding: 2px 0; border-radius: 4px; margin: 0 2px; }
 
-/* İLAÇ KARTLARI - YAN YANA (GRID) */
-.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.card { background: var(--card); border-radius: 18px; padding: 14px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
-.drug-name { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-.badge { align-self: flex-start; padding: 4px 8px; border-radius: 6px; font-weight: 800; font-size: 9px; text-transform: uppercase; margin-bottom: 12px; }
+/* Kapsül Renkleri */
+.pill-stable { border-color: rgba(74,222,128,0.3); } .pill-stable .pill-status-text { background: rgba(74,222,128,0.15); color: #4ade80; }
+.pill-early { border-color: rgba(96,165,250,0.3); } .pill-early .pill-status-text { background: rgba(96,165,250,0.15); color: #60a5fa; }
+.pill-delayed { border-color: rgba(251,191,36,0.3); } .pill-delayed .pill-status-text { background: rgba(251,191,36,0.15); color: #fbbf24; }
+.pill-missed { border-color: rgba(255,107,107,0.3); } .pill-missed .pill-status-text { background: rgba(255,107,107,0.15); color: #ff6b6b; }
+.pill-waiting { border-color: var(--line); } .pill-waiting .pill-status-text { color: var(--muted); background: rgba(255,255,255,0.05); }
+
+/* İLAÇ KARTLARI */
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card { background: var(--card); border-radius: 16px; padding: 12px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; }
+.drug-name { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
+.badge { align-self: flex-start; padding: 3px 6px; border-radius: 6px; font-weight: 800; font-size: 8px; text-transform: uppercase; margin-bottom: 10px; }
 .badge-safe { background:rgba(74,222,128,0.15); color:var(--accent); }
 .badge-due { background:rgba(251,191,36,0.15); color:var(--warning); animation: pulse-yellow 2s infinite; }
 .badge-late { background:rgba(255,107,107,0.15); color:var(--danger); animation: pulse-red 1s infinite; }
-.info-group { margin-bottom: 10px; }
-.label { color: var(--muted); font-size: 9px; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
-.val-primary { font-size: 13px; font-weight: 800; color: #fff; }
+.info-group { margin-bottom: 8px; }
+.label { color: var(--muted); font-size: 8.5px; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
+.val-primary { font-size: 12px; font-weight: 800; color: #fff; }
 .val-sub { font-size: 10px; color: var(--muted); font-weight: 600; }
-.timer-box { margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
-.timer { font-weight: 800; color: var(--accent); font-size: 15px; font-family: ui-monospace, monospace; }
+.timer-box { margin-top: 2px; padding-top: 8px; border-top: 1px solid var(--line); }
+.timer { font-weight: 800; color: var(--accent); font-size: 14px; font-family: ui-monospace, monospace; }
 .timer.urgent { color: var(--warning); }
-details { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
+details { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; }
 summary { cursor: pointer; color: var(--muted); font-size: 10px; font-weight: 700; list-style: none; outline: none; }
-.history-item { display: flex; justify-content: space-between; padding: 4px 0; font-size: 10px; color: #ccc; }
+.history-item { display: flex; justify-content: space-between; padding: 3px 0; font-size: 10px; color: #ccc; }
 .mono { font-family: ui-monospace, monospace; }
 
 @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
@@ -68,9 +73,9 @@ summary { cursor: pointer; color: var(--muted); font-size: 10px; font-weight: 70
 
 <div id="safety-shield" class="safety-shield"></div>
 
-<div class="top-bar">
-    <div class="app-title">🐾 Minik</div>
-    <div class="top-right">
+<div class="header-compact">
+    <div class="app-title">🐾 Minik Paneli</div>
+    <div class="header-info">
         <div id="clock" class="clock-text">--:--</div>
         <div id="last-sync" class="sync-badge">🔄 Bağlanıyor...</div>
     </div>
@@ -104,11 +109,7 @@ async function veriCek() {
         hamVeri = await response.json();
         sonBasariZamani = Date.now();
         ekraniCiz(); 
-    } catch(e) {
-        console.error(e);
-    } finally {
-        fetchDevamEdiyor = false;
-    }
+    } catch(e) { console.error(e); } finally { fetchDevamEdiyor = false; }
 }
 
 function saniyeTiktak() {
@@ -120,16 +121,21 @@ function saniyeTiktak() {
     const farkSaniye = sonBasariZamani > 0 ? Math.floor((simdi - sonBasariZamani) / 1000) : 999;
     const dNow = new Date();
     
-    if(clockElement) clockElement.textContent = dNow.getDate() + " " + dNow.toLocaleDateString('tr-TR', {month:'short'}) + " • " + String(dNow.getHours()).padStart(2,'0') + ':' + String(dNow.getMinutes()).padStart(2,'0');
+    if(clockElement) {
+        clockElement.textContent = dNow.getDate() + " " + dNow.toLocaleDateString('tr-TR', {month:'short'}) + " • " + String(dNow.getHours()).padStart(2,'0') + ':' + String(dNow.getMinutes()).padStart(2,'0');
+    }
 
     if (sonBasariZamani === 0) {
-        syncElement.innerHTML = `🔄 Bekleniyor...`; syncElement.style.color = "var(--warning)";
+        syncElement.innerHTML = `🔄 Sisteme Bağlanıyor...`; syncElement.style.color = "var(--warning)";
     } else if (farkSaniye < 20) {
-        syncElement.innerHTML = `🟢 Canlı`; syncElement.style.color = "#4ade80";
+        const d = new Date(sonBasariZamani);
+        const sn = String(d.getSeconds()).padStart(2,'0');
+        syncElement.innerHTML = `🟢 Canlı Veri (${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${sn})`;
+        syncElement.style.color = "#4ade80";
     } else if (farkSaniye < 60) {
-        syncElement.innerHTML = `🟡 ${farkSaniye}sn Gecikme`; syncElement.style.color = "#fbbf24";
+        syncElement.innerHTML = `🟡 Gecikme Var: ${farkSaniye} sn`; syncElement.style.color = "#fbbf24";
     } else {
-        syncElement.innerHTML = `🔴 Hata!`; syncElement.style.color = "#ef4444";
+        syncElement.innerHTML = `🔴 Hata! Bağlantı Yok`; syncElement.style.color = "#ef4444";
     }
 }
 
@@ -204,24 +210,35 @@ function ekraniCiz() {
                 </div>
 
                 <details><summary>Geçmiş ▼</summary><ul style="list-style:none; padding:0; margin-top:5px">
-                    ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by.substring(0,3)}</span></li>`).join('')}
+                    ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
                 </ul></details>
             </div>`;
     }
 
     document.getElementById('app').innerHTML = renderDrug('Keppra', '💉') + renderDrug('Enalapril', '💊');
 
-    // GÜNLÜK YATAY ÇİZELGE
+    // GÜNLÜK YATAY ÇİZELGE (AKILLI METİNLERLE)
     const allPlans = [{n:'Keppra',h:7,m:0},{n:'Enalapril',h:10,m:30},{n:'Keppra',h:15,m:0},{n:'Enalapril',h:22,m:30},{n:'Keppra',h:23,m:0}];
     let grid = ""; let totalP = 0; let stableC = 0;
     
     allPlans.forEach(p => {
         const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
         const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
-        let pClass = log ? "pill-stable" : (now > new Date(pt.getTime() + 30*60000) ? "pill-missed" : "");
-        let icon = log ? "✅" : (pClass === "pill-missed" ? "❌" : "⏳");
+        
+        let tagText = "BEKLİYOR";
+        let pClass = "pill-waiting";
+        
+        if (log) {
+            const diffMin = (log.dt - pt) / 60000;
+            if (diffMin < -30) { tagText = "ERKEN"; pClass = "pill-early"; }
+            else if (diffMin >= -30 && diffMin <= 30) { tagText = "ZAMANINDA"; pClass = "pill-stable"; }
+            else { tagText = "GEÇ"; pClass = "pill-delayed"; }
+        } else if (now > new Date(pt.getTime() + 30*60000)) {
+            tagText = "GECİKTİ"; pClass = "pill-missed";
+        }
+        
         let shortName = p.n.substring(0,3).toUpperCase();
-        grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-icon">${icon}</span></div>`;
+        grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
     });
     
     // 30 GÜNLÜK BAŞARI
