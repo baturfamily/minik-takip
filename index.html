@@ -52,7 +52,7 @@ summary { cursor: pointer; color: var(--muted); font-size: 12px; font-weight: 60
 <div id="warning-container"></div>
 <div class="header">
 <div class="title">🐾 Minik İlaç Takip</div>
-<div id="clock" class="subtitle">Yükleniyor...</div>
+<div id="last-sync" style="color:var(--muted); font-size:11px; margin-top:4px; font-weight:bold; letter-spacing:0.5px;">🔄 Bağlanıyor...</div>
 </div>
 
 <!-- LOG BURAYA ENJEKTE EDİLECEK -->
@@ -82,14 +82,20 @@ summary { cursor: pointer; color: var(--muted); font-size: 12px; font-weight: 60
 <div id="app"></div>
 
 <script>
-// 1. ANA FONKSİYON: Her çağrıldığında Google'dan veriyi çeker ve ekranı çizer
 async function verileriTazele() {
+  const syncElement = document.getElementById('last-sync');
+  
   try {
+    // 1. Durum: Güncelleme Başlıyor
+    syncElement.innerHTML = `🔄 Güncelleniyor...`;
+    syncElement.style.color = "var(--warning)";
+
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbzbS3DIUOcmpUBLgvfuFhi3zIhsougq7JB93ccmnwLlGbURtHLZknu5vl6FcxSWJndIZA/exec"; 
     const GRACE_MIN = 30; 
     const LIMIT = 60;
 
     const response = await fetch(SHEET_URL);
+    if (!response.ok) throw new Error("Ağ hatası");
     const rawLogs = await response.json();
 
     const logs = rawLogs.map(l => ({
@@ -100,8 +106,16 @@ async function verileriTazele() {
     })).sort((a, b) => b.dt - a.dt);
 
     const now = new Date();
+    const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    const fmtFull = d => fmt(d) + ':' + String(d.getSeconds()).padStart(2,'0');
 
-    // Uyarı Paneli (Yeni verildi mi?)
+    // 2. Durum: Başarılı Senkronizasyon
+    syncElement.innerHTML = `✅ Güncel: ${fmtFull(now)}`;
+    syncElement.style.color = "#4ade80"; // Canlı Yeşil
+
+    // --- (Buradan aşağısı senin orijinal hesaplama ve render mantığın) ---
+    
+    // Uyarı Paneli
     const recent = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (LIMIT * 60000));
     const container = document.getElementById('warning-container');
     if (recent.length > 0) {
@@ -109,16 +123,9 @@ async function verileriTazele() {
       recent.forEach(r => { if(!seen.has(r.drug)) { seen.add(r.drug); unique.push(r); } });
       container.innerHTML = unique.map(l => `<div class="alert-banner">⚠️ DİKKAT: ${Math.floor((now-l.dt)/60000)} dk önce ${l.dRaw} verildi ✅</div>`).join('');
       container.style.display = 'block';
-    } else {
-      container.style.display = 'none';
-    }
+    } else { container.style.display = 'none'; }
 
-    // İlaç Planları ve Kartlar (Orijinal Mantığın)
-    const allPlans = [
-      {n:'Keppra',h:7,m:0},{n:'Keppra',h:15,m:0},{n:'Keppra',h:23,m:0},
-      {n:'Enalapril',h:10,m:30},{n:'Enalapril',h:22,m:30}
-    ];
-
+    // Kartlar
     function getNextSmart(name) {
       const pArr = name.toLowerCase() === 'keppra' ? [{h:7,m:0},{h:15,m:0},{h:23,m:0}] : [{h:10,m:30},{h:22,m:30}];
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -131,32 +138,28 @@ async function verileriTazele() {
       }) || cands.find(c => c > now);
     }
 
-    const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
-
     function renderDrug(name, icon) {
       const dLogs = logs.filter(l => l.drug === name.toLowerCase()); 
       const last = dLogs[0];
       const next = getNextSmart(name);
       const diffMin = Math.round((next - now) / 60000);
       const lastGivenStr = last ? `${last.dt.getDate()}/${last.dt.getMonth()+1} ${fmt(last.dt)}` : 'Yok';
-
-      return `
-        <div class="card">
-          <div class="drug-header"><div class="drug-name">${icon} ${name}</div></div>
-          <div class="label">Son Veriliş</div><div class="value">${lastGivenStr}</div><div class="sub-value">${last ? last.by + ' verdi' : ''}</div>
-          <div class="footer-info">
-            <div><div class="label">Sıradaki</div><div class="next-time">${fmt(next)}</div></div>
-            <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffMin < 0 ? 'Vakit geçti!' : (Math.floor(diffMin/60)>0 ? Math.floor(diffMin/60)+'sa '+(diffMin%60)+'dk' : diffMin+'dk')}</div>
-          </div>
-        </div>`;
+      return `<div class="card">
+                <div class="drug-header"><div class="drug-name">${icon} ${name}</div></div>
+                <div class="label">Son Veriliş</div><div class="value">${lastGivenStr}</div><div class="sub-value">${last ? last.by + ' verdi' : ''}</div>
+                <div class="footer-info">
+                  <div><div class="label">Sıradaki</div><div class="next-time">${fmt(next)}</div></div>
+                  <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffMin < 0 ? 'Vakit geçti!' : (Math.floor(diffMin/60)>0 ? Math.floor(diffMin/60)+'sa '+(diffMin%60)+'dk' : diffMin+'dk')}</div>
+                </div>
+              </div>`;
     }
 
     document.getElementById('app').innerHTML = renderDrug('Keppra', '💉') + renderDrug('Enalapril', '💊');
 
-    // Başarı Yüzdesi ve Progress Bar
+    // Performans Çizelgesi
     let startCalc = new Date(now.getTime() - (30 * 86400000)); startCalc.setHours(0,0,0,0);
     let totalP = 0, stableC = 0, grid = "";
-    allPlans.sort((a,b)=>(a.h*60+a.m)-(b.h*60+b.m)).forEach(p => {
+    [{n:'Keppra',h:7,m:0},{n:'Keppra',h:15,m:0},{n:'Keppra',h:23,m:0},{n:'Enalapril',h:10,m:30},{n:'Enalapril',h:22,m:30}].sort((a,b)=>(a.h*60+a.m)-(b.h*60+b.m)).forEach(p => {
       const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
       const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
       let tag = log ? "tag-stable" : (now > new Date(pt.getTime() + 30*60000) ? "tag-missed" : "tag-waiting");
@@ -164,33 +167,28 @@ async function verileriTazele() {
     });
 
     for(let d=new Date(startCalc); d<=now; d.setDate(d.getDate()+1)){
-      allPlans.forEach(p => {
+      [{n:'Keppra',h:7,m:0},{n:'Keppra',h:15,m:0},{n:'Keppra',h:23,m:0},{n:'Enalapril',h:10,m:30},{n:'Enalapril',h:22,m:30}].forEach(p => {
         const pt = new Date(d.getFullYear(), d.getMonth(), d.getDate(), p.h, p.m);
         if(pt >= startCalc && pt <= now){ totalP++; if(logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt.getTime()) <= (GRACE_MIN*60000))) stableC++; }
       });
     }
 
-    const pct = totalP > 0 ? Math.round((stableC/totalP)*100) : 0;
-    document.getElementById('perf-pct').textContent = '%'+pct;
-    document.getElementById('perf-bar').style.width = pct+'%';
+    document.getElementById('perf-pct').textContent = '%' + (totalP > 0 ? Math.round((stableC/totalP)*100) : 0);
+    document.getElementById('perf-bar').style.width = (totalP > 0 ? Math.round((stableC/totalP)*100) : 0) + '%';
     document.getElementById('status-grid').innerHTML = grid;
     document.getElementById('clock').textContent = now.getDate() + " " + now.toLocaleDateString('tr-TR', {month:'long'}) + " • " + fmt(now);
 
-  } catch(e) { console.error("Hata:", e); }
+  } catch(e) { 
+    // 3. Durum: Hata
+    syncElement.innerHTML = `⚠️ Senkronizasyon Hatası!`;
+    syncElement.style.color = "#ff6b6b"; 
+  }
 }
 
-// 2. SİHİRLİ DOKUNUŞ: Uygulama öne geldiğinde tazele
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === 'visible') {
-    verileriTazele();
-  }
-});
-
-// 3. İLK AÇILIŞ: Sayfa açıldığında çalıştır
+// Olay Dinleyicileri
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') verileriTazele(); });
 verileriTazele();
-
-// 4. OTOMATİK: Her 2 dakikada bir kendi kendine tazele
-setInterval(verileriTazele, 120000);
+setInterval(verileriTazele, 10000); // TAM 10 Saniyede Bir Güncelleme
 </script>
 </body>
 </html>
