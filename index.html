@@ -9,94 +9,85 @@
 --bg:#0b0f17; --card:#121a27; --text:#eaf0ff; --muted:#a9b4cc; --line:rgba(255,255,255,.08);
 --accent:#4ade80; --warning:#fbbf24; --danger:#ff6b6b; --early:#60a5fa;
 }
-body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui; padding-bottom:40px; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui; padding:12px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-/* ZIRHLI GÜVENLİK KALKANI */
-.safety-shield {
-    display: none;
-    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
-    color: white; padding: 18px 15px; text-align: center;
-    font-weight: 900; font-size: 15px;
-    position: sticky; top: 0; z-index: 9999;
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
-    animation: pulse-red 1.5s infinite;
-    letter-spacing: 0.5px;
-}
+/* GÜVENLİK KALKANI */
+.safety-shield { display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white; padding: 12px; text-align: center; font-weight: 900; font-size: 14px; position: sticky; top: 0; z-index: 9999; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); animation: pulse-red 1.5s infinite; letter-spacing: 0.5px; }
 
-.content-wrapper { padding: 20px; }
-.header{ margin-bottom:24px; text-align:center; }
-.title{ font-size:26px; font-weight:900; letter-spacing:-0.5px; margin-bottom:4px; }
-.subtitle{ color:var(--muted); font-size:14px; font-weight:500; margin-bottom: 6px; }
+/* ÜST BİLGİ (HEADER) - TEK SATIR */
+.top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: var(--card); padding: 10px 15px; border-radius: 16px; border: 1px solid var(--line); }
+.app-title { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; display: flex; align-items: center; gap: 6px; }
+.top-right { text-align: right; }
+.clock-text { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.sync-badge { font-size: 10px; font-weight: 800; color: var(--muted); }
 
-.card{ background:var(--card); border-radius:22px; padding:20px; margin-bottom:18px; border:1px solid var(--line); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
-.drug-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
-.drug-name{ font-size:22px; font-weight:800; display:flex; align-items:center; gap:10px; }
-.badge{ padding:6px 12px; border-radius:10px; font-weight:800; font-size:11px; text-transform:uppercase; white-space: nowrap; flex-shrink: 0; }
-.badge-safe { background:rgba(74,222,128,0.1); color:var(--accent); border:1px solid rgba(74,222,128,0.2); }
-.badge-due { background:rgba(251,191,36,0.1); color:var(--warning); border:1px solid rgba(251,191,36,0.2); animation: pulse-yellow 2s infinite; }
-.badge-late { background:rgba(255,107,107,0.1); color:var(--danger); border:1px solid rgba(255,107,107,0.2); animation: pulse-red 1s infinite; }
-.label{ color:var(--muted); font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:4px; }
-.value{ font-size:18px; font-weight:700; color:#fff; }
-.sub-value{ font-size:13px; color:var(--muted); margin-top:4px; font-weight:500; }
-.footer-info{ margin-top:15px; padding-top:15px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
-.next-time{ font-size:16px; font-weight:700; color:#fff; }
-.timer{ font-weight:800; color:var(--accent); font-size:14px; font-family: ui-monospace, monospace; }
-.timer.urgent{ color:var(--warning); }
-details { margin-top: 15px; border-top: 1px solid var(--line); padding-top: 10px; }
-summary { cursor: pointer; color: var(--muted); font-size: 12px; font-weight: 600; list-style: none; outline: none; }
-.history-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; }
-.perf-section { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--line); border-radius: 20px; padding: 18px; margin-bottom: 18px; }
-.perf-title { font-size: 15px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between; }
-.bar-bg { background: rgba(255,255,255,0.05); height: 10px; border-radius: 5px; overflow: hidden; }
+/* PERFORMANS BARI - KOMPAKT */
+.perf-compact { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: 16px; padding: 12px 15px; margin-bottom: 12px; border: 1px solid var(--line); }
+.perf-label { font-size: 13px; font-weight: 800; white-space: nowrap; }
+.bar-bg { flex: 1; background: rgba(255,255,255,0.05); height: 8px; border-radius: 4px; overflow: hidden; }
 .bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
-.status-summary { list-style: none; display: flex; justify-content: space-between; align-items: center; width: 100%; outline: none; cursor: pointer; margin-top: -5px; }
-.status-summary::-webkit-details-marker { display: none; }
-.status-item { background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 15px; border: 1px solid var(--line); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
-.status-tag { font-size: 10px; font-weight: 900; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
-.tag-stable { color: #4ade80; background: rgba(74,222,128,0.1); }
-.tag-early { color: #60a5fa; background: rgba(96,165,250,0.1); }
-.tag-delayed { color: #fbbf24; background: rgba(251,191,36,0.1); }
-.tag-missed { color: #ff6b6b; background: rgba(255,107,107,0.1); }
+.perf-val { font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }
+
+/* GÜNLÜK ÇİZELGE - YATAY KAPSÜLLER */
+.daily-container { background: var(--card); border-radius: 16px; padding: 12px; margin-bottom: 12px; border: 1px solid var(--line); }
+.daily-title { font-size: 11px; font-weight: 800; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.daily-row { display: flex; justify-content: space-between; gap: 6px; }
+.daily-pill { flex: 1; text-align: center; padding: 8px 2px; border-radius: 10px; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+.pill-name { font-size: 9px; color: var(--muted); font-weight: 800; }
+.pill-time { color: #fff; font-size: 11px; font-weight: 700; font-family: ui-monospace, monospace; }
+.pill-icon { font-size: 14px; margin-top: 2px; }
+.pill-stable { border-color: rgba(74,222,128,0.4); background: rgba(74,222,128,0.1); }
+.pill-missed { border-color: rgba(255,107,107,0.4); background: rgba(255,107,107,0.1); }
+
+/* İLAÇ KARTLARI - YAN YANA (GRID) */
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card { background: var(--card); border-radius: 18px; padding: 14px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+.drug-name { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.badge { align-self: flex-start; padding: 4px 8px; border-radius: 6px; font-weight: 800; font-size: 9px; text-transform: uppercase; margin-bottom: 12px; }
+.badge-safe { background:rgba(74,222,128,0.15); color:var(--accent); }
+.badge-due { background:rgba(251,191,36,0.15); color:var(--warning); animation: pulse-yellow 2s infinite; }
+.badge-late { background:rgba(255,107,107,0.15); color:var(--danger); animation: pulse-red 1s infinite; }
+.info-group { margin-bottom: 10px; }
+.label { color: var(--muted); font-size: 9px; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
+.val-primary { font-size: 13px; font-weight: 800; color: #fff; }
+.val-sub { font-size: 10px; color: var(--muted); font-weight: 600; }
+.timer-box { margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
+.timer { font-weight: 800; color: var(--accent); font-size: 15px; font-family: ui-monospace, monospace; }
+.timer.urgent { color: var(--warning); }
+details { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
+summary { cursor: pointer; color: var(--muted); font-size: 10px; font-weight: 700; list-style: none; outline: none; }
+.history-item { display: flex; justify-content: space-between; padding: 4px 0; font-size: 10px; color: #ccc; }
+.mono { font-family: ui-monospace, monospace; }
+
 @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
 @keyframes pulse-yellow { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-.mono{ font-family: ui-monospace, monospace; }
 </style>
 </head>
 <body>
 
 <div id="safety-shield" class="safety-shield"></div>
 
-<div class="content-wrapper">
-    <div class="header">
-        <div class="title">🐾 Minik Paneli</div>
-        <div id="clock" class="subtitle">Saat Yükleniyor...</div>
-        <div id="last-sync" style="color:var(--muted); font-size:12px; font-weight:800; background:rgba(0,0,0,0.2); display:inline-block; padding:6px 14px; border-radius:15px;">
-            🔄 Sisteme Bağlanıyor...
-        </div>
+<div class="top-bar">
+    <div class="app-title">🐾 Minik</div>
+    <div class="top-right">
+        <div id="clock" class="clock-text">--:--</div>
+        <div id="last-sync" class="sync-badge">🔄 Bağlanıyor...</div>
     </div>
-
-    <div class="perf-section">
-        <div class="perf-title">
-            <span>📈 30 Günlük Başarı</span>
-            <span id="perf-pct" class="mono">%0</span>
-        </div>
-        <div class="bar-bg">
-            <div id="perf-bar" class="bar-fill" style="width: 0%"></div>
-        </div>
-    </div>
-
-    <div class="card" style="margin-top: 5px; padding-bottom: 15px;">
-        <details style="margin-top: 0; border-top: none; padding-top: 0;">
-            <summary class="status-summary">
-                <span style="font-weight:800; font-size:16px; color:#fff;">📊 Günlük Çizelge</span>
-                <span style="font-size:12px; color:var(--muted);">Aç / Kapat ▼</span>
-            </summary>
-            <div id="status-grid" style="margin-top:20px;"></div>
-        </details>
-    </div>
-
-    <div id="app"></div>
 </div>
+
+<div class="perf-compact">
+    <div class="perf-label">📈 30 Günlük Başarı</div>
+    <div class="bar-bg"><div id="perf-bar" class="bar-fill" style="width: 0%"></div></div>
+    <div id="perf-pct" class="perf-val">%0</div>
+</div>
+
+<div class="daily-container">
+    <div class="daily-title">Bugünkü Dozlar</div>
+    <div id="status-grid" class="daily-row"></div>
+</div>
+
+<div id="app" class="cards-grid"></div>
 
 <script>
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbzbS3DIUOcmpUBLgvfuFhi3zIhsougq7JB93ccmnwLlGbURtHLZknu5vl6FcxSWJndIZA/exec"; 
@@ -104,25 +95,22 @@ let sonBasariZamani = 0;
 let hamVeri = [];
 let fetchDevamEdiyor = false;
 
-// 1. VERİ ÇEKME MOTORU (10 Saniyede Bir Çalışır)
 async function veriCek() {
     if (fetchDevamEdiyor) return;
     fetchDevamEdiyor = true;
-
     try {
         const response = await fetch(SHEET_URL);
         if (!response.ok) throw new Error("Ağ Hatası");
         hamVeri = await response.json();
         sonBasariZamani = Date.now();
-        ekraniCiz(); // Sadece veri başarıyla geldiğinde ekranı günceller
+        ekraniCiz(); 
     } catch(e) {
-        console.error("Bağlantı Hatası:", e);
+        console.error(e);
     } finally {
         fetchDevamEdiyor = false;
     }
 }
 
-// 2. CANLI TRAFİK IŞIĞI (Her saniye tıklar)
 function saniyeTiktak() {
     const syncElement = document.getElementById('last-sync');
     const clockElement = document.getElementById('clock');
@@ -130,37 +118,24 @@ function saniyeTiktak() {
 
     const simdi = Date.now();
     const farkSaniye = sonBasariZamani > 0 ? Math.floor((simdi - sonBasariZamani) / 1000) : 999;
-
-    // Saat formatı
     const dNow = new Date();
-    const fmtSaat = String(dNow.getHours()).padStart(2,'0') + ':' + String(dNow.getMinutes()).padStart(2,'0');
-    if(clockElement) clockElement.textContent = dNow.getDate() + " " + dNow.toLocaleDateString('tr-TR', {month:'long'}) + " • " + fmtSaat;
+    
+    if(clockElement) clockElement.textContent = dNow.getDate() + " " + dNow.toLocaleDateString('tr-TR', {month:'short'}) + " • " + String(dNow.getHours()).padStart(2,'0') + ':' + String(dNow.getMinutes()).padStart(2,'0');
 
-    // Trafik Işığı Mantığı
     if (sonBasariZamani === 0) {
-        syncElement.innerHTML = `🔄 İlk veriler alınıyor...`;
-        syncElement.style.color = "var(--warning)";
+        syncElement.innerHTML = `🔄 Bekleniyor...`; syncElement.style.color = "var(--warning)";
     } else if (farkSaniye < 20) {
-        const d = new Date(sonBasariZamani);
-        const sn = String(d.getSeconds()).padStart(2,'0');
-        syncElement.innerHTML = `🟢 Canlı Veri (${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${sn})`;
-        syncElement.style.color = "#4ade80";
+        syncElement.innerHTML = `🟢 Canlı`; syncElement.style.color = "#4ade80";
     } else if (farkSaniye < 60) {
-        syncElement.innerHTML = `🟡 Gecikme Var: ${farkSaniye} sn önce`;
-        syncElement.style.color = "#fbbf24";
+        syncElement.innerHTML = `🟡 ${farkSaniye}sn Gecikme`; syncElement.style.color = "#fbbf24";
     } else {
-        syncElement.innerHTML = `🔴 DİKKAT: BAĞLANTI YOK! (${farkSaniye} sn)`;
-        syncElement.style.color = "#ef4444";
+        syncElement.innerHTML = `🔴 Hata!`; syncElement.style.color = "#ef4444";
     }
 }
 
-// 3. EKRAN ÇİZİM MOTORU
 function ekraniCiz() {
     if (hamVeri.length === 0) return;
-
-    // Açık olan menüleri (details) hafızaya al
-    const detailsState = {};
-    document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
+    const detailsState = {}; document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
 
     const logs = hamVeri.map(l => ({
         dt: new Date(l.dt),
@@ -174,21 +149,16 @@ function ekraniCiz() {
     const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
     const isToday = (d) => d.toDateString() === now.toDateString();
 
-    // --- ZIRHLI KORUMA KALKANI ---
+    // KALKAN
     const shield = document.getElementById('safety-shield');
-    // Son 60 dakika içinde ilaç verilmiş mi kontrol et
     const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
     if (son60dk.length > 0) {
-        const r = son60dk[0]; // En son verilen ilacı al
-        const dkOnce = Math.floor((now - r.dt) / 60000);
-        const metin = dkOnce === 0 ? "az önce" : `${dkOnce} dk önce`;
-        shield.innerHTML = `🚨 DİKKAT: ${r.dRaw}, ${r.by} tarafından ${metin} verildi!`;
+        const r = son60dk[0]; const dkOnce = Math.floor((now - r.dt) / 60000);
+        shield.innerHTML = `🚨 DİKKAT: ${r.dRaw}, ${r.by} tarafından ${dkOnce === 0 ? 'az önce' : dkOnce+' dk önce'} verildi!`;
         shield.style.display = 'block';
-    } else {
-        shield.style.display = 'none';
-    }
+    } else { shield.style.display = 'none'; }
 
-    // --- İLAÇ KARTLARI ---
+    // KARTLAR
     const keppraTimes = [{h:7,m:0},{h:15,m:0},{h:23,m:0}];
     const enalaprilTimes = [{h:10,m:30},{h:22,m:30}];
 
@@ -196,9 +166,7 @@ function ekraniCiz() {
         const pArr = name.toLowerCase() === 'keppra' ? keppraTimes : enalaprilTimes;
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let cands = [];
-        [-1, 0, 1].forEach(off => {
-            pArr.forEach(t => { cands.push(new Date(today.getTime() + (off * 86400000) + (t.h*3600 + t.m*60)*1000)); });
-        });
+        [-1, 0, 1].forEach(off => { pArr.forEach(t => { cands.push(new Date(today.getTime() + (off * 86400000) + (t.h*3600 + t.m*60)*1000)); }); });
         cands.sort((a,b) => a-b);
         return cands.find(c => {
             const wasDone = logs.find(l => l.drug === name.toLowerCase() && Math.abs(l.dt - c) < (4 * 3600000));
@@ -208,61 +176,61 @@ function ekraniCiz() {
 
     function renderDrug(name, icon) {
         const dLogs = logs.filter(l => l.drug === name.toLowerCase()); 
-        const last = dLogs[0];
-        const next = getNextSmart(name);
+        const last = dLogs[0]; const next = getNextSmart(name);
         const diffMin = Math.round((next - now) / 60000);
         
         let status = { text: "BEKLEMEDE", class: "badge-safe" };
-        if (last && (now - last.dt) >= 0 && (now - last.dt) < (GRACE_MIN * 60000)) {
-            status = { text: "YENİ VERİLDİ", class: "badge-safe" };
-        } else if (diffMin <= 0 && diffMin >= -GRACE_MIN) {
-            status = { text: "VAKTİ GELDİ", class: "badge-due" };
-        } else if (diffMin < -GRACE_MIN) {
-            status = { text: "GECİKTİ", class: "badge-late" };
-        }
+        if (last && (now - last.dt) >= 0 && (now - last.dt) < (GRACE_MIN * 60000)) status = { text: "YENİ VERİLDİ", class: "badge-safe" };
+        else if (diffMin <= 0 && diffMin >= -GRACE_MIN) status = { text: "VAKTİ GELDİ", class: "badge-due" };
+        else if (diffMin < -GRACE_MIN) status = { text: "GECİKTİ", class: "badge-late" };
 
         const h = Math.floor(Math.abs(diffMin) / 60); const m = Math.abs(diffMin) % 60;
-        const diffStr = diffMin < 0 ? "Vakti geçti!" : (h > 0 ? `${h}sa ${m}dk` : `${m}dk`);
-        const lastGivenStr = last ? `${isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)} ${fmt(last.dt)}` : 'Yok';
+        const diffStr = diffMin < 0 ? "Geçti!" : (h > 0 ? `${h}sa ${m}d` : `${m}dk`);
+        const lastGivenStr = last ? `${isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)} ${fmt(last.dt)}` : '--';
 
         return `
             <div class="card">
-                <div class="drug-header"><div class="drug-name">${icon} ${name}</div><div class="badge ${status.class}">${status.text}</div></div>
-                <div class="label">Son Veriliş</div><div class="value">${lastGivenStr}</div><div class="sub-value">${last ? last.by + ' verdi' : ''}</div>
-                <div class="footer-info">
-                    <div><div class="label">Sıradaki</div><div class="next-time">${fmt(next)}</div></div>
+                <div class="drug-name">${icon} ${name}</div>
+                <div class="badge ${status.class}">${status.text}</div>
+                
+                <div class="info-group">
+                    <div class="label">Son Veriliş</div>
+                    <div class="val-primary">${lastGivenStr} <span class="val-sub">${last ? '('+last.by+')' : ''}</span></div>
+                </div>
+
+                <div class="timer-box">
+                    <div class="label">Sıradaki (${fmt(next)})</div>
                     <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffStr}</div>
                 </div>
-                <details><summary>📜 Son 5 Doz Geçmişi ▼</summary><ul style="list-style:none; padding:0; margin-top:10px">
-                    ${dLogs.slice(0,5).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
+
+                <details><summary>Geçmiş ▼</summary><ul style="list-style:none; padding:0; margin-top:5px">
+                    ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by.substring(0,3)}</span></li>`).join('')}
                 </ul></details>
             </div>`;
     }
 
     document.getElementById('app').innerHTML = renderDrug('Keppra', '💉') + renderDrug('Enalapril', '💊');
 
-    // --- GÜNLÜK ÇİZELGE VE PERFORMANS ---
-    const allPlans = [
-        {n:'Keppra',h:7,m:0},{n:'Keppra',h:15,m:0},{n:'Keppra',h:23,m:0},
-        {n:'Enalapril',h:10,m:30},{n:'Enalapril',h:22,m:30}
-    ];
-
-    let startCalc = new Date(now.getTime() - (30 * 86400000)); startCalc.setHours(0,0,0,0);
-    let totalP = 0, stableC = 0, grid = "";
+    // GÜNLÜK YATAY ÇİZELGE
+    const allPlans = [{n:'Keppra',h:7,m:0},{n:'Enalapril',h:10,m:30},{n:'Keppra',h:15,m:0},{n:'Enalapril',h:22,m:30},{n:'Keppra',h:23,m:0}];
+    let grid = ""; let totalP = 0; let stableC = 0;
     
-    allPlans.sort((a,b)=>(a.h*60+a.m)-(b.h*60+b.m)).forEach(p => {
+    allPlans.forEach(p => {
         const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
         const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
-        let tag = log ? "tag-stable" : (now > new Date(pt.getTime() + 30*60000) ? "tag-missed" : "tag-waiting");
-        grid += `<div class="status-item"><span>${p.n} (${fmt(pt)})</span><span class="status-tag ${tag}">${log ? 'TAMAM' : 'BEKLİYOR'}</span></div>`;
+        let pClass = log ? "pill-stable" : (now > new Date(pt.getTime() + 30*60000) ? "pill-missed" : "");
+        let icon = log ? "✅" : (pClass === "pill-missed" ? "❌" : "⏳");
+        let shortName = p.n.substring(0,3).toUpperCase();
+        grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-icon">${icon}</span></div>`;
     });
-
+    
+    // 30 GÜNLÜK BAŞARI
+    let startCalc = new Date(now.getTime() - (30 * 86400000)); startCalc.setHours(0,0,0,0);
     for(let d=new Date(startCalc); d<=now; d.setDate(d.getDate()+1)){
         allPlans.forEach(p => {
             const pt = new Date(d.getFullYear(), d.getMonth(), d.getDate(), p.h, p.m);
             if(pt >= startCalc && pt <= now){
-                totalP++;
-                if(logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt.getTime()) <= (GRACE_MIN*60000))) stableC++;
+                totalP++; if(logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt.getTime()) <= (GRACE_MIN*60000))) stableC++;
             }
         });
     }
@@ -270,27 +238,17 @@ function ekraniCiz() {
     const pct = totalP > 0 ? Math.round((stableC/totalP)*100) : 0;
     const clr = pct >= 80 ? "#4ade80" : (pct >= 50 ? "#fbbf24" : "#ff6b6b");
     
-    const perfPctEl = document.getElementById('perf-pct');
-    const perfBarEl = document.getElementById('perf-bar');
-    if(perfPctEl) { perfPctEl.textContent = '%'+pct; perfPctEl.style.color = clr; }
-    if(perfBarEl) { perfBarEl.style.width = pct+'%'; perfBarEl.style.backgroundColor = clr; }
-    
-    const gridEl = document.getElementById('status-grid');
-    if(gridEl) gridEl.innerHTML = grid;
+    document.getElementById('perf-pct').textContent = '%'+pct; document.getElementById('perf-pct').style.color = clr;
+    document.getElementById('perf-bar').style.width = pct+'%'; document.getElementById('perf-bar').style.backgroundColor = clr;
+    document.getElementById('status-grid').innerHTML = grid;
 
-    // Hafızadaki açık menüleri geri yükle
-    document.querySelectorAll('details').forEach((d, i) => {
-        if (detailsState[i]) d.open = true;
-    });
+    document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
 }
 
-// 4. BAŞLATICILAR VE ZAMANLAYICILAR
-veriCek(); // Açılır açılmaz veriyi getir
-setInterval(veriCek, 10000); // 10 saniyede bir arka planda Google'a sor
-setInterval(saniyeTiktak, 1000); // Her saniye saatleri ve ışığı güncelle
-document.addEventListener("visibilitychange", () => { 
-    if (document.visibilityState === 'visible') veriCek(); 
-});
+veriCek();
+setInterval(veriCek, 10000); 
+setInterval(saniyeTiktak, 1000); 
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') veriCek(); });
 </script>
 </body>
 </html>
