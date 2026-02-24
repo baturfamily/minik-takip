@@ -111,6 +111,15 @@ let sonBasariZamani = 0;
 let hamVeri = [];
 let fetchDevamEdiyor = false;
 
+// KEPPRA 4 SAAT, ENALAPRIL 6 SAAT KURALI (w: window/pencere)
+const allPlans = [
+    {n:'Keppra',h:7,m:0, w:4},
+    {n:'Enalapril',h:10,m:30, w:6},
+    {n:'Keppra',h:15,m:0, w:4},
+    {n:'Enalapril',h:22,m:30, w:6},
+    {n:'Keppra',h:23,m:0, w:4}
+];
+
 async function veriCek() {
     if (fetchDevamEdiyor) return;
     fetchDevamEdiyor = true;
@@ -154,21 +163,61 @@ function ekraniCiz() {
     if (hamVeri.length === 0) return;
     const detailsState = {}; document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
 
-    const logs = hamVeri
+    // 1. ADIM: MÜKERRER KAYITLARI (DOUBLE TAP) TEMİZLEME ZEKASI
+    let rawLogs = hamVeri
         .filter(l => !l.i.toLowerCase().includes('nöbet'))
         .map(l => ({
             dt: new Date(l.dt),
             drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
             dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
             by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase()
-        })).sort((a, b) => b.dt - a.dt);
+        })).sort((a, b) => a.dt - b.dt); // Önce Eskiden Yeniye (İlk basılanı tutmak için)
+
+    let validLogs = [];
+    let mappedTargets = new Set();
+
+    rawLogs.forEach(l => {
+        let matchedTargetKey = null;
+        let lDate = new Date(l.dt.getFullYear(), l.dt.getMonth(), l.dt.getDate());
+        
+        // Bu kayıt hangi hedefe ait? (Örn: Sabah 07:00 Kepprası mı, 15:00 Kepprası mı?)
+        for(let off of [-1, 0, 1]) {
+            let checkDate = new Date(lDate.getTime() + (off * 86400000));
+            for(let p of allPlans) {
+                if (p.n.toLowerCase() === l.drug) {
+                    let pt = new Date(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate(), p.h, p.m);
+                    // İlacın yarı zaman dilimine uyuyor mu? (Keppra +-4, Enalapril +-6)
+                    if (Math.abs(l.dt - pt) < (p.w * 3600000)) {
+                        matchedTargetKey = `${p.n}_${pt.getTime()}`;
+                        break;
+                    }
+                }
+            }
+            if (matchedTargetKey) break;
+        }
+
+        if (matchedTargetKey) {
+            // Eğer bu doz penceresi için ilk kez kayıt geliyorsa kabul et
+            if (!mappedTargets.has(matchedTargetKey)) {
+                mappedTargets.add(matchedTargetKey);
+                validLogs.push(l);
+            }
+            // Aynı pencere için gelen 2., 3. double-tap tıklamaları GÖRMEZDEN GELİNİR.
+        } else {
+            // Eğer hiçbir pencereye uymayan aşırı alakasız bir saatte basıldıysa (koruma amaçlı tutulur)
+            validLogs.push(l);
+        }
+    });
+
+    // 2. ADIM: TEMİZLENMİŞ LİSTEYİ NORMAL AKIŞ İÇİN YENİDEN ESKİYE SIRALA
+    const logs = validLogs.sort((a, b) => b.dt - a.dt);
 
     const now = new Date();
     const GRACE_MIN = 30;
     const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
     const isToday = (d) => d.toDateString() === now.toDateString();
 
-    // 1. KALKAN (Artık son 60 dakikadaki TÜM ilaçları gösterir)
+    // GÜVENLİK KALKANI (Temizlenmiş liste ile çalıştığı için artık 3 tane uyarı vermez)
     const shield = document.getElementById('safety-shield');
     const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
     if (son60dk.length > 0) {
@@ -179,20 +228,19 @@ function ekraniCiz() {
         shield.style.display = 'block';
     } else { shield.style.display = 'none'; }
 
-    // 2. İLAÇ KARTLARI
-    const keppraTimes = [{h:7,m:0},{h:15,m:0},{h:23,m:0}];
-    const enalaprilTimes = [{h:10,m:30},{h:22,m:30}];
-
+    // İLAÇ KARTLARI
     function getNextSmart(name) {
-        const pArr = name.toLowerCase() === 'keppra' ? keppraTimes : enalaprilTimes;
+        const targetPlans = allPlans.filter(p => p.n.toLowerCase() === name.toLowerCase());
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let cands = [];
-        [-1, 0, 1].forEach(off => { pArr.forEach(t => { cands.push(new Date(today.getTime() + (off * 86400000) + (t.h*3600 + t.m*60)*1000)); }); });
-        cands.sort((a,b) => a-b);
-        return cands.find(c => {
-            const wasDone = logs.find(l => l.drug === name.toLowerCase() && Math.abs(l.dt - c) < (4 * 3600000));
-            return !wasDone && c > now.getTime() - (GRACE_MIN*60000);
-        }) || cands.find(c => c > now);
+        [-1, 0, 1].forEach(off => { targetPlans.forEach(t => { cands.push({ dt: new Date(today.getTime() + (off * 86400000) + (t.h*3600 + t.m*60)*1000), w: t.w }); }); });
+        cands.sort((a,b) => a.dt - b.dt);
+        
+        let found = cands.find(c => {
+            const wasDone = logs.find(l => l.drug === name.toLowerCase() && Math.abs(l.dt - c.dt) < (c.w * 3600000));
+            return !wasDone && c.dt > now.getTime() - (GRACE_MIN*60000);
+        });
+        return found ? found.dt : cands.find(c => c.dt > now).dt;
     }
 
     function renderDrug(name, icon) {
@@ -232,13 +280,11 @@ function ekraniCiz() {
 
     document.getElementById('app').innerHTML = renderDrug('Keppra', '💉') + renderDrug('Enalapril', '💊');
 
-    // 3. GÜNLÜK YATAY ÇİZELGE
-    const allPlans = [{n:'Keppra',h:7,m:0},{n:'Enalapril',h:10,m:30},{n:'Keppra',h:15,m:0},{n:'Enalapril',h:22,m:30},{n:'Keppra',h:23,m:0}];
+    // GÜNLÜK YATAY ÇİZELGE
     let grid = ""; 
-    
     allPlans.forEach(p => {
         const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
-        const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
+        const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
         
         let tagText = "BEKLİYOR"; let pClass = "pill-waiting";
         if (log) {
@@ -253,7 +299,7 @@ function ekraniCiz() {
         grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
     });
     
-    // 4 & 5. DİNAMİK HESAPLAMALAR (AYLIK BAŞARI VE PUAN TABLOSU)
+    // BAŞARI VE PUAN TABLOSU
     const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
     document.getElementById('perf-title-text').textContent = `📈 ${monthName} Başarısı`;
 
@@ -276,7 +322,7 @@ function ekraniCiz() {
             const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
             if (pt > now) return; 
             
-            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (4 * 3600000));
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
             
             if (log) {
                 const diffMin = (log.dt - pt) / 60000;
