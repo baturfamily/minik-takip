@@ -29,14 +29,14 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
 .perf-val { font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }
 
-/* GÜNLÜK ÇİZELGE */
+/* GÜNLÜK ÇİZELGE (Yazılar büyütüldü, alan hafif genişletildi) */
 .daily-container { background: var(--card); border-radius: 16px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--line); }
-.daily-title { font-size: 11px; font-weight: 800; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.daily-title { font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
 .daily-row { display: flex; justify-content: space-between; gap: 6px; }
-.daily-pill { flex: 1; text-align: center; padding: 12px 2px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; gap: 6px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); min-height: 95px; }
-.pill-name { font-size: 11px; color: #fff; font-weight: 900; }
-.pill-time { color: var(--muted); font-size: 12px; font-weight: 800; font-family: ui-monospace, monospace; }
-.pill-status-text { font-size: 8.5px; font-weight: 900; letter-spacing: -0.2px; padding: 4px 1px; border-radius: 6px; margin: 0 4px; display: flex; align-items: center; justify-content: center; min-height: 32px; text-align: center; line-height: 1.3; }
+.daily-pill { flex: 1; text-align: center; padding: 12px 2px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; gap: 8px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); min-height: 105px; }
+.pill-name { font-size: 13px; color: #fff; font-weight: 900; }
+.pill-time { color: var(--muted); font-size: 14px; font-weight: 800; font-family: ui-monospace, monospace; }
+.pill-status-text { font-size: 10px; font-weight: 900; letter-spacing: -0.2px; padding: 6px 1px; border-radius: 6px; margin: 0 2px; display: flex; align-items: center; justify-content: center; min-height: 38px; text-align: center; line-height: 1.2; }
 
 /* Kapsül Renkleri */
 .pill-stable { border-color: rgba(74,222,128,0.4); } .pill-stable .pill-status-text { background: rgba(74,222,128,0.15); color: #4ade80; }
@@ -45,24 +45,24 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .pill-missed { border-color: rgba(255,107,107,0.4); } .pill-missed .pill-status-text { background: rgba(255,107,107,0.15); color: #ff6b6b; }
 .pill-waiting { border-color: var(--line); } .pill-waiting .pill-status-text { color: var(--muted); background: rgba(255,255,255,0.05); }
 
-/* İLAÇ KARTLARI */
+/* İLAÇ KARTLARI (Başlıklar, sayaçlar ve geçmiş detayları belirginleştirildi) */
 .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
 .card { background: var(--card); border-radius: 16px; padding: 14px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; }
-.drug-name { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
-.badge { align-self: flex-start; padding: 4px 6px; border-radius: 6px; font-weight: 800; font-size: 9px; text-transform: uppercase; margin-bottom: 10px; }
+.drug-name { font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.badge { align-self: flex-start; padding: 6px 8px; border-radius: 6px; font-weight: 800; font-size: 11px; text-transform: uppercase; margin-bottom: 12px; }
 .badge-safe { background:rgba(74,222,128,0.15); color:var(--accent); }
 .badge-due { background:rgba(251,191,36,0.15); color:var(--warning); animation: pulse-yellow 2s infinite; }
 .badge-late { background:rgba(255,107,107,0.15); color:var(--danger); animation: pulse-red 1s infinite; }
-.info-group { margin-bottom: 8px; }
-.label { color: var(--muted); font-size: 9px; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
-.val-primary { font-size: 13px; font-weight: 800; color: #fff; }
-.val-sub { font-size: 11px; color: var(--muted); font-weight: 600; }
-.timer-box { margin-top: 2px; padding-top: 10px; border-top: 1px solid var(--line); }
-.timer { font-weight: 800; color: var(--accent); font-size: 15px; font-family: ui-monospace, monospace; }
+.info-group { margin-bottom: 10px; }
+.label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+.val-primary { font-size: 15px; font-weight: 800; color: #fff; }
+.val-sub { font-size: 12px; color: var(--muted); font-weight: 600; }
+.timer-box { margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
+.timer { font-weight: 800; color: var(--accent); font-size: 18px; font-family: ui-monospace, monospace; }
 .timer.urgent { color: var(--warning); }
-details { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; }
-summary { cursor: pointer; color: var(--muted); font-size: 11px; font-weight: 700; list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; }
-.history-item { display: flex; justify-content: space-between; padding: 4px 0; font-size: 11px; color: #ccc; }
+details { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
+summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 700; list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; }
+.history-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: #ccc; }
 .mono { font-family: ui-monospace, monospace; }
 
 /* EKSTRA KARTLAR */
