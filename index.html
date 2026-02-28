@@ -425,9 +425,23 @@ function ekraniCiz() {
     }
     nobetHTML += `</div></details></div>`;
 
+    // YENİ HALİ:
     document.getElementById('extra-cards').innerHTML = leaderHTML + nobetHTML;
 
     document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
+
+    // --- KART GEÇMİŞLERİNİ EŞZAMANLI AÇIP KAPATMA ---
+    const appDetails = document.querySelectorAll('#app details');
+    appDetails.forEach(det => {
+        det.addEventListener('toggle', (e) => {
+            appDetails.forEach(d => {
+                if (d !== e.target && d.open !== e.target.open) {
+                    d.open = e.target.open;
+                }
+            });
+        });
+    });
+    // ------------------------------------------------
 }
 
 veriCek();
