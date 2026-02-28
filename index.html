@@ -255,7 +255,9 @@ function ekraniCiz() {
 
         const h = Math.floor(Math.abs(diffMin) / 60); const m = Math.abs(diffMin) % 60;
         const diffStr = diffMin < 0 ? "Geçti!" : (h > 0 ? `${h}sa ${m}d` : `${m}dk`);
-        const lastGivenStr = last ? `${isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)} ${fmt(last.dt)}` : '--';
+        const dateStr = last ? (isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)) : '';
+        const timeStr = last ? fmt(last.dt) : '--';
+        const lastGivenStr = last ? `${dateStr} <span style="font-size: 21px; font-weight: 900; letter-spacing: 0.5px;">${timeStr}</span>` : '--';
 
         return `
             <div class="card">
