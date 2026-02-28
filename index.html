@@ -29,14 +29,14 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
 .perf-val { font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }
 
-/* GÜNLÜK ÇİZELGE (Yazılar büyütüldü, alan hafif genişletildi) */
-.daily-container { background: var(--card); border-radius: 16px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--line); }
-.daily-title { font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-.daily-row { display: flex; justify-content: space-between; gap: 6px; }
-.daily-pill { flex: 1; text-align: center; padding: 12px 2px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; gap: 8px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); min-height: 105px; }
+/* GÜNLÜK ÇİZELGE (Tek Satıra Tam Sığdırılmış Form) */
+.daily-container { background: var(--card); border-radius: 16px; padding: 12px 6px; margin-bottom: 10px; border: 1px solid var(--line); }
+.daily-title { font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 6px; }
+.daily-row { display: flex; justify-content: space-between; gap: 4px; }
+.daily-pill { flex: 1 1 0; min-width: 0; text-align: center; padding: 10px 1px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; gap: 6px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); min-height: 100px; }
 .pill-name { font-size: 13px; color: #fff; font-weight: 900; }
-.pill-time { color: var(--muted); font-size: 14px; font-weight: 800; font-family: ui-monospace, monospace; }
-.pill-status-text { font-size: 10px; font-weight: 900; letter-spacing: -0.2px; padding: 6px 1px; border-radius: 6px; margin: 0 2px; display: flex; align-items: center; justify-content: center; min-height: 38px; text-align: center; line-height: 1.2; }
+.pill-time { color: var(--muted); font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; letter-spacing: -0.5px; }
+.pill-status-text { font-size: 9.5px; font-weight: 900; letter-spacing: -0.3px; padding: 4px 1px; border-radius: 6px; margin: 0 1px; display: flex; align-items: center; justify-content: center; min-height: 34px; text-align: center; line-height: 1.1; word-wrap: break-word; }
 
 /* Kapsül Renkleri */
 .pill-stable { border-color: rgba(74,222,128,0.4); } .pill-stable .pill-status-text { background: rgba(74,222,128,0.15); color: #4ade80; }
