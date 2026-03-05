@@ -307,7 +307,7 @@ function ekraniCiz() {
         grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
     });
     
-    // BAŞARI VE PUAN TABLOSU
+  // BAŞARI VE PUAN TABLOSU (MEVCUT AY HESAPLAMASI)
     const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
     document.getElementById('perf-title-text').textContent = `📈 ${monthName} Ayı Doz Zamanı Başarısı`;
 
@@ -324,6 +324,7 @@ function ekraniCiz() {
     
     let successScore = 100; 
     let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 }; 
+    let statsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
     
     for(let d=startDay; d<=now.getDate(); d++) {
         allPlans.forEach(p => {
@@ -336,15 +337,20 @@ function ekraniCiz() {
                 const diffMin = (log.dt - pt) / 60000;
                 let earnedPts = ptsPerDose; 
                 let penaltyPts = 0;
+                let byName = log.by;
+
+                if(!statsData[byName]) statsData[byName] = {t:0, o:0, l:0};
+                statsData[byName].t++;
 
                 if (diffMin < -30 || diffMin > 30) { 
                     earnedPts = ptsPerDose * 0.75; 
                     penaltyPts = ptsPerDose * 0.25; 
-                } 
+                    statsData[byName].l++;
+                } else {
+                    statsData[byName].o++;
+                }
                 
                 successScore -= penaltyPts;
-                
-                let byName = log.by;
                 if(scores[byName] === undefined) scores[byName] = 0;
                 scores[byName] += earnedPts;
             } else {
@@ -364,27 +370,100 @@ function ekraniCiz() {
     document.getElementById('perf-bar').style.backgroundColor = clr;
     document.getElementById('status-grid').innerHTML = grid;
 
-    let sortedScores = Object.keys(scores).map(k => ({name: k, score: scores[k]})).sort((a,b) => b.score - a.score);
-    let leaderHTML = `
-    <div class="extra-card">
-        <details>
-            <summary><span>🏆 ${monthName} Ayı Puan Tablosu</span> <span class="show-text">Göster ▼</span></summary>
-            <div style="margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;">`;
-    
-    const medals = ["#fbbf24", "#9ca3af", "#b45309"]; 
-    sortedScores.forEach((s, idx) => {
-        let color = medals[idx] || "#4ade80";
-        leaderHTML += `
-            <div class="score-row">
-                <div class="score-rank" style="color:${color};">#${idx+1}</div>
-                <div class="score-name">${s.name}</div>
-                <div class="score-val" style="color:${color};">${parseFloat(s.score.toFixed(1))}</div>
-            </div>
-            <div class="bar-bg" style="height:6px; margin-bottom:12px;">
-                <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
-            </div>`;
-    });
-    leaderHTML += `</div></details></div>`;
+    // BİR ÖNCEKİ AYIN VERİLERİNİ HESAPLAMA
+    const pMonthDate = new Date(currentYear, currentMonth - 1, 1);
+    const pMonth = pMonthDate.getMonth();
+    const pYear = pMonthDate.getFullYear();
+    const pMonthNameStr = pMonthDate.toLocaleDateString('tr-TR', {month:'long'});
+    const pDaysInMonth = new Date(pYear, pMonth + 1, 0).getDate();
+
+    let pLogs = logs.filter(l => l.dt.getMonth() === pMonth && l.dt.getFullYear() === pYear);
+    let pStartDay = pLogs.length > 0 ? pLogs[pLogs.length - 1].dt.getDate() : 1;
+    const pDaysInComp = pDaysInMonth - pStartDay + 1;
+    const pTotalDoses = pDaysInComp * 5;
+    const pPtsPerDose = pTotalDoses > 0 ? (100 / pTotalDoses) : 0;
+
+    let pScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let pStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+
+    for(let d=pStartDay; d<=pDaysInMonth; d++) {
+        allPlans.forEach(p => {
+            const pt = new Date(pYear, pMonth, d, p.h, p.m);
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let earnedPts = pPtsPerDose;
+                let byName = log.by;
+
+                if(!pStatsData[byName]) pStatsData[byName] = {t:0, o:0, l:0};
+                pStatsData[byName].t++;
+
+                if (diffMin < -30 || diffMin > 30) {
+                    earnedPts = pPtsPerDose * 0.75;
+                    pStatsData[byName].l++;
+                } else {
+                    pStatsData[byName].o++;
+                }
+
+                if(pScores[byName] === undefined) pScores[byName] = 0;
+                pScores[byName] += earnedPts;
+            }
+        });
+    }
+
+    // İSTATİSTİK KARTLARI İÇİN ORTAK HTML OLUŞTURUCU
+    function buildStatsCardHTML(title, scoresObj, statsObj) {
+        let sortedUsers = Object.keys(scoresObj).map(k => ({name: k, score: scoresObj[k]})).sort((a,b) => b.score - a.score);
+        let validUsers = sortedUsers.filter(u => statsObj[u.name] && statsObj[u.name].t > 0);
+
+        let html = `
+        <div class="extra-card" style="margin-bottom:10px;">
+            <details>
+                <summary><span>${title}</span> <span class="show-text">Göster ▼</span></summary>
+                <div style="margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;">`;
+
+        if (validUsers.length === 0) {
+             html += `<div style="text-align:center; color:var(--muted); font-size:12px; padding:6px 0;">Henüz veri yok.</div>`;
+        } else {
+            const medals = ["#fbbf24", "#9ca3af", "#b45309"];
+            validUsers.forEach((s, idx) => {
+                let color = medals[idx] || "#4ade80";
+                let d = statsObj[s.name];
+                let borderStyle = idx === validUsers.length - 1 ? '' : 'border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:12px; padding-bottom:12px;';
+
+                html += `
+                    <div style="${borderStyle}">
+                        <div class="score-row" style="margin-bottom:4px;">
+                            <div class="score-rank" style="color:${color};">#${idx+1}</div>
+                            <div class="score-name" style="font-size:15px;">${s.name}</div>
+                            <div class="score-val" style="color:${color};">${parseFloat(s.score.toFixed(1))} Puan</div>
+                        </div>
+                        <div class="bar-bg" style="height:4px; margin-bottom:10px;">
+                            <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <div style="flex:1; background:rgba(255,255,255,0.02); border:1px solid var(--line); padding:6px; border-radius:8px; text-align:center;">
+                                <div style="font-size:10px; color:var(--muted); font-weight:800; text-transform:uppercase;">Toplam</div>
+                                <div style="font-size:16px; color:#fff; font-weight:900;">${d.t}</div>
+                            </div>
+                            <div style="flex:1; background:rgba(74,222,128,0.05); border:1px solid rgba(74,222,128,0.2); padding:6px; border-radius:8px; text-align:center;">
+                                <div style="font-size:10px; color:#4ade80; font-weight:800; text-transform:uppercase;">Zamanında</div>
+                                <div style="font-size:16px; color:#4ade80; font-weight:900;">${d.o}</div>
+                            </div>
+                            <div style="flex:1; background:rgba(255,107,107,0.05); border:1px solid rgba(255,107,107,0.2); padding:6px; border-radius:8px; text-align:center;">
+                                <div style="font-size:10px; color:#ff6b6b; font-weight:800; text-transform:uppercase;">Geç/Erken</div>
+                                <div style="font-size:16px; color:#ff6b6b; font-weight:900;">${d.l}</div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+        html += `</div></details></div>`;
+        return html;
+    }
+
+    let currentMonthStatsHTML = buildStatsCardHTML(`🏆 ${monthName} Ayı İstatistikleri`, scores, statsData);
+    let prevMonthStatsHTML = buildStatsCardHTML(`📊 ${pMonthNameStr} Ayı İstatistikleri`, pScores, pStatsData);
 
     // 6. NÖBET GÜNLÜĞÜ VE GÜN SAYACI
     const nobetLogs = hamVeri
@@ -401,11 +480,11 @@ function ekraniCiz() {
         if (diffDays > 30 && diffDays <= 60) dayColor = "#fbbf24"; 
         else if (diffDays > 60) dayColor = "#ff6b6b"; 
 
-        daysBadgeHTML = `<span style="color:${dayColor}; font-size:18px; font-weight:900; background:rgba(255,255,255,0.05); padding:8px 12px; border-radius:10px;">${diffDays}. Gün</span>`;
+        daysBadgeHTML = `<span style="color:${dayColor}; font-size:19px; font-weight:900; background:rgba(255,255,255,0.05); padding:8px 14px; border-radius:10px; display:inline-block;">${diffDays}. Gün</span>`;
     }
 
     let nobetHTML = `
-    <div class="extra-card" style="margin-bottom:0;">
+    <div class="extra-card" style="margin-bottom:10px;">
         <details>
             <summary>
                 <span>🚨 Minik Nöbet Günlüğü</span> 
@@ -431,8 +510,7 @@ function ekraniCiz() {
     }
     nobetHTML += `</div></details></div>`;
 
-    // YENİ HALİ:
-    document.getElementById('extra-cards').innerHTML = leaderHTML + nobetHTML;
+    document.getElementById('extra-cards').innerHTML = currentMonthStatsHTML + nobetHTML + prevMonthStatsHTML;
 
     document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
 
