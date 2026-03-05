@@ -309,7 +309,7 @@ function ekraniCiz() {
     
 // BAŞARI VE PUAN TABLOSU (MEVCUT AY HESAPLAMASI)
     const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
-    document.getElementById('perf-title-text').textContent = `📈 ${monthName} Ayı Doz Zamanı Başarısı`;
+    document.getElementById('perf-title-text').textContent = `📈 ${monthName} Ayı Başarısı`;
 
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
@@ -412,13 +412,13 @@ function ekraniCiz() {
     }
 
     // İLGİLİ YILIN (TÜM YIL) VERİLERİNİ HESAPLAMA
-    let yLogs = logs.filter(l => l.dt.getFullYear() === currentYear);
-    let yStartDt = yLogs.length > 0 ? new Date(yLogs[yLogs.length - 1].dt.getFullYear(), yLogs[yLogs.length - 1].dt.getMonth(), yLogs[yLogs.length - 1].dt.getDate()) : new Date(currentYear, 0, 1);
+    const isLeap = (currentYear % 4 === 0 && currentYear % 100 !== 0) || (currentYear % 400 === 0);
+    const yDaysInYear = isLeap ? 366 : 365;
+    const yTotalDosesInYear = yDaysInYear * 5; 
+    const yPtsPerDose = 100 / yTotalDosesInYear;
+
+    let yStartDt = new Date(currentYear, 0, 1);
     let todayDt = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
-    const yDaysInComp = Math.floor((todayDt - yStartDt) / 86400000) + 1;
-    const yTotalDoses = yDaysInComp * 5;
-    const yPtsPerDose = yTotalDoses > 0 ? (100 / yTotalDoses) : 0;
 
     let yScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
     let yStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
@@ -441,7 +441,7 @@ function ekraniCiz() {
                 yStatsData[byName].t++;
 
                 if (diffMin < -30 || diffMin > 30) {
-                    earnedPts = yPtsPerDose * 0.75;
+                    earnedPts = yPtsPerDose * 0.75; // Geç/Erken ise %25 kesinti
                     yStatsData[byName].l++;
                 } else {
                     yStatsData[byName].o++;
