@@ -98,7 +98,7 @@ summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 70
 </div>
 
 <div class="perf-compact">
-    <div class="perf-label" id="perf-title-text">📈 Başarı</div>
+    <div class="perf-label" id="perf-title-text">📈 Başarı Durumu</div>
     <div class="bar-bg"><div id="perf-bar" class="bar-fill" style="width: 0%"></div></div>
     <div id="perf-pct" class="perf-val">%0</div>
 </div>
@@ -307,7 +307,7 @@ function ekraniCiz() {
         grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
     });
     
-  // BAŞARI VE PUAN TABLOSU (MEVCUT AY HESAPLAMASI)
+// BAŞARI VE PUAN TABLOSU (MEVCUT AY HESAPLAMASI)
     const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
     document.getElementById('perf-title-text').textContent = `📈 ${monthName} Ayı Doz Zamanı Başarısı`;
 
@@ -411,6 +411,48 @@ function ekraniCiz() {
         });
     }
 
+    // İLGİLİ YILIN (TÜM YIL) VERİLERİNİ HESAPLAMA
+    let yLogs = logs.filter(l => l.dt.getFullYear() === currentYear);
+    let yStartDt = yLogs.length > 0 ? new Date(yLogs[yLogs.length - 1].dt.getFullYear(), yLogs[yLogs.length - 1].dt.getMonth(), yLogs[yLogs.length - 1].dt.getDate()) : new Date(currentYear, 0, 1);
+    let todayDt = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    const yDaysInComp = Math.floor((todayDt - yStartDt) / 86400000) + 1;
+    const yTotalDoses = yDaysInComp * 5;
+    const yPtsPerDose = yTotalDoses > 0 ? (100 / yTotalDoses) : 0;
+
+    let yScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let yStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+
+    for(let loopDt = new Date(yStartDt); loopDt <= todayDt; loopDt.setDate(loopDt.getDate() + 1)) {
+        let y = loopDt.getFullYear();
+        let m = loopDt.getMonth();
+        let d = loopDt.getDate();
+        allPlans.forEach(p => {
+            const pt = new Date(y, m, d, p.h, p.m);
+            if (pt > now) return;
+
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let earnedPts = yPtsPerDose;
+                let byName = log.by;
+
+                if(!yStatsData[byName]) yStatsData[byName] = {t:0, o:0, l:0};
+                yStatsData[byName].t++;
+
+                if (diffMin < -30 || diffMin > 30) {
+                    earnedPts = yPtsPerDose * 0.75;
+                    yStatsData[byName].l++;
+                } else {
+                    yStatsData[byName].o++;
+                }
+
+                if(yScores[byName] === undefined) yScores[byName] = 0;
+                yScores[byName] += earnedPts;
+            }
+        });
+    }
+
     // İSTATİSTİK KARTLARI İÇİN ORTAK HTML OLUŞTURUCU
     function buildStatsCardHTML(title, scoresObj, statsObj) {
         let sortedUsers = Object.keys(scoresObj).map(k => ({name: k, score: scoresObj[k]})).sort((a,b) => b.score - a.score);
@@ -464,6 +506,7 @@ function ekraniCiz() {
 
     let currentMonthStatsHTML = buildStatsCardHTML(`🏆 ${monthName} Ayı İstatistikleri`, scores, statsData);
     let prevMonthStatsHTML = buildStatsCardHTML(`📊 ${pMonthNameStr} Ayı İstatistikleri`, pScores, pStatsData);
+    let currentYearStatsHTML = buildStatsCardHTML(`📅 ${currentYear} Yılı İstatistikleri`, yScores, yStatsData);
 
     // 6. NÖBET GÜNLÜĞÜ VE GÜN SAYACI
     const nobetLogs = hamVeri
@@ -510,7 +553,7 @@ function ekraniCiz() {
     }
     nobetHTML += `</div></details></div>`;
 
-    document.getElementById('extra-cards').innerHTML = currentMonthStatsHTML + nobetHTML + prevMonthStatsHTML;
+    document.getElementById('extra-cards').innerHTML = currentMonthStatsHTML + nobetHTML + prevMonthStatsHTML + currentYearStatsHTML;
 
     document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
 
