@@ -15,7 +15,8 @@
 --accent:#4ade80; --warning:#fbbf24; --danger:#ff6b6b; --early:#60a5fa;
 }
 * { box-sizing: border-box; }
-body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui; padding:10px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+/* body'ye overscroll-behavior-y eklendi ki Safari'nin kendi yenilemesiyle çakışmasın, bizim özel kaydırmamız çalışsın */
+body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui; padding:10px; -webkit-font-smoothing: antialiased; overflow-x: hidden; overscroll-behavior-y: none; }
 
 /* GÜVENLİK KALKANI */
 .safety-shield { display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white; padding: 10px; text-align: center; font-weight: 900; font-size: 13px; position: sticky; top: 0; z-index: 9999; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); animation: pulse-red 1.5s infinite; letter-spacing: 0.5px; }
@@ -24,17 +25,16 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 @keyframes spin-anim { 100% { transform: rotate(360deg); } }
 .spin { display: inline-block; animation: spin-anim 1s linear infinite; }
 
-/* EN ÜSTTEKİ SABİT PERDE VE BUTON (YENİ STICKY) */
+/* EN ÜSTTEKİ SABİT PERDE VE BUTON (TIKLAMA ÖZELLİĞİ KALDIRILDI) */
 .sticky-top-wrapper { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 10px 0 5px 0; margin-top: -10px; }
-.header-compact { text-align: center; margin-bottom: 5px; background: linear-gradient(145deg, #1e293b, #0f172a); padding: 16px 12px; border-radius: 16px; border: 1px solid var(--line); box-shadow:0 6px 20px rgba(0,0,0,0.4); cursor: pointer; user-select: none; transition: transform 0.1s ease, filter 0.1s ease; -webkit-tap-highlight-color: transparent; }
-.header-compact:active { transform: scale(0.96); filter: brightness(0.8); } 
+.header-compact { text-align: center; margin-bottom: 5px; background: linear-gradient(145deg, #1e293b, #0f172a); padding: 16px 12px; border-radius: 16px; border: 1px solid var(--line); box-shadow:0 6px 20px rgba(0,0,0,0.4); user-select: none; transition: transform 0.2s ease, filter 0.2s ease; }
 .app-title { font-size: 20px; font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; color: #fff; }
 .header-sub { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 10px; transition: color 0.3s; }
 .header-info { display: flex; justify-content: center; align-items: center; gap: 10px; }
 .clock-text { font-size: 13px; font-weight: 700; color: var(--muted); }
 .sync-badge { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 8px; background: rgba(0,0,0,0.3); }
 
-/* GÜNLÜK ÇİZELGE (Artık sabit değil, standart kart) */
+/* GÜNLÜK ÇİZELGE */
 .daily-container { background: var(--card); border-radius: 16px; padding: 14px 6px; margin-bottom: 10px; border: 1px solid var(--line); }
 .daily-title { font-size: 16px; font-weight: 900; color: var(--muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
 .daily-row { display: flex; justify-content: space-between; gap: 4px; }
@@ -97,9 +97,9 @@ summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 70
 <div id="safety-shield" class="safety-shield"></div>
 
 <div class="sticky-top-wrapper">
-    <div class="header-compact" onclick="veriCek()" ontouchstart="">
+    <div class="header-compact" id="main-header-card">
         <div class="app-title">🐾 MİNİK İLAÇ TAKİBİ <span id="sync-icon">🔄</span></div>
-        <div class="header-sub" id="update-text">Verileri Güncellemek İçin Dokunun</div>
+        <div class="header-sub" id="update-text">Aşağı Kaydırarak Güncelleyin</div>
         <div class="header-info">
             <div id="clock" class="clock-text">--:--</div>
             <div id="last-sync" class="sync-badge">🔄 Bağlanıyor...</div>
@@ -146,8 +146,11 @@ async function veriCek() {
     // GÖRSEL GERİBİLDİRİM (ANİMASYON) BAŞLATMA
     const updateText = document.getElementById('update-text');
     const syncIcon = document.getElementById('sync-icon');
+    const headerCard = document.getElementById('main-header-card');
+    
     if(updateText) { updateText.innerHTML = "⏳ Veriler Tazeleniyor..."; updateText.style.color = "#4ade80"; }
     if(syncIcon) syncIcon.classList.add("spin");
+    if(headerCard) headerCard.style.transform = "scale(0.98)";
 
     try {
         const response = await fetch(SHEET_URL);
@@ -161,10 +164,59 @@ async function veriCek() {
         fetchDevamEdiyor = false; 
         
         // GÖRSEL GERİBİLDİRİM (ANİMASYON) BİTİRME
-        if(updateText) { updateText.innerHTML = "Verileri Güncellemek İçin Dokunun"; updateText.style.color = "var(--muted)"; }
+        if(updateText) { updateText.innerHTML = "Aşağı Kaydırarak Güncelleyin"; updateText.style.color = "var(--muted)"; }
         if(syncIcon) syncIcon.classList.remove("spin");
+        if(headerCard) headerCard.style.transform = "scale(1)";
     }
 }
+
+// --- PULL TO REFRESH (Aşağı Kaydırarak Yenileme) MANTIĞI ---
+let touchStartY = 0;
+const pullThreshold = 70; // 70 pixel aşağı kaydırmak yenilemek için yeterli
+
+window.addEventListener('touchstart', e => {
+    // Sadece sayfanın en üstündeyken aşağı çekme işlemini algıla
+    if (window.scrollY <= 5 && !fetchDevamEdiyor) {
+        touchStartY = e.touches[0].clientY;
+    }
+}, {passive: true});
+
+window.addEventListener('touchmove', e => {
+    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
+        let currentY = e.touches[0].clientY;
+        let diffY = currentY - touchStartY;
+        
+        // Parmağı yeterince aşağı çekerse "Bırakın Güncellensin" uyarısını göster
+        if (diffY > 30) {
+            const updateText = document.getElementById('update-text');
+            if (updateText) {
+                updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın";
+                updateText.style.color = "#fbbf24";
+            }
+        }
+    }
+}, {passive: true});
+
+window.addEventListener('touchend', e => {
+    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
+        let currentY = e.changedTouches[0].clientY;
+        let diffY = currentY - touchStartY;
+        
+        // Eğer yeterli seviyede aşağı çekilip bırakıldıysa veriyi çek
+        if (diffY > pullThreshold) {
+            veriCek();
+        } else {
+            // Yeterli çekilmediyse eski haline döndür
+            const updateText = document.getElementById('update-text');
+            if (updateText) {
+                updateText.innerHTML = "Aşağı Kaydırarak Güncelleyin";
+                updateText.style.color = "var(--muted)";
+            }
+        }
+    }
+    touchStartY = 0;
+});
+// -----------------------------------------------------------
 
 function saniyeTiktak() {
     const syncElement = document.getElementById('last-sync');
@@ -550,7 +602,6 @@ function ekraniCiz() {
         if (diffDays > 30 && diffDays <= 60) dayColor = "#fbbf24";
         else if (diffDays > 60) dayColor = "#ff6b6b"; 
 
-        /* NÖBET GÜNLÜĞÜ SAYACI BÜYÜTÜLDÜ (18px) VE VURGULANDI */
         daysBadgeHTML = `<span style="color:${dayColor}; font-size:16px; font-weight:900; background:rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); padding:4px 8px; border-radius:8px; margin-left:6px; white-space:nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${diffDays}. Gün</span>`;
     }
 
