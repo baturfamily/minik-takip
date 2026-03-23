@@ -2,9 +2,7 @@
 <html lang="tr">
 <head>
 <link rel="icon" type="image/png" href="https://i.ibb.co/VspddZY/app-icon-cropped-no-white-sides.png">
-
 <link rel="apple-touch-icon" href="https://i.ibb.co/VspddZY/app-icon-cropped-no-white-sides.png">
-
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Minik İlaç">
 <meta charset="UTF-8">
@@ -12,7 +10,8 @@
 <title>Minik Sağlık Paneli</title>
 <style>
 :root{
---bg:#0b0f17; --card:#121a27; --text:#eaf0ff; --muted:#a9b4cc; --line:rgba(255,255,255,.08);
+--bg:#0b0f17;
+--card:#121a27; --text:#eaf0ff; --muted:#a9b4cc; --line:rgba(255,255,255,.08);
 --accent:#4ade80; --warning:#fbbf24; --danger:#ff6b6b; --early:#60a5fa;
 }
 * { box-sizing: border-box; }
@@ -21,23 +20,24 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 /* GÜVENLİK KALKANI */
 .safety-shield { display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white; padding: 10px; text-align: center; font-weight: 900; font-size: 13px; position: sticky; top: 0; z-index: 9999; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); animation: pulse-red 1.5s infinite; letter-spacing: 0.5px; }
 
-/* ORTALANMIŞ KOMPAKT BAŞLIK */
-.header-compact { text-align: center; margin-bottom: 10px; background: var(--card); padding: 8px; border-radius: 16px; border: 1px solid var(--line); }
-.app-title { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 4px; }
-.header-info { display: flex; justify-content: center; align-items: center; gap: 8px; }
-.clock-text { font-size: 12px; font-weight: 700; color: var(--muted); }
-.sync-badge { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 8px; background: rgba(0,0,0,0.3); }
+/* ORTALANMIŞ KOMPAKT BAŞLIK - ARTIK DEV BİR BUTON */
+.header-compact { text-align: center; margin-bottom: 10px; background: linear-gradient(145deg, #1e293b, #0f172a); padding: 24px 12px; border-radius: 16px; border: 1px solid var(--line); box-shadow:0 4px 15px rgba(0,0,0,0.3); cursor: pointer; }
+.app-title { font-size: 26px; font-weight: 900; letter-spacing: 1px; margin-bottom: 8px; color: #fff; }
+.header-sub { font-size: 14px; color: var(--muted); font-weight: 600; margin-bottom: 12px; }
+.header-info { display: flex; justify-content: center; align-items: center; gap: 10px; }
+.clock-text { font-size: 14px; font-weight: 700; color: var(--muted); }
+.sync-badge { font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 8px; background: rgba(0,0,0,0.3); }
 
 /* PERFORMANS BARI */
-.perf-compact { display: flex; align-items: center; gap: 10px; background: var(--card); border-radius: 14px; padding: 10px 12px; margin-bottom: 10px; border: 1px solid var(--line); }
-.perf-label { font-size: 12px; font-weight: 800; white-space: nowrap; }
+.perf-compact { display: flex; align-items: center; gap: 10px; background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--line); }
+.perf-label { font-size: 14px; font-weight: 800; white-space: nowrap; }
 .bar-bg { flex: 1; background: rgba(255,255,255,0.05); height: 8px; border-radius: 4px; overflow: hidden; }
 .bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
-.perf-val { font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }
+.perf-val { font-size: 16px; font-weight: 900; font-family: ui-monospace, monospace; }
 
-/* GÜNLÜK ÇİZELGE (Tek Satıra Tam Sığdırılmış Form) */
-.daily-container { background: var(--card); border-radius: 16px; padding: 12px 6px; margin-bottom: 10px; border: 1px solid var(--line); }
-.daily-title { font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 6px; }
+/* GÜNLÜK ÇİZELGE */
+.daily-container { background: var(--card); border-radius: 16px; padding: 14px 6px; margin-bottom: 10px; border: 1px solid var(--line); }
+.daily-title { font-size: 16px; font-weight: 900; color: var(--muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
 .daily-row { display: flex; justify-content: space-between; gap: 4px; }
 .daily-pill { flex: 1 1 0; min-width: 0; text-align: center; padding: 10px 1px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; gap: 6px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); min-height: 100px; }
 .pill-name { font-size: 13px; color: #fff; font-weight: 900; }
@@ -51,7 +51,7 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .pill-missed { border-color: rgba(255,107,107,0.4); } .pill-missed .pill-status-text { background: rgba(255,107,107,0.15); color: #ff6b6b; }
 .pill-waiting { border-color: var(--line); } .pill-waiting .pill-status-text { color: var(--muted); background: rgba(255,255,255,0.05); }
 
-/* İLAÇ KARTLARI (Başlıklar, sayaçlar ve geçmiş detayları belirginleştirildi) */
+/* İLAÇ KARTLARI */
 .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
 .card { background: var(--card); border-radius: 16px; padding: 14px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; }
 .drug-name { font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
@@ -60,26 +60,26 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .badge-due { background:rgba(251,191,36,0.15); color:var(--warning); animation: pulse-yellow 2s infinite; }
 .badge-late { background:rgba(255,107,107,0.15); color:var(--danger); animation: pulse-red 1s infinite; }
 .info-group { margin-bottom: 10px; }
-.label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+.label { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
 .val-primary { font-size: 15px; font-weight: 800; color: #fff; }
-.val-sub { font-size: 12px; color: var(--muted); font-weight: 600; }
+.val-sub { font-size: 16px; color: #fff; font-weight: 800; letter-spacing: 0.5px; opacity: 0.9; } /* Büyütüldü */
 .timer-box { margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
 .timer { font-weight: 800; color: var(--accent); font-size: 18px; font-family: ui-monospace, monospace; }
 .timer.urgent { color: var(--warning); }
 details { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
 summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 700; list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; }
-.history-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: #ccc; }
+.history-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; color: #ccc; }
 .mono { font-family: ui-monospace, monospace; }
 
 /* EKSTRA KARTLAR */
-.extra-card { background: var(--card); border-radius: 16px; padding: 14px; border: 1px solid var(--line); margin-bottom: 10px; }
+.extra-card { background: var(--card); border-radius: 16px; padding: 16px; border: 1px solid var(--line); margin-bottom: 10px; }
 .extra-card details { margin-top: 0; border-top: none; padding-top: 0; }
-.extra-card summary { font-size: 14px; font-weight: 800; color: #fff; margin: 0; padding: 0; border: none; }
-.extra-card summary .show-text { font-size: 10px; color: var(--muted); font-weight: 700; }
+.extra-card summary { font-size: 18px; font-weight: 900; color: #fff; margin: 0; padding: 0; border: none; letter-spacing: 0.5px; } /* Büyütüldü */
+.extra-card summary .show-text { font-size: 12px; color: var(--muted); font-weight: 700; }
 .score-row { display: flex; align-items: center; margin-bottom: 8px; }
-.score-rank { width: 24px; font-weight: 900; font-size: 13px; }
-.score-name { flex: 1; font-weight: 800; font-size: 13px; color: #fff; }
-.score-val { font-weight: 900; font-size: 14px; font-family: ui-monospace, monospace; }
+.score-rank { width: 30px; font-weight: 900; font-size: 18px; } /* Büyütüldü */
+.score-name { flex: 1; font-weight: 800; font-size: 18px; color: #fff; } /* Büyütüldü */
+.score-val { font-weight: 900; font-size: 26px; font-family: ui-monospace, monospace; } /* ÇOK Büyütüldü */
 
 @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
 @keyframes pulse-yellow { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
@@ -89,12 +89,9 @@ summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 70
 
 <div id="safety-shield" class="safety-shield"></div>
 
-<div class="header-compact">
-    <div class="app-title">🐾 Minik İlaç Takibi</div>
-    <div class="header-info">
-        <div id="clock" class="clock-text">--:--</div>
-        <div id="last-sync" class="sync-badge">🔄 Bağlanıyor...</div>
-    </div>
+<div class="daily-container">
+    <div class="daily-title">Bugünkü Dozlar</div>
+    <div id="status-grid" class="daily-row"></div>
 </div>
 
 <div class="perf-compact">
@@ -103,16 +100,21 @@ summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 70
     <div id="perf-pct" class="perf-val">%0</div>
 </div>
 
-<div class="daily-container">
-    <div class="daily-title">Bugünkü Dozlar</div>
-    <div id="status-grid" class="daily-row"></div>
+<div class="header-compact" onclick="veriCek()">
+    <div class="app-title">🐾 MİNİK İLAÇ TAKİBİ <span id="sync-icon">🔄</span></div>
+    <div class="header-sub">Verileri Güncellemek İçin Dokunun</div>
+    <div class="header-info">
+        <div id="clock" class="clock-text">--:--</div>
+        <div id="last-sync" class="sync-badge">🔄 Bağlanıyor...</div>
+    </div>
 </div>
 
 <div id="app" class="cards-grid"></div>
+
 <div id="extra-cards"></div>
 
 <script>
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbzbS3DIUOcmpUBLgvfuFhi3zIhsougq7JB93ccmnwLlGbURtHLZknu5vl6FcxSWJndIZA/exec"; 
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzbS3DIUOcmpUBLgvfuFhi3zIhsougq7JB93ccmnwLlGbURtHLZknu5vl6FcxSWJndIZA/exec";
 let sonBasariZamani = 0;
 let hamVeri = [];
 let fetchDevamEdiyor = false;
@@ -152,24 +154,27 @@ function saniyeTiktak() {
     }
 
     if (sonBasariZamani === 0) {
-        syncElement.innerHTML = `🔄 Sisteme Bağlanıyor...`; syncElement.style.color = "var(--warning)";
+        syncElement.innerHTML = `🔄 Sisteme Bağlanıyor...`;
+        syncElement.style.color = "var(--warning)";
     } else if (farkSaniye < 20) {
         const d = new Date(sonBasariZamani);
         const sn = String(d.getSeconds()).padStart(2,'0');
         syncElement.innerHTML = `🟢 Canlı Veri (${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${sn})`;
         syncElement.style.color = "#4ade80";
     } else if (farkSaniye < 60) {
-        syncElement.innerHTML = `🟡 Gecikme Var: ${farkSaniye} sn`; syncElement.style.color = "#fbbf24";
+        syncElement.innerHTML = `🟡 Gecikme Var: ${farkSaniye} sn`;
+        syncElement.style.color = "#fbbf24";
     } else {
-        syncElement.innerHTML = `🔴 Hata! Bağlantı Yok`; syncElement.style.color = "#ef4444";
+        syncElement.innerHTML = `🔴 Hata! Bağlantı Yok`;
+        syncElement.style.color = "#ef4444";
     }
 }
 
 function ekraniCiz() {
     if (hamVeri.length === 0) return;
-    const detailsState = {}; document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
+    const detailsState = {};
+    document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
 
-    // 1. ADIM: MÜKERRER KAYITLARI (DOUBLE TAP) TEMİZLEME ZEKASI
     let rawLogs = hamVeri
         .filter(l => !l.i.toLowerCase().includes('nöbet'))
         .map(l => ({
@@ -177,22 +182,19 @@ function ekraniCiz() {
             drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
             dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
             by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase()
-        })).sort((a, b) => a.dt - b.dt); // Önce Eskiden Yeniye (İlk basılanı tutmak için)
+        })).sort((a, b) => a.dt - b.dt);
 
     let validLogs = [];
     let mappedTargets = new Set();
-
     rawLogs.forEach(l => {
         let matchedTargetKey = null;
         let lDate = new Date(l.dt.getFullYear(), l.dt.getMonth(), l.dt.getDate());
         
-        // Bu kayıt hangi hedefe ait? (Örn: Sabah 07:00 Kepprası mı, 15:00 Kepprası mı?)
         for(let off of [-1, 0, 1]) {
             let checkDate = new Date(lDate.getTime() + (off * 86400000));
             for(let p of allPlans) {
                 if (p.n.toLowerCase() === l.drug) {
                     let pt = new Date(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate(), p.h, p.m);
-                    // İlacın yarı zaman dilimine uyuyor mu? (Keppra +-4, Enalapril +-6)
                     if (Math.abs(l.dt - pt) < (p.w * 3600000)) {
                         matchedTargetKey = `${p.n}_${pt.getTime()}`;
                         break;
@@ -203,27 +205,21 @@ function ekraniCiz() {
         }
 
         if (matchedTargetKey) {
-            // Eğer bu doz penceresi için ilk kez kayıt geliyorsa kabul et
             if (!mappedTargets.has(matchedTargetKey)) {
                 mappedTargets.add(matchedTargetKey);
                 validLogs.push(l);
             }
-            // Aynı pencere için gelen 2., 3. double-tap tıklamaları GÖRMEZDEN GELİNİR.
         } else {
-            // Eğer hiçbir pencereye uymayan aşırı alakasız bir saatte basıldıysa (koruma amaçlı tutulur)
             validLogs.push(l);
         }
     });
 
-    // 2. ADIM: TEMİZLENMİŞ LİSTEYİ NORMAL AKIŞ İÇİN YENİDEN ESKİYE SIRALA
     const logs = validLogs.sort((a, b) => b.dt - a.dt);
-
     const now = new Date();
     const GRACE_MIN = 30;
     const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
     const isToday = (d) => d.toDateString() === now.toDateString();
 
-    // GÜVENLİK KALKANI (Temizlenmiş liste ile çalıştığı için artık 3 tane uyarı vermez)
     const shield = document.getElementById('safety-shield');
     const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
     if (son60dk.length > 0) {
@@ -234,7 +230,6 @@ function ekraniCiz() {
         shield.style.display = 'block';
     } else { shield.style.display = 'none'; }
 
-    // İLAÇ KARTLARI
     function getNextSmart(name) {
         const targetPlans = allPlans.filter(p => p.n.toLowerCase() === name.toLowerCase());
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -250,16 +245,17 @@ function ekraniCiz() {
     }
 
     function renderDrug(name, icon) {
-        const dLogs = logs.filter(l => l.drug === name.toLowerCase()); 
+        const dLogs = logs.filter(l => l.drug === name.toLowerCase());
         const last = dLogs[0]; const next = getNextSmart(name);
         const diffMin = Math.round((next - now) / 60000);
-        
+
         let status = { text: "BEKLEMEDE", class: "badge-safe" };
         if (last && (now - last.dt) >= 0 && (now - last.dt) < (GRACE_MIN * 60000)) status = { text: "YENİ VERİLDİ", class: "badge-safe" };
         else if (diffMin <= 0 && diffMin >= -GRACE_MIN) status = { text: "VAKTİ GELDİ", class: "badge-due" };
         else if (diffMin < -GRACE_MIN) status = { text: "GECİKTİ", class: "badge-late" };
 
-        const h = Math.floor(Math.abs(diffMin) / 60); const m = Math.abs(diffMin) % 60;
+        const h = Math.floor(Math.abs(diffMin) / 60);
+        const m = Math.abs(diffMin) % 60;
         const diffStr = diffMin < 0 ? "Geçti!" : (h > 0 ? `${h}sa ${m}d` : `${m}dk`);
         const dateStr = last ? (isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)) : '';
         const timeStr = last ? fmt(last.dt) : '--';
@@ -288,8 +284,7 @@ function ekraniCiz() {
 
     document.getElementById('app').innerHTML = renderDrug('Keppra', '💉') + renderDrug('Enalapril', '💊');
 
-    // GÜNLÜK YATAY ÇİZELGE
-    let grid = ""; 
+    let grid = "";
     allPlans.forEach(p => {
         const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
         const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
@@ -307,7 +302,6 @@ function ekraniCiz() {
         grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
     });
     
-// BAŞARI VE PUAN TABLOSU (MEVCUT AY HESAPLAMASI)
     const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
     document.getElementById('perf-title-text').textContent = `📈 ${monthName} Ayı Doz Zamanlama Başarısı`;
 
@@ -320,19 +314,18 @@ function ekraniCiz() {
 
     const daysInCompetition = daysInMonth - startDay + 1;
     const totalMonthDoses = daysInCompetition * 5; 
-    const ptsPerDose = totalMonthDoses > 0 ? (100 / totalMonthDoses) : 0; 
-    
+    const ptsPerDose = totalMonthDoses > 0 ? (100 / totalMonthDoses) : 0;
+
     let successScore = 100; 
-    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 }; 
+    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
     let statsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
-    
+
     for(let d=startDay; d<=now.getDate(); d++) {
         allPlans.forEach(p => {
             const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
             if (pt > now) return; 
             
             const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
-            
             if (log) {
                 const diffMin = (log.dt - pt) / 60000;
                 let earnedPts = ptsPerDose; 
@@ -355,7 +348,7 @@ function ekraniCiz() {
                 scores[byName] += earnedPts;
             } else {
                 if (now > new Date(pt.getTime() + 30 * 60000)) {
-                    successScore -= ptsPerDose; 
+                    successScore -= ptsPerDose;
                 }
             }
         });
@@ -364,17 +357,15 @@ function ekraniCiz() {
     if (successScore < 0) successScore = 0;
     const clr = successScore >= 80 ? "#4ade80" : (successScore >= 50 ? "#fbbf24" : "#ff6b6b");
     let displayScore = parseFloat(successScore.toFixed(1)); 
-    document.getElementById('perf-pct').textContent = '%' + displayScore; 
+    document.getElementById('perf-pct').textContent = '%' + displayScore;
     document.getElementById('perf-pct').style.color = clr;
     document.getElementById('perf-bar').style.width = displayScore + '%'; 
     document.getElementById('perf-bar').style.backgroundColor = clr;
     document.getElementById('status-grid').innerHTML = grid;
 
-    // BİR ÖNCEKİ AYIN VERİLERİNİ HESAPLAMA
     const pMonthDate = new Date(currentYear, currentMonth - 1, 1);
     const pMonth = pMonthDate.getMonth();
     const pYear = pMonthDate.getFullYear();
-    const pMonthNameStr = pMonthDate.toLocaleDateString('tr-TR', {month:'long'});
     const pDaysInMonth = new Date(pYear, pMonth + 1, 0).getDate();
 
     let pLogs = logs.filter(l => l.dt.getMonth() === pMonth && l.dt.getFullYear() === pYear);
@@ -411,21 +402,19 @@ function ekraniCiz() {
         });
     }
 
-    // İLGİLİ YILIN (TÜM YIL) VERİLERİNİ HESAPLAMA
     let yStartDt;
     if (currentYear === 2026) {
-        yStartDt = new Date(2026, 1, 27); // 27 Şubat 2026 başlangıç (Aylar 0'dan başlar: 1 = Şubat)
+        yStartDt = new Date(2026, 1, 27);
     } else {
-        yStartDt = new Date(currentYear, 0, 1); // 2027 ve sonrası için 1 Ocak
+        yStartDt = new Date(currentYear, 0, 1);
     }
 
     const endOfYearDt = new Date(currentYear, 11, 31);
     const yDaysInYear = Math.round((endOfYearDt - yStartDt) / 86400000) + 1;
-    const yTotalDosesInYear = yDaysInYear * 5; 
+    const yTotalDosesInYear = yDaysInYear * 5;
     const yPtsPerDose = yTotalDosesInYear > 0 ? (100 / yTotalDosesInYear) : 0;
 
     let todayDt = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
     let yScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
     let yStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
 
@@ -449,7 +438,7 @@ function ekraniCiz() {
                     yStatsData[byName].t++;
 
                     if (diffMin < -30 || diffMin > 30) {
-                        earnedPts = yPtsPerDose * 0.75; // Geç/Erken ise %25 kesinti
+                        earnedPts = yPtsPerDose * 0.75; 
                         yStatsData[byName].l++;
                     } else {
                         yStatsData[byName].o++;
@@ -462,7 +451,6 @@ function ekraniCiz() {
         }
     }
 
-    // İSTATİSTİK KARTLARI İÇİN ORTAK HTML OLUŞTURUCU
     function buildStatsCardHTML(title, scoresObj, statsObj) {
         let sortedUsers = Object.keys(scoresObj).map(k => ({name: k, score: scoresObj[k]})).sort((a,b) => b.score - a.score);
         let validUsers = sortedUsers.filter(u => statsObj[u.name] && statsObj[u.name].t > 0);
@@ -471,39 +459,39 @@ function ekraniCiz() {
         <div class="extra-card" style="margin-bottom:10px;">
             <details>
                 <summary><span>${title}</span> <span class="show-text">Göster ▼</span></summary>
-                <div style="margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;">`;
+                <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:14px;">`;
 
         if (validUsers.length === 0) {
-             html += `<div style="text-align:center; color:var(--muted); font-size:12px; padding:6px 0;">Henüz veri yok.</div>`;
+             html += `<div style="text-align:center; color:var(--muted); font-size:14px; padding:6px 0;">Henüz veri yok.</div>`;
         } else {
             const medals = ["#fbbf24", "#9ca3af", "#b45309"];
             validUsers.forEach((s, idx) => {
                 let color = medals[idx] || "#4ade80";
                 let d = statsObj[s.name];
-                let borderStyle = idx === validUsers.length - 1 ? '' : 'border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:12px; padding-bottom:12px;';
+                let borderStyle = idx === validUsers.length - 1 ? '' : 'border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:16px; padding-bottom:16px;';
 
                 html += `
                     <div style="${borderStyle}">
-                        <div class="score-row" style="margin-bottom:4px;">
+                        <div class="score-row" style="margin-bottom:8px;">
                             <div class="score-rank" style="color:${color};">#${idx+1}</div>
-                            <div class="score-name" style="font-size:15px;">${s.name}</div>
+                            <div class="score-name">${s.name}</div>
                             <div class="score-val" style="color:${color};">${parseFloat(s.score.toFixed(1))} Puan</div>
                         </div>
-                        <div class="bar-bg" style="height:4px; margin-bottom:10px;">
+                        <div class="bar-bg" style="height:6px; margin-bottom:14px;">
                             <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
                         </div>
-                        <div style="display:flex; gap:8px;">
-                            <div style="flex:1; background:rgba(255,255,255,0.02); border:1px solid var(--line); padding:6px; border-radius:8px; text-align:center;">
-                                <div style="font-size:10px; color:var(--muted); font-weight:800; text-transform:uppercase;">Toplam</div>
-                                <div style="font-size:16px; color:#fff; font-weight:900;">${d.t}</div>
+                        <div style="display:flex; gap:10px;">
+                            <div style="flex:1; background:rgba(255,255,255,0.02); border:1px solid var(--line); padding:10px; border-radius:10px; text-align:center;">
+                                <div style="font-size:12px; color:var(--muted); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Toplam</div>
+                                <div style="font-size:22px; color:#fff; font-weight:900;">${d.t}</div>
                             </div>
-                            <div style="flex:1; background:rgba(74,222,128,0.05); border:1px solid rgba(74,222,128,0.2); padding:6px; border-radius:8px; text-align:center;">
-                                <div style="font-size:10px; color:#4ade80; font-weight:800; text-transform:uppercase;">Zamanında</div>
-                                <div style="font-size:16px; color:#4ade80; font-weight:900;">${d.o}</div>
+                            <div style="flex:1; background:rgba(74,222,128,0.05); border:1px solid rgba(74,222,128,0.2); padding:10px; border-radius:10px; text-align:center;">
+                                <div style="font-size:12px; color:#4ade80; font-weight:800; text-transform:uppercase; margin-bottom:4px;">Zamanında</div>
+                                <div style="font-size:22px; color:#4ade80; font-weight:900;">${d.o}</div>
                             </div>
-                            <div style="flex:1; background:rgba(255,107,107,0.05); border:1px solid rgba(255,107,107,0.2); padding:6px; border-radius:8px; text-align:center;">
-                                <div style="font-size:10px; color:#ff6b6b; font-weight:800; text-transform:uppercase;">Geç/Erken</div>
-                                <div style="font-size:16px; color:#ff6b6b; font-weight:900;">${d.l}</div>
+                            <div style="flex:1; background:rgba(255,107,107,0.05); border:1px solid rgba(255,107,107,0.2); padding:10px; border-radius:10px; text-align:center;">
+                                <div style="font-size:12px; color:#ff6b6b; font-weight:800; text-transform:uppercase; margin-bottom:4px;">Geç/Erken</div>
+                                <div style="font-size:22px; color:#ff6b6b; font-weight:900;">${d.l}</div>
                             </div>
                         </div>
                     </div>`;
@@ -517,7 +505,6 @@ function ekraniCiz() {
     let prevMonthStatsHTML = buildStatsCardHTML(`📊 Geçen Ayın İstatistikleri`, pScores, pStatsData);
     let currentYearStatsHTML = buildStatsCardHTML(`📅 ${currentYear} Yılı İstatistikleri`, yScores, yStatsData);
 
-    // 6. NÖBET GÜNLÜĞÜ VE GÜN SAYACI
     const nobetLogs = hamVeri
         .filter(l => l.i.toLowerCase().includes('nöbet'))
         .map(l => ({ dt: new Date(l.dt), by: l.k }))
@@ -529,7 +516,7 @@ function ekraniCiz() {
         const diffDays = Math.floor((now - lastNobet) / (1000 * 60 * 60 * 24));
         
         let dayColor = "#4ade80"; 
-        if (diffDays > 30 && diffDays <= 60) dayColor = "#fbbf24"; 
+        if (diffDays > 30 && diffDays <= 60) dayColor = "#fbbf24";
         else if (diffDays > 60) dayColor = "#ff6b6b"; 
 
         daysBadgeHTML = `<span style="color:${dayColor}; font-size:19px; font-weight:900; background:rgba(255,255,255,0.05); padding:8px 14px; border-radius:10px; display:inline-block;">${diffDays}. Gün</span>`;
@@ -543,20 +530,20 @@ function ekraniCiz() {
                 ${daysBadgeHTML}
                 <span class="show-text">Göster ▼</span>
             </summary>
-            <div style="margin-top:12px; border-top:1px dashed var(--line); padding-top:8px;">`;
+            <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:12px;">`;
 
     if (nobetLogs.length === 0) {
-        nobetHTML += `<div style="text-align:center; color:var(--muted); font-size:11px; padding:6px 0;">Çok şükür, henüz kayıt yok! 🧿</div>`;
+        nobetHTML += `<div style="text-align:center; color:var(--muted); font-size:14px; padding:6px 0;">Çok şükür, henüz kayıt yok! 🧿</div>`;
     } else {
         nobetLogs.forEach(n => {
             const nDate = n.dt.getDate() + ' ' + n.dt.toLocaleDateString('tr-TR', {month:'long'}) + ' ' + n.dt.getFullYear();
             nobetHTML += `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
                     <div>
-                        <div style="font-weight:800; font-size:12px; color:#ef4444;">${nDate}</div>
-                        <div style="font-size:10px; color:var(--muted); margin-top:2px;">Kayıt: ${n.by}</div>
+                        <div style="font-weight:800; font-size:15px; color:#ef4444;">${nDate}</div>
+                        <div style="font-size:13px; color:var(--muted); margin-top:4px;">Kayıt: ${n.by}</div>
                     </div>
-                    <div style="font-weight:900; font-size:14px; font-family:monospace; color:#fff;">${fmt(n.dt)}</div>
+                    <div style="font-weight:900; font-size:18px; font-family:monospace; color:#fff;">${fmt(n.dt)}</div>
                 </div>`;
         });
     }
@@ -566,7 +553,6 @@ function ekraniCiz() {
 
     document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
 
-    // --- KART GEÇMİŞLERİNİ EŞZAMANLI AÇIP KAPATMA ---
     const appDetails = document.querySelectorAll('#app details');
     appDetails.forEach(det => {
         det.addEventListener('toggle', (e) => {
@@ -577,8 +563,7 @@ function ekraniCiz() {
             });
         });
     });
-    // ------------------------------------------------
-    }
+}
 
 veriCek();
 setInterval(veriCek, 5000); 
