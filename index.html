@@ -20,32 +20,36 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 /* GÜVENLİK KALKANI */
 .safety-shield { display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white; padding: 10px; text-align: center; font-weight: 900; font-size: 13px; position: sticky; top: 0; z-index: 9999; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); animation: pulse-red 1.5s infinite; letter-spacing: 0.5px; }
 
-/* ORTALANMIŞ KOMPAKT BAŞLIK - TIKLAMA HİSSİ İÇİN DÜZENLENDİ */
-.header-compact { text-align: center; margin-bottom: 10px; background: linear-gradient(145deg, #1e293b, #0f172a); padding: 16px 12px; border-radius: 16px; border: 1px solid var(--line); box-shadow:0 4px 15px rgba(0,0,0,0.3); cursor: pointer; user-select: none; transition: transform 0.1s ease, filter 0.1s ease; -webkit-tap-highlight-color: transparent; }
-.header-compact:active { transform: scale(0.96); filter: brightness(0.8); } /* Gerçek Tıklama Efekti */
+/* YENİLEME ANİMASYONU EKLENDİ */
+@keyframes spin-anim { 100% { transform: rotate(360deg); } }
+.spin { display: inline-block; animation: spin-anim 1s linear infinite; }
+
+/* EN ÜSTTEKİ SABİT PERDE VE BUTON (YENİ STICKY) */
+.sticky-top-wrapper { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 10px 0 5px 0; margin-top: -10px; }
+.header-compact { text-align: center; margin-bottom: 5px; background: linear-gradient(145deg, #1e293b, #0f172a); padding: 16px 12px; border-radius: 16px; border: 1px solid var(--line); box-shadow:0 6px 20px rgba(0,0,0,0.4); cursor: pointer; user-select: none; transition: transform 0.1s ease, filter 0.1s ease; -webkit-tap-highlight-color: transparent; }
+.header-compact:active { transform: scale(0.96); filter: brightness(0.8); } 
 .app-title { font-size: 20px; font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; color: #fff; }
-.header-sub { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+.header-sub { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 10px; transition: color 0.3s; }
 .header-info { display: flex; justify-content: center; align-items: center; gap: 10px; }
 .clock-text { font-size: 13px; font-weight: 700; color: var(--muted); }
 .sync-badge { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 8px; background: rgba(0,0,0,0.3); }
 
-/* PERFORMANS BARI - İNCELTİLDİ */
-.perf-compact { display: flex; flex-direction: column; gap: 8px; background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--line); }
-.perf-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-.perf-label { font-size: 14px; font-weight: 800; white-space: nowrap; }
-.bar-bg { width: 100%; background: rgba(255,255,255,0.05); height: 4px; border-radius: 2px; overflow: hidden; } /* İnceldi */
-.bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
-.perf-val { font-size: 16px; font-weight: 900; font-family: ui-monospace, monospace; }
-
-/* GÜNLÜK ÇİZELGE - STICKY OLARAK YUKARIYA SABİTLENDİ (PERDELİ SİSTEM) */
-.sticky-top-wrapper { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 10px 0; margin-top: -10px; }
-.daily-container { background: var(--card); border-radius: 16px; padding: 14px 6px; border: 1px solid var(--line); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.6); margin: 0; }
+/* GÜNLÜK ÇİZELGE (Artık sabit değil, standart kart) */
+.daily-container { background: var(--card); border-radius: 16px; padding: 14px 6px; margin-bottom: 10px; border: 1px solid var(--line); }
 .daily-title { font-size: 16px; font-weight: 900; color: var(--muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
 .daily-row { display: flex; justify-content: space-between; gap: 4px; }
 .daily-pill { flex: 1 1 0; min-width: 0; text-align: center; padding: 10px 1px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; gap: 6px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); min-height: 100px; }
 .pill-name { font-size: 13px; color: #fff; font-weight: 900; }
 .pill-time { color: var(--muted); font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; letter-spacing: -0.5px; }
 .pill-status-text { font-size: 9.5px; font-weight: 900; letter-spacing: -0.3px; padding: 4px 1px; border-radius: 6px; margin: 0 1px; display: flex; align-items: center; justify-content: center; min-height: 34px; text-align: center; line-height: 1.1; word-wrap: break-word; }
+
+/* PERFORMANS BARI */
+.perf-compact { display: flex; flex-direction: column; gap: 8px; background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--line); }
+.perf-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.perf-label { font-size: 14px; font-weight: 800; white-space: nowrap; }
+.bar-bg { width: 100%; background: rgba(255,255,255,0.05); height: 4px; border-radius: 2px; overflow: hidden; } 
+.bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; }
+.perf-val { font-size: 16px; font-weight: 900; font-family: ui-monospace, monospace; }
 
 /* Kapsül Renkleri */
 .pill-stable { border-color: rgba(74,222,128,0.4); } .pill-stable .pill-status-text { background: rgba(74,222,128,0.15); color: #4ade80; }
@@ -93,10 +97,19 @@ summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 70
 <div id="safety-shield" class="safety-shield"></div>
 
 <div class="sticky-top-wrapper">
-    <div class="daily-container">
-        <div class="daily-title">Bugünkü Dozlar</div>
-        <div id="status-grid" class="daily-row"></div>
+    <div class="header-compact" onclick="veriCek()" ontouchstart="">
+        <div class="app-title">🐾 MİNİK İLAÇ TAKİBİ <span id="sync-icon">🔄</span></div>
+        <div class="header-sub" id="update-text">Verileri Güncellemek İçin Dokunun</div>
+        <div class="header-info">
+            <div id="clock" class="clock-text">--:--</div>
+            <div id="last-sync" class="sync-badge">🔄 Bağlanıyor...</div>
+        </div>
     </div>
+</div>
+
+<div class="daily-container">
+    <div class="daily-title">Bugünkü Dozlar</div>
+    <div id="status-grid" class="daily-row"></div>
 </div>
 
 <div class="perf-compact">
@@ -105,15 +118,6 @@ summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 70
         <div id="perf-pct" class="perf-val">%0</div>
     </div>
     <div class="bar-bg"><div id="perf-bar" class="bar-fill" style="width: 0%"></div></div>
-</div>
-
-<div class="header-compact" onclick="veriCek()" ontouchstart="">
-    <div class="app-title">🐾 MİNİK İLAÇ TAKİBİ <span id="sync-icon">🔄</span></div>
-    <div class="header-sub">Verileri Güncellemek İçin Dokunun</div>
-    <div class="header-info">
-        <div id="clock" class="clock-text">--:--</div>
-        <div id="last-sync" class="sync-badge">🔄 Bağlanıyor...</div>
-    </div>
 </div>
 
 <div id="app" class="cards-grid"></div>
@@ -138,13 +142,28 @@ const allPlans = [
 async function veriCek() {
     if (fetchDevamEdiyor) return;
     fetchDevamEdiyor = true;
+    
+    // GÖRSEL GERİBİLDİRİM (ANİMASYON) BAŞLATMA
+    const updateText = document.getElementById('update-text');
+    const syncIcon = document.getElementById('sync-icon');
+    if(updateText) { updateText.innerHTML = "⏳ Veriler Tazeleniyor..."; updateText.style.color = "#4ade80"; }
+    if(syncIcon) syncIcon.classList.add("spin");
+
     try {
         const response = await fetch(SHEET_URL);
         if (!response.ok) throw new Error("Ağ Hatası");
         hamVeri = await response.json();
         sonBasariZamani = Date.now();
         ekraniCiz(); 
-    } catch(e) { console.error(e); } finally { fetchDevamEdiyor = false; }
+    } catch(e) { 
+        console.error(e); 
+    } finally { 
+        fetchDevamEdiyor = false; 
+        
+        // GÖRSEL GERİBİLDİRİM (ANİMASYON) BİTİRME
+        if(updateText) { updateText.innerHTML = "Verileri Güncellemek İçin Dokunun"; updateText.style.color = "var(--muted)"; }
+        if(syncIcon) syncIcon.classList.remove("spin");
+    }
 }
 
 function saniyeTiktak() {
@@ -531,7 +550,8 @@ function ekraniCiz() {
         if (diffDays > 30 && diffDays <= 60) dayColor = "#fbbf24";
         else if (diffDays > 60) dayColor = "#ff6b6b"; 
 
-        daysBadgeHTML = `<span style="color:${dayColor}; font-size:15px; font-weight:900; background:rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); padding:4px 10px; border-radius:8px; margin-left:8px; white-space:nowrap;">${diffDays}. Gün</span>`;
+        /* NÖBET GÜNLÜĞÜ SAYACI BÜYÜTÜLDÜ (18px) VE VURGULANDI */
+        daysBadgeHTML = `<span style="color:${dayColor}; font-size:18px; font-weight:900; background:rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); padding:6px 12px; border-radius:10px; margin-left:8px; white-space:nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">${diffDays}. Gün</span>`;
     }
 
     let nobetHTML = `
