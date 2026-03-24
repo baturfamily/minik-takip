@@ -172,7 +172,7 @@ async function veriCek() {
         fetchDevamEdiyor = false; 
         
         // GÖRSEL GERİBİLDİRİM (ANİMASYON) BİTİRME
-        if(updateText) { updateText.innerHTML = "Aşağı Kaydırarak Güncelleyin"; updateText.style.color = "var(--muted)"; }
+        if(updateText) { updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın"; updateText.style.color = "var(--muted)"; }
         if(syncIcon) syncIcon.classList.remove("spin");
         if(headerCard) headerCard.style.transform = "scale(1)";
     }
@@ -213,7 +213,7 @@ window.addEventListener('touchend', e => {
         } else {
             const updateText = document.getElementById('update-text');
             if (updateText) {
-                updateText.innerHTML = "Aşağı Kaydırarak Güncelleyin";
+                updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın";
                 updateText.style.color = "var(--muted)";
             }
         }
