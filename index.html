@@ -15,8 +15,8 @@
 --accent:#4ade80; --warning:#fbbf24; --danger:#ff6b6b; --early:#60a5fa;
 }
 * { box-sizing: border-box; }
-/* body'ye overscroll-behavior-y eklendi ki Safari'nin kendi yenilemesiyle çakışmasın, bizim özel kaydırmamız çalışsın */
-body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui; padding:10px; -webkit-font-smoothing: antialiased; overflow-x: hidden; overscroll-behavior-y: none; }
+/* METİN SEÇİMİ KAPATILDI (-webkit-user-select vb.) */
+body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui; padding:10px; -webkit-font-smoothing: antialiased; overflow-x: hidden; overscroll-behavior-y: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 
 /* GÜVENLİK KALKANI */
 .safety-shield { display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white; padding: 10px; text-align: center; font-weight: 900; font-size: 13px; position: sticky; top: 0; z-index: 9999; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); animation: pulse-red 1.5s infinite; letter-spacing: 0.5px; }
@@ -25,7 +25,7 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 @keyframes spin-anim { 100% { transform: rotate(360deg); } }
 .spin { display: inline-block; animation: spin-anim 1s linear infinite; }
 
-/* EN ÜSTTEKİ SABİT PERDE VE BUTON (TIKLAMA ÖZELLİĞİ KALDIRILDI) */
+/* EN ÜSTTEKİ SABİT PERDE VE BUTON (YENİ STICKY) */
 .sticky-top-wrapper { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 10px 0 5px 0; margin-top: -10px; }
 .header-compact { text-align: center; margin-bottom: 5px; background: linear-gradient(145deg, #1e293b, #0f172a); padding: 16px 12px; border-radius: 16px; border: 1px solid var(--line); box-shadow:0 6px 20px rgba(0,0,0,0.4); user-select: none; transition: transform 0.2s ease, filter 0.2s ease; }
 .app-title { font-size: 20px; font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; color: #fff; }
@@ -73,16 +73,24 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-syst
 .timer-box { margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
 .timer { font-weight: 800; color: var(--accent); font-size: 18px; font-family: ui-monospace, monospace; }
 .timer.urgent { color: var(--warning); }
+
+/* GÖSTER/GİZLE ÖZELLİKLERİ VE GENİŞ TIKLAMA ALANI */
 details { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; }
-summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 700; list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; }
+summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 700; list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin: -12px 0; -webkit-tap-highlight-color: transparent; }
+summary::-webkit-details-marker { display: none; }
 .history-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; color: #ccc; }
 .mono { font-family: ui-monospace, monospace; }
 
 /* EKSTRA KARTLAR */
 .extra-card { background: var(--card); border-radius: 16px; padding: 16px; border: 1px solid var(--line); margin-bottom: 10px; }
 .extra-card details { margin-top: 0; border-top: none; padding-top: 0; }
-.extra-card summary { font-size: 15px; font-weight: 800; color: #fff; margin: 0; padding: 0; border: none; letter-spacing: 0.3px; display: flex; align-items: center; justify-content: space-between; } 
+.extra-card summary { font-size: 15px; font-weight: 800; color: #fff; padding: 12px 0; margin: -12px 0; border: none; letter-spacing: 0.3px; display: flex; align-items: center; justify-content: space-between; -webkit-tap-highlight-color: transparent; } 
 .extra-card summary .show-text { font-size: 12px; color: var(--muted); font-weight: 700; white-space: nowrap; }
+
+/* DİNAMİK GÖSTER/GİZLE YAZISI CSS İLE OTOMATİZE EDİLDİ */
+summary .show-text::after { content: "Göster ▼"; }
+details[open] summary .show-text::after { content: "Gizle ▲"; color: var(--accent); }
+
 .score-row { display: flex; align-items: center; margin-bottom: 8px; }
 .score-rank { width: 30px; font-weight: 900; font-size: 16px; } 
 .score-name { flex: 1; font-weight: 800; font-size: 16px; color: #fff; } 
@@ -175,7 +183,6 @@ let touchStartY = 0;
 const pullThreshold = 70; // 70 pixel aşağı kaydırmak yenilemek için yeterli
 
 window.addEventListener('touchstart', e => {
-    // Sadece sayfanın en üstündeyken aşağı çekme işlemini algıla
     if (window.scrollY <= 5 && !fetchDevamEdiyor) {
         touchStartY = e.touches[0].clientY;
     }
@@ -186,11 +193,10 @@ window.addEventListener('touchmove', e => {
         let currentY = e.touches[0].clientY;
         let diffY = currentY - touchStartY;
         
-        // Parmağı yeterince aşağı çekerse "Bırakın Güncellensin" uyarısını göster
         if (diffY > 30) {
             const updateText = document.getElementById('update-text');
             if (updateText) {
-                updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın";
+                updateText.innerHTML = "⬇️ Bırakın Güncellensin...";
                 updateText.style.color = "#fbbf24";
             }
         }
@@ -202,11 +208,9 @@ window.addEventListener('touchend', e => {
         let currentY = e.changedTouches[0].clientY;
         let diffY = currentY - touchStartY;
         
-        // Eğer yeterli seviyede aşağı çekilip bırakıldıysa veriyi çek
         if (diffY > pullThreshold) {
             veriCek();
         } else {
-            // Yeterli çekilmediyse eski haline döndür
             const updateText = document.getElementById('update-text');
             if (updateText) {
                 updateText.innerHTML = "Aşağı Kaydırarak Güncelleyin";
@@ -352,7 +356,7 @@ function ekraniCiz() {
                     <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffStr}</div>
                 </div>
                 <details>
-                    <summary><span>Geçmiş</span> <span class="show-text">Göster ▼</span></summary>
+                    <summary><span>Geçmiş</span> <span class="show-text"></span></summary>
                     <ul style="list-style:none; padding:0; margin-top:5px">
                         ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
                     </ul>
@@ -540,7 +544,7 @@ function ekraniCiz() {
                     <div style="display:flex; align-items:center;">
                         <span>${title}</span>
                     </div>
-                    <span class="show-text">Göster ▼</span>
+                    <span class="show-text"></span>
                 </summary>
                 <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:14px;">`;
 
@@ -613,7 +617,7 @@ function ekraniCiz() {
                     <span>🚨 Minik Nöbet Günlüğü</span> 
                     ${daysBadgeHTML}
                 </div>
-                <span class="show-text">Göster ▼</span>
+                <span class="show-text"></span>
             </summary>
             <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:12px;">`;
 
