@@ -12,60 +12,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --bg: #0F1115; 
-  --card: rgba(30, 41, 59, 0.95); 
-  --text: #F8FAFC; 
-  --muted: #94A3B8; 
-  --line: rgba(255,255,255,0.06);
-  
-  --accent: #10B981; 
-  --warning: #F59E0B; 
-  --danger: #F43F5E; 
-  --early: #3B82F6; 
-  --purple: #A78BFA;
-  
-  --vip-bg: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); 
-  --card-shadow: 0 8px 30px rgba(0,0,0,0.2); 
-  --wait-badge-bg: rgba(255,255,255,0.05); 
+  --bg: #0F1115; 
+  --card: #1E293B; 
+  --text: #F8FAFC; 
+  --muted: #94A3B8; 
+  --line: rgba(255,255,255,0.06);
+  
+  --accent: #10B981; 
+  --warning: #F59E0B; 
+  --danger: #F43F5E; 
+  --early: #3B82F6; 
+  --purple: #A78BFA;
+  
+  --vip-bg: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); 
+  --card-shadow: 0 8px 30px rgba(0,0,0,0.2); 
+  --wait-badge-bg: rgba(255,255,255,0.05); 
 }
 
 * { box-sizing: border-box; font-family: 'Inter', -apple-system, system-ui, sans-serif !important; }
-
-/* GÖVDE AYARLARI */
-body { 
-  margin: 0; 
-  color: var(--text); 
-  padding: 10px 16px; 
-  -webkit-font-smoothing: antialiased; 
-  overflow-x: hidden; 
-  overscroll-behavior-y: none; 
-  -webkit-user-select: none; 
-  user-select: none; 
-  -webkit-touch-callout: none; 
-  position: relative; 
-  z-index: 0;
-}
-
-/* 1. KATMAN: FOTOĞRAF (iOS Safari Bug'ı İçin Özel Sabitleme Metodu) */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: url('https://i.ibb.co/xtw8RB3V/MG-2857.jpg'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -2;
-}
-
-/* 2. KATMAN: %70 SİYAH KARARTMA PERDESİ */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7); 
-  z-index: -1;
-}
+body{ margin:0; background:var(--bg); color:var(--text); padding:10px 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; overscroll-behavior-y: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 
 /* GÜVENLİK KALKANI */
 .safety-shield { display: none; background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%); color: white; padding: 12px 14px; text-align: center; font-weight: 800; font-size: 14px; position: sticky; top: 0; z-index: 9999; border-radius: 16px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4); animation: pulse-red 2s infinite; letter-spacing: 0.5px; }
@@ -74,8 +39,8 @@ body::after {
 @keyframes spin-anim { 100% { transform: rotate(360deg); } }
 .spin { display: inline-flex; animation: spin-anim 1s linear infinite; }
 
-/* EN ÜSTTEKİ SABİT PERDE (SOLID SİYAH) */
-.sticky-top-wrapper { position: sticky; top: 0; z-index: 100; background: #0F1115; padding: 12px 0 6px 0; margin-top: -12px; }
+/* EN ÜSTTEKİ SABİT PERDE VE BUTON (YENİ STICKY) */
+.sticky-top-wrapper { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 12px 0 6px 0; margin-top: -12px; }
 .header-compact { text-align: center; margin-bottom: 5px; background: var(--vip-bg); padding: 18px 12px; border-radius: 20px; border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(0,0,0,0.2); user-select: none; transition: transform 0.15s ease, opacity 0.15s ease; touch-action: manipulation; }
 .header-compact:active { transform: scale(0.96) !important; opacity: 0.9 !important; }
 .app-title { font-size: 20px; font-weight: 900; letter-spacing: -0.2px; margin-bottom: 6px; color: #fff; display: flex; align-items: center; justify-content: center; }
@@ -100,7 +65,7 @@ body::after {
 .perf-compact { display: flex; flex-direction: column; gap: 10px; background: var(--card); border-radius: 20px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--line); box-shadow: var(--card-shadow); }
 .perf-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
 .perf-label { font-size: 14px; font-weight: 800; white-space: nowrap; display: flex; align-items: center; }
-.bar-bg { width: 100%; background: var(--bg); height: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); } 
+.bar-bg { width: 100%; background: var(--bg); height: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); } 
 .bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; border-radius: 3px; }
 .perf-val { font-size: 16px; font-weight: 900; font-family: ui-monospace, monospace; }
 
@@ -122,7 +87,7 @@ body::after {
 .info-group { margin-bottom: 12px; }
 .label { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;}
 .val-primary { font-size: 15px; font-weight: 800; color: #fff; }
-.val-sub { font-size: 15px; color: var(--muted); font-weight: 700; letter-spacing: 0px; } 
+.val-sub { font-size: 15px; color: var(--muted); font-weight: 700; letter-spacing: 0px; } 
 .timer-box { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
 .timer { font-weight: 900; color: var(--accent); font-size: 18px; font-family: ui-monospace, monospace; }
 .timer.urgent { color: var(--warning); }
@@ -142,7 +107,7 @@ summary::-webkit-details-marker { display: none; }
 /* EKSTRA KARTLAR */
 .extra-card { background: var(--card); border-radius: 20px; padding: 18px; border: 1px solid var(--line); margin-bottom: 12px; box-shadow: var(--card-shadow); }
 .extra-card details { margin-top: 0; border-top: none; padding-top: 0; }
-.extra-card summary { font-size: 15px; font-weight: 800; color: #fff; padding: 12px 0; margin: -12px 0; border: none; letter-spacing: 0.3px; display: flex; align-items: center; justify-content: space-between; -webkit-tap-highlight-color: transparent; } 
+.extra-card summary { font-size: 15px; font-weight: 800; color: #fff; padding: 12px 0; margin: -12px 0; border: none; letter-spacing: 0.3px; display: flex; align-items: center; justify-content: space-between; -webkit-tap-highlight-color: transparent; } 
 .extra-card summary .show-text { font-size: 12px; color: var(--muted); font-weight: 700; white-space: nowrap; }
 
 /* DİNAMİK GÖSTER/GİZLE YAZISI CSS İLE OTOMATİZE EDİLDİ */
@@ -150,9 +115,9 @@ summary .show-text::after { content: "Göster ▼"; }
 details[open] summary .show-text::after { content: "Gizle ▲"; color: var(--accent); }
 
 .score-row { display: flex; align-items: center; margin-bottom: 10px; }
-.score-rank { width: 30px; font-weight: 900; font-size: 16px; } 
-.score-name { flex: 1; font-weight: 800; font-size: 16px; color: #fff; } 
-.score-val { font-weight: 900; font-size: 18px; font-family: ui-monospace, monospace; } 
+.score-rank { width: 30px; font-weight: 900; font-size: 16px; } 
+.score-name { flex: 1; font-weight: 800; font-size: 16px; color: #fff; } 
+.score-val { font-weight: 900; font-size: 18px; font-family: ui-monospace, monospace; } 
 
 @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
 @keyframes pulse-yellow { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
@@ -163,28 +128,28 @@ details[open] summary .show-text::after { content: "Gizle ▲"; color: var(--acc
 <div id="safety-shield" class="safety-shield"></div>
 
 <div class="sticky-top-wrapper">
-    <div class="header-compact" id="main-header-card">
-        <div class="app-title" id="app-title-container">
-            </div>
-        <div class="header-sub" id="update-text">Güncellemek İçin Aşağı Kaydırın</div>
-        <div class="header-info">
-            <div id="clock" class="clock-text">--:--</div>
-            <div id="last-sync" class="sync-badge">Bağlanıyor...</div>
-        </div>
-    </div>
+    <div class="header-compact" id="main-header-card">
+        <div class="app-title" id="app-title-container">
+            </div>
+        <div class="header-sub" id="update-text">Güncellemek İçin Aşağı Kaydırın</div>
+        <div class="header-info">
+            <div id="clock" class="clock-text">--:--</div>
+            <div id="last-sync" class="sync-badge">Bağlanıyor...</div>
+        </div>
+    </div>
 </div>
 
 <div class="daily-container">
-    <div class="daily-title">Bugünkü Dozlar</div>
-    <div id="status-grid" class="daily-row"></div>
+    <div class="daily-title">Bugünkü Dozlar</div>
+    <div id="status-grid" class="daily-row"></div>
 </div>
 
 <div class="perf-compact">
-    <div class="perf-header">
-        <div class="perf-label" id="perf-title-text">Başarı Durumu</div>
-        <div id="perf-pct" class="perf-val">%0</div>
-    </div>
-    <div class="bar-bg"><div id="perf-bar" class="bar-fill" style="width: 0%"></div></div>
+    <div class="perf-header">
+        <div class="perf-label" id="perf-title-text">Başarı Durumu</div>
+        <div id="perf-pct" class="perf-val">%0</div>
+    </div>
+    <div class="bar-bg"><div id="perf-bar" class="bar-fill" style="width: 0%"></div></div>
 </div>
 
 <div id="app" class="cards-grid"></div>
@@ -193,12 +158,12 @@ details[open] summary .show-text::after { content: "Gizle ▲"; color: var(--acc
 
 <script>
 // PREMIUM NATIVE SVG İKONLAR
-const svgPet = ``; 
+const svgPet = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/><path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"/></svg>`;
 const svgSync = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>`;
 const svgWait = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
 const svgChart = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>`;
 const svgTrophy = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`;
-const svgBarChart = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`; 
+const svgBarChart = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`; 
 const svgCalendar = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
 const svgSyringe = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.4 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>`;
 const svgPill = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>`;
@@ -217,42 +182,42 @@ let fetchDevamEdiyor = false;
 
 // KEPPRA 4 SAAT, ENALAPRIL 6 SAAT KURALI (w: window/pencere)
 const allPlans = [
-    {n:'Keppra',h:7,m:0, w:4},
-    {n:'Enalapril',h:10,m:30, w:6},
-    {n:'Keppra',h:15,m:0, w:4},
-    {n:'Enalapril',h:22,m:30, w:6},
-    {n:'Keppra',h:23,m:0, w:4}
+    {n:'Keppra',h:7,m:0, w:4},
+    {n:'Enalapril',h:10,m:30, w:6},
+    {n:'Keppra',h:15,m:0, w:4},
+    {n:'Enalapril',h:22,m:30, w:6},
+    {n:'Keppra',h:23,m:0, w:4}
 ];
 
 async function veriCek() {
-    if (fetchDevamEdiyor) return;
-    fetchDevamEdiyor = true;
-    
-    // GÖRSEL GERİBİLDİRİM (ANİMASYON) BAŞLATMA
-    const updateText = document.getElementById('update-text');
-    const syncIcon = document.getElementById('sync-icon-container');
-    const headerCard = document.getElementById('main-header-card');
-    
-    if(updateText) { updateText.innerHTML = `${svgWait} Veriler Tazeleniyor...`; updateText.style.color = "var(--accent)"; }
-    if(syncIcon) syncIcon.firstElementChild.classList.add("spin");
-    if(headerCard) headerCard.style.transform = "scale(0.96)";
+    if (fetchDevamEdiyor) return;
+    fetchDevamEdiyor = true;
+    
+    // GÖRSEL GERİBİLDİRİM (ANİMASYON) BAŞLATMA
+    const updateText = document.getElementById('update-text');
+    const syncIcon = document.getElementById('sync-icon-container');
+    const headerCard = document.getElementById('main-header-card');
+    
+    if(updateText) { updateText.innerHTML = `${svgWait} Veriler Tazeleniyor...`; updateText.style.color = "var(--accent)"; }
+    if(syncIcon) syncIcon.firstElementChild.classList.add("spin");
+    if(headerCard) headerCard.style.transform = "scale(0.96)";
 
-    try {
-        const response = await fetch(SHEET_URL);
-        if (!response.ok) throw new Error("Ağ Hatası");
-        hamVeri = await response.json();
-        sonBasariZamani = Date.now();
-        ekraniCiz(); 
-    } catch(e) { 
-        console.error(e); 
-    } finally { 
-        fetchDevamEdiyor = false; 
-        
-        // GÖRSEL GERİBİLDİRİM (ANİMASYON) BİTİRME
-        if(updateText) { updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın"; updateText.style.color = "var(--muted)"; }
-        if(syncIcon) syncIcon.firstElementChild.classList.remove("spin");
-        if(headerCard) headerCard.style.transform = "scale(1)";
-    }
+    try {
+        const response = await fetch(SHEET_URL);
+        if (!response.ok) throw new Error("Ağ Hatası");
+        hamVeri = await response.json();
+        sonBasariZamani = Date.now();
+        ekraniCiz(); 
+    } catch(e) { 
+        console.error(e); 
+    } finally { 
+        fetchDevamEdiyor = false; 
+        
+        // GÖRSEL GERİBİLDİRİM (ANİMASYON) BİTİRME
+        if(updateText) { updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın"; updateText.style.color = "var(--muted)"; }
+        if(syncIcon) syncIcon.firstElementChild.classList.remove("spin");
+        if(headerCard) headerCard.style.transform = "scale(1)";
+    }
 }
 
 // --- PULL TO REFRESH (Aşağı Kaydırarak Yenileme) MANTIĞI ---
@@ -260,489 +225,1919 @@ let touchStartY = 0;
 const pullThreshold = 70; // 70 pixel aşağı kaydırmak yenilemek için yeterli
 
 window.addEventListener('touchstart', e => {
-    if (window.scrollY <= 5 && !fetchDevamEdiyor) {
-        touchStartY = e.touches[0].clientY;
-    }
+    if (window.scrollY <= 5 && !fetchDevamEdiyor) {
+        touchStartY = e.touches[0].clientY;
+    }
 }, {passive: true});
 
 window.addEventListener('touchmove', e => {
-    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
-        let currentY = e.touches[0].clientY;
-        let diffY = currentY - touchStartY;
-        
-        if (diffY > 30) {
-            const updateText = document.getElementById('update-text');
-            if (updateText) {
-                updateText.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;">${svgSync} Bırakın Güncellensin...</span>`;
-                updateText.style.color = "var(--warning)";
-            }
-        }
-    }
+    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
+        let currentY = e.touches[0].clientY;
+        let diffY = currentY - touchStartY;
+        
+        if (diffY > 30) {
+            const updateText = document.getElementById('update-text');
+            if (updateText) {
+                updateText.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;">${svgSync} Bırakın Güncellensin...</span>`;
+                updateText.style.color = "var(--warning)";
+            }
+        }
+    }
 }, {passive: true});
 
 window.addEventListener('touchend', e => {
-    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
-        let currentY = e.changedTouches[0].clientY;
-        let diffY = currentY - touchStartY;
-        
-        if (diffY > pullThreshold) {
-            veriCek();
-        } else {
-            const updateText = document.getElementById('update-text');
-            if (updateText) {
-                updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın";
-                updateText.style.color = "var(--muted)";
-            }
-        }
-    }
-    touchStartY = 0;
+    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
+        let currentY = e.changedTouches[0].clientY;
+        let diffY = currentY - touchStartY;
+        
+        if (diffY > pullThreshold) {
+            veriCek();
+        } else {
+            const updateText = document.getElementById('update-text');
+            if (updateText) {
+                updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın";
+                updateText.style.color = "var(--muted)";
+            }
+        }
+    }
+    touchStartY = 0;
 });
 // -----------------------------------------------------------
 
 function saniyeTiktak() {
-    const syncElement = document.getElementById('last-sync');
-    const clockElement = document.getElementById('clock');
-    if (!syncElement) return;
+    const syncElement = document.getElementById('last-sync');
+    const clockElement = document.getElementById('clock');
+    if (!syncElement) return;
 
-    const simdi = Date.now();
-    const farkSaniye = sonBasariZamani > 0 ? Math.floor((simdi - sonBasariZamani) / 1000) : 999;
-    const dNow = new Date();
-    
-    if(clockElement) {
-        clockElement.textContent = dNow.getDate() + " " + dNow.toLocaleDateString('tr-TR', {month:'short'}) + " • " + String(dNow.getHours()).padStart(2,'0') + ':' + String(dNow.getMinutes()).padStart(2,'0');
-    }
+    const simdi = Date.now();
+    const farkSaniye = sonBasariZamani > 0 ? Math.floor((simdi - sonBasariZamani) / 1000) : 999;
+    const dNow = new Date();
+    
+    if(clockElement) {
+        clockElement.textContent = dNow.getDate() + " " + dNow.toLocaleDateString('tr-TR', {month:'short'}) + " • " + String(dNow.getHours()).padStart(2,'0') + ':' + String(dNow.getMinutes()).padStart(2,'0');
+    }
 
-    if (sonBasariZamani === 0) {
-        syncElement.innerHTML = `${dotYellow} Sisteme Bağlanıyor...`;
-        syncElement.style.color = "var(--text)";
-    } else if (farkSaniye < 20) {
-        const d = new Date(sonBasariZamani);
-        const sn = String(d.getSeconds()).padStart(2,'0');
-        syncElement.innerHTML = `${dotGreen} Canlı (${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${sn})`;
-        syncElement.style.color = "var(--text)";
-    } else if (farkSaniye < 60) {
-        syncElement.innerHTML = `${dotYellow} Gecikme: ${farkSaniye} sn`;
-        syncElement.style.color = "var(--text)";
-    } else {
-        syncElement.innerHTML = `${dotRed} Bağlantı Yok`;
-        syncElement.style.color = "var(--text)";
-    }
+    if (sonBasariZamani === 0) {
+        syncElement.innerHTML = `${dotYellow} Sisteme Bağlanıyor...`;
+        syncElement.style.color = "var(--text)";
+    } else if (farkSaniye < 20) {
+        const d = new Date(sonBasariZamani);
+        const sn = String(d.getSeconds()).padStart(2,'0');
+        syncElement.innerHTML = `${dotGreen} Canlı (${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${sn})`;
+        syncElement.style.color = "var(--text)";
+    } else if (farkSaniye < 60) {
+        syncElement.innerHTML = `${dotYellow} Gecikme: ${farkSaniye} sn`;
+        syncElement.style.color = "var(--text)";
+    } else {
+        syncElement.innerHTML = `${dotRed} Bağlantı Yok`;
+        syncElement.style.color = "var(--text)";
+    }
 }
 
 function ekraniCiz() {
-    if (hamVeri.length === 0) return;
-    const detailsState = {};
-    document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
+    if (hamVeri.length === 0) return;
+    const detailsState = {};
+    document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
 
-    let rawLogs = hamVeri
-        .filter(l => !l.i.toLowerCase().includes('nöbet'))
-        .map(l => ({
-            dt: new Date(l.dt),
-            drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
-            dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
-            by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase()
-        })).sort((a, b) => a.dt - b.dt);
+    let rawLogs = hamVeri
+        .filter(l => !l.i.toLowerCase().includes('nöbet'))
+        .map(l => ({
+            dt: new Date(l.dt),
+            drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
+            dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
+            by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase()
+        })).sort((a, b) => a.dt - b.dt);
 
-    let validLogs = [];
-    let mappedTargets = new Set();
-    rawLogs.forEach(l => {
-        let matchedTargetKey = null;
-        let lDate = new Date(l.dt.getFullYear(), l.dt.getMonth(), l.dt.getDate());
-        
-        for(let off of [-1, 0, 1]) {
-            let checkDate = new Date(lDate.getTime() + (off * 86400000));
-            for(let p of allPlans) {
-                if (p.n.toLowerCase() === l.drug) {
-                    let pt = new Date(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate(), p.h, p.m);
-                    if (Math.abs(l.dt - pt) < (p.w * 3600000)) {
-                        matchedTargetKey = `${p.n}_${pt.getTime()}`;
-                        break;
-                    }
-                }
-            }
-            if (matchedTargetKey) break;
-        }
+    let validLogs = [];
+    let mappedTargets = new Set();
+    rawLogs.forEach(l => {
+        let matchedTargetKey = null;
+        let lDate = new Date(l.dt.getFullYear(), l.dt.getMonth(), l.dt.getDate());
+        
+        for(let off of [-1, 0, 1]) {
+            let checkDate = new Date(lDate.getTime() + (off * 86400000));
+            for(let p of allPlans) {
+                if (p.n.toLowerCase() === l.drug) {
+                    let pt = new Date(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate(), p.h, p.m);
+                    if (Math.abs(l.dt - pt) < (p.w * 3600000)) {
+                        matchedTargetKey = `${p.n}_${pt.getTime()}`;
+                        break;
+                    }
+                }
+            }
+            if (matchedTargetKey) break;
+        }
 
-        if (matchedTargetKey) {
-            if (!mappedTargets.has(matchedTargetKey)) {
-                mappedTargets.add(matchedTargetKey);
-                validLogs.push(l);
-            }
-        } else {
-            validLogs.push(l);
-        }
-    });
+        if (matchedTargetKey) {
+            if (!mappedTargets.has(matchedTargetKey)) {
+                mappedTargets.add(matchedTargetKey);
+                validLogs.push(l);
+            }
+        } else {
+            validLogs.push(l);
+        }
+    });
 
-    const logs = validLogs.sort((a, b) => b.dt - a.dt);
-    const now = new Date();
-    const GRACE_MIN = 30;
-    const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
-    const isToday = (d) => d.toDateString() === now.toDateString();
+    const logs = validLogs.sort((a, b) => b.dt - a.dt);
+    const now = new Date();
+    const GRACE_MIN = 30;
+    const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    const isToday = (d) => d.toDateString() === now.toDateString();
 
-    const shield = document.getElementById('safety-shield');
-    const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
-    if (son60dk.length > 0) {
-        shield.innerHTML = son60dk.map(r => {
-            const dkOnce = Math.floor((now - r.dt) / 60000);
-            return `<div style="padding: 4px 0;">🚨 DİKKAT: <b>${r.dRaw}</b>, ${r.by} tarafından ${dkOnce === 0 ? 'az önce' : dkOnce+' dk önce'} verildi!</div>`;
-        }).join('<div style="height:1px; background:rgba(255,255,255,0.3); margin:4px 0;"></div>');
-        shield.style.display = 'block';
-    } else { shield.style.display = 'none'; }
+    const shield = document.getElementById('safety-shield');
+    const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
+    if (son60dk.length > 0) {
+        shield.innerHTML = son60dk.map(r => {
+            const dkOnce = Math.floor((now - r.dt) / 60000);
+            return `<div style="padding: 4px 0;">🚨 DİKKAT: <b>${r.dRaw}</b>, ${r.by} tarafından ${dkOnce === 0 ? 'az önce' : dkOnce+' dk önce'} verildi!</div>`;
+        }).join('<div style="height:1px; background:rgba(255,255,255,0.3); margin:4px 0;"></div>');
+        shield.style.display = 'block';
+    } else { shield.style.display = 'none'; }
 
-    function getNextSmart(name) {
-        const targetPlans = allPlans.filter(p => p.n.toLowerCase() === name.toLowerCase());
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        let cands = [];
-        [-1, 0, 1].forEach(off => { targetPlans.forEach(t => { cands.push({ dt: new Date(today.getTime() + (off * 86400000) + (t.h*3600 + t.m*60)*1000), w: t.w }); }); });
-        cands.sort((a,b) => a.dt - b.dt);
-        
-        let found = cands.find(c => {
-            const wasDone = logs.find(l => l.drug === name.toLowerCase() && Math.abs(l.dt - c.dt) < (c.w * 3600000));
-            return !wasDone && c.dt > now.getTime() - (GRACE_MIN*60000);
-        });
-        return found ? found.dt : cands.find(c => c.dt > now).dt;
-    }
+    function getNextSmart(name) {
+        const targetPlans = allPlans.filter(p => p.n.toLowerCase() === name.toLowerCase());
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        let cands = [];
+        [-1, 0, 1].forEach(off => { targetPlans.forEach(t => { cands.push({ dt: new Date(today.getTime() + (off * 86400000) + (t.h*3600 + t.m*60)*1000), w: t.w }); }); });
+        cands.sort((a,b) => a.dt - b.dt);
+        
+        let found = cands.find(c => {
+            const wasDone = logs.find(l => l.drug === name.toLowerCase() && Math.abs(l.dt - c.dt) < (c.w * 3600000));
+            return !wasDone && c.dt > now.getTime() - (GRACE_MIN*60000);
+        });
+        return found ? found.dt : cands.find(c => c.dt > now).dt;
+    }
 
-    function renderDrug(name, icon) {
-        const dLogs = logs.filter(l => l.drug === name.toLowerCase());
-        const last = dLogs[0]; const next = getNextSmart(name);
-        const diffMin = Math.round((next - now) / 60000);
+    function renderDrug(name, icon) {
+        const dLogs = logs.filter(l => l.drug === name.toLowerCase());
+        const last = dLogs[0]; const next = getNextSmart(name);
+        const diffMin = Math.round((next - now) / 60000);
 
-        let status = { text: "BEKLEMEDE", class: "badge-safe" };
-        if (last && (now - last.dt) >= 0 && (now - last.dt) < (GRACE_MIN * 60000)) status = { text: "YENİ VERİLDİ", class: "badge-safe" };
-        else if (diffMin <= 0 && diffMin >= -GRACE_MIN) status = { text: "VAKTİ GELDİ", class: "badge-due" };
-        else if (diffMin < -GRACE_MIN) status = { text: "GECİKTİ", class: "badge-late" };
+        let status = { text: "BEKLEMEDE", class: "badge-safe" };
+        if (last && (now - last.dt) >= 0 && (now - last.dt) < (GRACE_MIN * 60000)) status = { text: "YENİ VERİLDİ", class: "badge-safe" };
+        else if (diffMin <= 0 && diffMin >= -GRACE_MIN) status = { text: "VAKTİ GELDİ", class: "badge-due" };
+        else if (diffMin < -GRACE_MIN) status = { text: "GECİKTİ", class: "badge-late" };
 
-        const h = Math.floor(Math.abs(diffMin) / 60);
-        const m = Math.abs(diffMin) % 60;
-        const diffStr = diffMin < 0 ? "Geçti!" : (h > 0 ? `${h}sa ${m}d` : `${m}dk`);
-        const dateStr = last ? (isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)) : '';
-        const timeStr = last ? fmt(last.dt) : '--';
-        const lastGivenStr = last ? `${dateStr} <span style="font-size: 20px; font-weight: 900; letter-spacing: 0px;">${timeStr}</span>` : '--';
+        const h = Math.floor(Math.abs(diffMin) / 60);
+        const m = Math.abs(diffMin) % 60;
+        const diffStr = diffMin < 0 ? "Geçti!" : (h > 0 ? `${h}sa ${m}d` : `${m}dk`);
+        const dateStr = last ? (isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)) : '';
+        const timeStr = last ? fmt(last.dt) : '--';
+        const lastGivenStr = last ? `${dateStr} <span style="font-size: 20px; font-weight: 900; letter-spacing: 0px;">${timeStr}</span>` : '--';
 
-        return `
-            <div class="card">
-                <div class="drug-name">${icon} ${name}</div>
-                <div class="badge ${status.class}">${status.text}</div>
-                <div class="info-group">
-                    <div class="label">Son Veriliş</div>
-                    <div class="val-primary">${lastGivenStr} <span class="val-sub">${last ? '('+last.by+')' : ''}</span></div>
-                </div>
-                <div class="timer-box">
-                    <div class="label">Sıradaki (${fmt(next)})</div>
-                    <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffStr}</div>
-                </div>
-                <details>
-                    <summary><span>Geçmiş</span> <span class="show-text"></span></summary>
-                    <ul style="list-style:none; padding:0; margin-top:5px">
-                        ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
-                    </ul>
-                </details>
-            </div>`;
-    }
+        return `
+            <div class="card">
+                <div class="drug-name">${icon} ${name}</div>
+                <div class="badge ${status.class}">${status.text}</div>
+                <div class="info-group">
+                    <div class="label">Son Veriliş</div>
+                    <div class="val-primary">${lastGivenStr} <span class="val-sub">${last ? '('+last.by+')' : ''}</span></div>
+                </div>
+                <div class="timer-box">
+                    <div class="label">Sıradaki (${fmt(next)})</div>
+                    <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffStr}</div>
+                </div>
+                <details>
+                    <summary><span>Geçmiş</span> <span class="show-text"></span></summary>
+                    <ul style="list-style:none; padding:0; margin-top:5px">
+                        ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
+                    </ul>
+                </details>
+            </div>`;
+    }
 
-    document.getElementById('app').innerHTML = renderDrug('Keppra', svgSyringe) + renderDrug('Enalapril', svgPill);
+    document.getElementById('app').innerHTML = renderDrug('Keppra', svgSyringe) + renderDrug('Enalapril', svgPill);
 
-    let grid = "";
-    allPlans.forEach(p => {
-        const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
-        const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
-        
-        let tagText = "BEKLİYOR"; let pClass = "pill-waiting";
-        if (log) {
-            const diffMin = (log.dt - pt) / 60000;
-            if (diffMin < -30) { tagText = "ERKEN<br>VERİLDİ"; pClass = "pill-early"; }
-            else if (diffMin >= -30 && diffMin <= 30) { tagText = "ZAMANINDA<br>VERİLDİ"; pClass = "pill-stable"; }
-            else { tagText = "GEÇ<br>VERİLDİ"; pClass = "pill-delayed"; }
-        } else if (now > new Date(pt.getTime() + 30*60000)) {
-            tagText = "GECİKTİ"; pClass = "pill-missed";
-        }
-        let shortName = p.n.substring(0,3).toUpperCase();
-        grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
-    });
-    
-    const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
-    document.getElementById('perf-title-text').innerHTML = `${svgChart} ${monthName} Ayı Doz Zamanlama Başarısı`;
+    let grid = "";
+    allPlans.forEach(p => {
+        const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
+        const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+        
+        let tagText = "BEKLİYOR"; let pClass = "pill-waiting";
+        if (log) {
+            const diffMin = (log.dt - pt) / 60000;
+            if (diffMin < -30) { tagText = "ERKEN<br>VERİLDİ"; pClass = "pill-early"; }
+            else if (diffMin >= -30 && diffMin <= 30) { tagText = "ZAMANINDA<br>VERİLDİ"; pClass = "pill-stable"; }
+            else { tagText = "GEÇ<br>VERİLDİ"; pClass = "pill-delayed"; }
+        } else if (now > new Date(pt.getTime() + 30*60000)) {
+            tagText = "GECİKTİ"; pClass = "pill-missed";
+        }
+        let shortName = p.n.substring(0,3).toUpperCase();
+        grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
+    });
+    
+    const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
+    document.getElementById('perf-title-text').innerHTML = `${svgChart} ${monthName} Ayı Doz Zamanlama Başarısı`;
 
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    let currentMonthLogs = logs.filter(l => l.dt.getMonth() === currentMonth && l.dt.getFullYear() === currentYear);
-    let startDay = currentMonthLogs.length > 0 ? currentMonthLogs[currentMonthLogs.length - 1].dt.getDate() : now.getDate();
+    let currentMonthLogs = logs.filter(l => l.dt.getMonth() === currentMonth && l.dt.getFullYear() === currentYear);
+    let startDay = currentMonthLogs.length > 0 ? currentMonthLogs[currentMonthLogs.length - 1].dt.getDate() : now.getDate();
 
-    const daysInCompetition = daysInMonth - startDay + 1;
-    const totalMonthDoses = daysInCompetition * 5; 
-    const ptsPerDose = totalMonthDoses > 0 ? (100 / totalMonthDoses) : 0;
+    const daysInCompetition = daysInMonth - startDay + 1;
+    const totalMonthDoses = daysInCompetition * 5; 
+    const ptsPerDose = totalMonthDoses > 0 ? (100 / totalMonthDoses) : 0;
 
-    let successScore = 100; 
-    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
-    let statsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+    let successScore = 100; 
+    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let statsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
 
-    for(let d=startDay; d<=now.getDate(); d++) {
-        allPlans.forEach(p => {
-            const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
-            if (pt > now) return; 
-            
-            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
-            if (log) {
-                const diffMin = (log.dt - pt) / 60000;
-                let earnedPts = ptsPerDose; 
-                let penaltyPts = 0;
-                let byName = log.by;
+    for(let d=startDay; d<=now.getDate(); d++) {
+        allPlans.forEach(p => {
+            const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
+            if (pt > now) return; 
+            
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let earnedPts = ptsPerDose; 
+                let penaltyPts = 0;
+                let byName = log.by;
 
-                if(!statsData[byName]) statsData[byName] = {t:0, o:0, l:0};
-                statsData[byName].t++;
+                if(!statsData[byName]) statsData[byName] = {t:0, o:0, l:0};
+                statsData[byName].t++;
 
-                if (diffMin < -30 || diffMin > 30) { 
-                    earnedPts = ptsPerDose * 0.75; 
-                    penaltyPts = ptsPerDose * 0.25; 
-                    statsData[byName].l++;
-                } else {
-                    statsData[byName].o++;
-                }
-                
-                successScore -= penaltyPts;
-                if(scores[byName] === undefined) scores[byName] = 0;
-                scores[byName] += earnedPts;
-            } else {
-                if (now > new Date(pt.getTime() + 30 * 60000)) {
-                    successScore -= ptsPerDose;
-                }
-            }
-        });
-    }
+                if (diffMin < -30 || diffMin > 30) { 
+                    earnedPts = ptsPerDose * 0.75; 
+                    penaltyPts = ptsPerDose * 0.25; 
+                    statsData[byName].l++;
+                } else {
+                    statsData[byName].o++;
+                }
+                
+                successScore -= penaltyPts;
+                if(scores[byName] === undefined) scores[byName] = 0;
+                scores[byName] += earnedPts;
+            } else {
+                if (now > new Date(pt.getTime() + 30 * 60000)) {
+                    successScore -= ptsPerDose;
+                }
+            }
+        });
+    }
 
-    if (successScore < 0) successScore = 0;
-    const clr = successScore >= 80 ? "var(--accent)" : (successScore >= 50 ? "var(--warning)" : "var(--danger)");
-    let displayScore = parseFloat(successScore.toFixed(1)); 
-    document.getElementById('perf-pct').textContent = '%' + displayScore;
-    document.getElementById('perf-pct').style.color = clr;
-    document.getElementById('perf-bar').style.width = displayScore + '%'; 
-    document.getElementById('perf-bar').style.backgroundColor = clr;
-    document.getElementById('status-grid').innerHTML = grid;
+    if (successScore < 0) successScore = 0;
+    const clr = successScore >= 80 ? "var(--accent)" : (successScore >= 50 ? "var(--warning)" : "var(--danger)");
+    let displayScore = parseFloat(successScore.toFixed(1)); 
+    document.getElementById('perf-pct').textContent = '%' + displayScore;
+    document.getElementById('perf-pct').style.color = clr;
+    document.getElementById('perf-bar').style.width = displayScore + '%'; 
+    document.getElementById('perf-bar').style.backgroundColor = clr;
+    document.getElementById('status-grid').innerHTML = grid;
 
-    const pMonthDate = new Date(currentYear, currentMonth - 1, 1);
-    const pMonth = pMonthDate.getMonth();
-    const pYear = pMonthDate.getFullYear();
-    const pDaysInMonth = new Date(pYear, pMonth + 1, 0).getDate();
+    const pMonthDate = new Date(currentYear, currentMonth - 1, 1);
+    const pMonth = pMonthDate.getMonth();
+    const pYear = pMonthDate.getFullYear();
+    const pDaysInMonth = new Date(pYear, pMonth + 1, 0).getDate();
 
-    let pLogs = logs.filter(l => l.dt.getMonth() === pMonth && l.dt.getFullYear() === pYear);
-    let pStartDay = pLogs.length > 0 ? pLogs[pLogs.length - 1].dt.getDate() : 1;
-    const pDaysInComp = pDaysInMonth - pStartDay + 1;
-    const pTotalDoses = pDaysInComp * 5;
-    const pPtsPerDose = pTotalDoses > 0 ? (100 / pTotalDoses) : 0;
+    let pLogs = logs.filter(l => l.dt.getMonth() === pMonth && l.dt.getFullYear() === pYear);
+    let pStartDay = pLogs.length > 0 ? pLogs[pLogs.length - 1].dt.getDate() : 1;
+    const pDaysInComp = pDaysInMonth - pStartDay + 1;
+    const pTotalDoses = pDaysInComp * 5;
+    const pPtsPerDose = pTotalDoses > 0 ? (100 / pTotalDoses) : 0;
 
-    let pScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
-    let pStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+    let pScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let pStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
 
-    for(let d=pStartDay; d<=pDaysInMonth; d++) {
-        allPlans.forEach(p => {
-            const pt = new Date(pYear, pMonth, d, p.h, p.m);
-            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
-            if (log) {
-                const diffMin = (log.dt - pt) / 60000;
-                let earnedPts = pPtsPerDose;
-                let byName = log.by;
+    for(let d=pStartDay; d<=pDaysInMonth; d++) {
+        allPlans.forEach(p => {
+            const pt = new Date(pYear, pMonth, d, p.h, p.m);
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let earnedPts = pPtsPerDose;
+                let byName = log.by;
 
-                if(!pStatsData[byName]) pStatsData[byName] = {t:0, o:0, l:0};
-                pStatsData[byName].t++;
+                if(!pStatsData[byName]) pStatsData[byName] = {t:0, o:0, l:0};
+                pStatsData[byName].t++;
 
-                if (diffMin < -30 || diffMin > 30) {
-                    earnedPts = pPtsPerDose * 0.75;
-                    pStatsData[byName].l++;
-                } else {
-                    pStatsData[byName].o++;
-                }
+                if (diffMin < -30 || diffMin > 30) {
+                    earnedPts = pPtsPerDose * 0.75;
+                    pStatsData[byName].l++;
+                } else {
+                    pStatsData[byName].o++;
+                }
 
-                if(pScores[byName] === undefined) pScores[byName] = 0;
-                pScores[byName] += earnedPts;
-            }
-        });
-    }
+                if(pScores[byName] === undefined) pScores[byName] = 0;
+                pScores[byName] += earnedPts;
+            }
+        });
+    }
 
-    let yStartDt;
-    if (currentYear === 2026) {
-        yStartDt = new Date(2026, 1, 27);
-    } else {
-        yStartDt = new Date(currentYear, 0, 1);
-    }
+    let yStartDt;
+    if (currentYear === 2026) {
+        yStartDt = new Date(2026, 1, 27);
+    } else {
+        yStartDt = new Date(currentYear, 0, 1);
+    }
 
-    const endOfYearDt = new Date(currentYear, 11, 31);
-    const yDaysInYear = Math.round((endOfYearDt - yStartDt) / 86400000) + 1;
-    const yTotalDosesInYear = yDaysInYear * 5;
-    const yPtsPerDose = yTotalDosesInYear > 0 ? (100 / yTotalDosesInYear) : 0;
+    const endOfYearDt = new Date(currentYear, 11, 31);
+    const yDaysInYear = Math.round((endOfYearDt - yStartDt) / 86400000) + 1;
+    const yTotalDosesInYear = yDaysInYear * 5;
+    const yPtsPerDose = yTotalDosesInYear > 0 ? (100 / yTotalDosesInYear) : 0;
 
-    let todayDt = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    let yScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
-    let yStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+    let todayDt = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let yScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let yStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
 
-    let loopStartDt = new Date(yStartDt);
-    if (todayDt >= loopStartDt) {
-        for(let loopDt = new Date(loopStartDt); loopDt <= todayDt; loopDt.setDate(loopDt.getDate() + 1)) {
-            let y = loopDt.getFullYear();
-            let m = loopDt.getMonth();
-            let d = loopDt.getDate();
-            allPlans.forEach(p => {
-                const pt = new Date(y, m, d, p.h, p.m);
-                if (pt > now) return;
+    let loopStartDt = new Date(yStartDt);
+    if (todayDt >= loopStartDt) {
+        for(let loopDt = new Date(loopStartDt); loopDt <= todayDt; loopDt.setDate(loopDt.getDate() + 1)) {
+            let y = loopDt.getFullYear();
+            let m = loopDt.getMonth();
+            let d = loopDt.getDate();
+            allPlans.forEach(p => {
+                const pt = new Date(y, m, d, p.h, p.m);
+                if (pt > now) return;
 
-                const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
-                if (log) {
-                    const diffMin = (log.dt - pt) / 60000;
-                    let earnedPts = yPtsPerDose;
-                    let byName = log.by;
+                const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+                if (log) {
+                    const diffMin = (log.dt - pt) / 60000;
+                    let earnedPts = yPtsPerDose;
+                    let byName = log.by;
 
-                    if(!yStatsData[byName]) yStatsData[byName] = {t:0, o:0, l:0};
-                    yStatsData[byName].t++;
+                    if(!yStatsData[byName]) yStatsData[byName] = {t:0, o:0, l:0};
+                    yStatsData[byName].t++;
 
-                    if (diffMin < -30 || diffMin > 30) {
-                        earnedPts = yPtsPerDose * 0.75; 
-                        yStatsData[byName].l++;
-                    } else {
-                        yStatsData[byName].o++;
-                    }
+                    if (diffMin < -30 || diffMin > 30) {
+                        earnedPts = yPtsPerDose * 0.75; 
+                        yStatsData[byName].l++;
+                    } else {
+                        yStatsData[byName].o++;
+                    }
 
-                    if(yScores[byName] === undefined) yScores[byName] = 0;
-                    yScores[byName] += earnedPts;
-                }
-            });
-        }
-    }
+                    if(yScores[byName] === undefined) yScores[byName] = 0;
+                    yScores[byName] += earnedPts;
+                }
+            });
+        }
+    }
 
-    function buildStatsCardHTML(title, scoresObj, statsObj) {
-        let sortedUsers = Object.keys(scoresObj).map(k => ({name: k, score: scoresObj[k]})).sort((a,b) => b.score - a.score);
-        let validUsers = sortedUsers.filter(u => statsObj[u.name] && statsObj[u.name].t > 0);
+    function buildStatsCardHTML(title, scoresObj, statsObj) {
+        let sortedUsers = Object.keys(scoresObj).map(k => ({name: k, score: scoresObj[k]})).sort((a,b) => b.score - a.score);
+        let validUsers = sortedUsers.filter(u => statsObj[u.name] && statsObj[u.name].t > 0);
 
-        let html = `
-        <div class="extra-card">
-            <details>
-                <summary>
-                    <div style="display:flex; align-items:center;">
-                        <span>${title}</span>
-                    </div>
-                    <span class="show-text"></span>
-                </summary>
-                <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:16px;">`;
+        let html = `
+        <div class="extra-card">
+            <details>
+                <summary>
+                    <div style="display:flex; align-items:center;">
+                        <span>${title}</span>
+                    </div>
+                    <span class="show-text"></span>
+                </summary>
+                <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:16px;">`;
 
-        if (validUsers.length === 0) {
-             html += `<div style="text-align:center; color:var(--muted); font-size:14px; padding:6px 0;">Henüz veri yok.</div>`;
-        } else {
-            const medals = ["var(--warning)", "var(--muted)", "#b45309"];
-            const trophy = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`; 
+        if (validUsers.length === 0) {
+             html += `<div style="text-align:center; color:var(--muted); font-size:14px; padding:6px 0;">Henüz veri yok.</div>`;
+        } else {
+            const medals = ["var(--warning)", "var(--muted)", "#b45309"];
+            const trophy = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`; 
 
-            validUsers.forEach((s, idx) => {
-                let color = medals[idx] || "var(--accent)";
-                let d = statsObj[s.name];
-                let borderStyle = idx === validUsers.length - 1 ? '' : 'border-bottom:1px solid rgba(255,255,255,0.03); margin-bottom:16px; padding-bottom:16px;';
-                let medalHTML = idx === 0 ? trophy : `<div class="score-rank" style="color:${color};">#${idx+1}</div>`;
+            validUsers.forEach((s, idx) => {
+                let color = medals[idx] || "var(--accent)";
+                let d = statsObj[s.name];
+                let borderStyle = idx === validUsers.length - 1 ? '' : 'border-bottom:1px solid rgba(255,255,255,0.03); margin-bottom:16px; padding-bottom:16px;';
+                let medalHTML = idx === 0 ? trophy : `<div class="score-rank" style="color:${color};">#${idx+1}</div>`;
 
-                html += `
-                    <div style="${borderStyle}">
-                        <div class="score-row" style="margin-bottom:8px;">
-                            ${medalHTML}
-                            <div class="score-name">${s.name}</div>
-                            <div class="score-val" style="color:${color};">${parseFloat(s.score.toFixed(1))} Puan</div>
-                        </div>
-                        <div class="bar-bg" style="height:6px; margin-bottom:16px;">
-                            <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
-                        </div>
-                        <div style="display:flex; gap:12px;">
-                            <div style="flex:1; background:var(--bg); border:1px solid var(--line); padding:10px; border-radius:12px; text-align:center;">
-                                <div style="font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Toplam</div>
-                                <div style="font-size:18px; color:#fff; font-weight:900;">${d.t}</div>
-                            </div>
-                            <div style="flex:1; background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); padding:10px; border-radius:12px; text-align:center;">
-                                <div style="font-size:11px; color:var(--accent); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Zamanında</div>
-                                <div style="font-size:18px; color:var(--accent); font-weight:900;">${d.o}</div>
-                            </div>
-                            <div style="flex:1; background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.2); padding:10px; border-radius:12px; text-align:center;">
-                                <div style="font-size:11px; color:var(--danger); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Geç/Erken</div>
-                                <div style="font-size:18px; color:var(--danger); font-weight:900;">${d.l}</div>
-                            </div>
-                        </div>
-                    </div>`;
-            });
-        }
-        html += `</div></details></div>`;
-        return html;
-    }
+                html += `
+                    <div style="${borderStyle}">
+                        <div class="score-row" style="margin-bottom:8px;">
+                            ${medalHTML}
+                            <div class="score-name">${s.name}</div>
+                            <div class="score-val" style="color:${color};">${parseFloat(s.score.toFixed(1))} Puan</div>
+                        </div>
+                        <div class="bar-bg" style="height:6px; margin-bottom:16px;">
+                            <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
+                        </div>
+                        <div style="display:flex; gap:12px;">
+                            <div style="flex:1; background:var(--bg); border:1px solid var(--line); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Toplam</div>
+                                <div style="font-size:18px; color:#fff; font-weight:900;">${d.t}</div>
+                            </div>
+                            <div style="flex:1; background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--accent); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Zamanında</div>
+                                <div style="font-size:18px; color:var(--accent); font-weight:900;">${d.o}</div>
+                            </div>
+                            <div style="flex:1; background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.2); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--danger); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Geç/Erken</div>
+                                <div style="font-size:18px; color:var(--danger); font-weight:900;">${d.l}</div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+        html += `</div></details></div>`;
+        return html;
+    }
 
-    const nobetLogs = hamVeri
-        .filter(l => l.i.toLowerCase().includes('nöbet'))
-        .map(l => ({ dt: new Date(l.dt), by: l.k }))
-        .sort((a, b) => b.dt - a.dt);
+    const nobetLogs = hamVeri
+        .filter(l => l.i.toLowerCase().includes('nöbet'))
+        .map(l => ({ dt: new Date(l.dt), by: l.k }))
+        .sort((a, b) => b.dt - a.dt);
 
-    let daysBadgeHTML = "";
-    if (nobetLogs.length > 0) {
-        const lastNobet = nobetLogs[0].dt;
-        const diffDays = Math.floor((now - lastNobet) / (1000 * 60 * 60 * 24));
-        
-        let dayColor = "var(--accent)"; 
-        if (diffDays > 30 && diffDays <= 60) dayColor = "var(--warning)";
-        else if (diffDays > 60) dayColor = "var(--danger)"; 
+    let daysBadgeHTML = "";
+    if (nobetLogs.length > 0) {
+        const lastNobet = nobetLogs[0].dt;
+        const diffDays = Math.floor((now - lastNobet) / (1000 * 60 * 60 * 24));
+        
+        let dayColor = "var(--accent)"; 
+        if (diffDays > 30 && diffDays <= 60) dayColor = "var(--warning)";
+        else if (diffDays > 60) dayColor = "var(--danger)"; 
 
-        // GÜNCELLENMİŞ SAYAÇ TASARIMI (Sayı büyütüldü ve dikeyde tam ortalandı)
-        daysBadgeHTML = `<div style="color:${dayColor}; font-size:14px; font-weight:700; background:rgba(255,255,255,0.05); border: 1px solid var(--line); padding:0 12px; border-radius:12px; white-space:nowrap; display:inline-flex; align-items:center; justify-content:center; gap:6px; height:34px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"><span style="font-size:26px; font-weight:900; line-height:1; display:inline-block; transform:translateY(1px);">${diffDays}</span> Gün</div>`;
-    }
+        // GÜNCELLENMİŞ SAYAÇ TASARIMI (Sayı büyütüldü ve dikeyde tam ortalandı)
+        daysBadgeHTML = `<div style="color:${dayColor}; font-size:14px; font-weight:700; background:rgba(255,255,255,0.05); border: 1px solid var(--line); padding:0 12px; border-radius:12px; white-space:nowrap; display:inline-flex; align-items:center; justify-content:center; gap:6px; height:34px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"><span style="font-size:26px; font-weight:900; line-height:1; display:inline-block; transform:translateY(1px);">${diffDays}</span> Gün</div>`;
+    }
 
-    const nobetAlert = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; color: var(--danger);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`; 
+    const nobetAlert = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; color: var(--danger);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`; 
 
-    // GÜNCELLENMİŞ HİZALAMA VE KELİME BÖLÜNMEMESİ
-    let nobetHTML = `
-    <div class="extra-card">
-        <details>
-            <summary style="flex-direction: column; align-items: stretch; gap: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                    <div style="display:flex; align-items:center; white-space:nowrap; font-size:16px;">
-                        ${nobetAlert} Minik Nöbet Günlüğü
-                    </div>
-                    <span class="show-text"></span>
-                </div>
-                ${daysBadgeHTML ? `<div style="display: flex; justify-content: center; width: 100%;">${daysBadgeHTML}</div>` : ''}
-            </summary>
-            <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:12px;">`;
+    // GÜNCELLENMİŞ HİZALAMA VE KELİME BÖLÜNMEMESİ
+    let nobetHTML = `
+    <div class="extra-card">
+        <details>
+            <summary style="flex-direction: column; align-items: stretch; gap: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display:flex; align-items:center; white-space:nowrap; font-size:16px;">
+                        ${nobetAlert} Minik Nöbet Günlüğü
+                    </div>
+                    <span class="show-text"></span>
+                </div>
+                ${daysBadgeHTML ? `<div style="display: flex; justify-content: center; width: 100%;">${daysBadgeHTML}</div>` : ''}
+            </summary>
+            <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:12px;">`;
 
-    if (nobetLogs.length === 0) {
-        nobetHTML += `<div style="text-align:center; color:var(--muted); font-size:13px; padding:6px 0;">Çok şükür, henüz kayıt yok! 🧿</div>`;
-    } else {
-        nobetLogs.forEach(n => {
-            const nDate = n.dt.getDate() + ' ' + n.dt.toLocaleDateString('tr-TR', {month:'long'}) + ' ' + n.dt.getFullYear();
-            nobetHTML += `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
-                    <div>
-                        <div style="font-weight:800; font-size:13px; color:var(--danger);">${nDate}</div>
-                        <div style="font-size:12px; color:var(--muted); margin-top:4px;">Kayıt: ${n.by}</div>
-                    </div>
-                    <div style="font-weight:900; font-size:16px; font-family:monospace; color:#fff;">${fmt(n.dt)}</div>
-                </div>`;
-        });
-    }
-    nobetHTML += `</div></details></div>`;
+    if (nobetLogs.length === 0) {
+        nobetHTML += `<div style="text-align:center; color:var(--muted); font-size:13px; padding:6px 0;">Çok şükür, henüz kayıt yok! 🧿</div>`;
+    } else {
+        nobetLogs.forEach(n => {
+            const nDate = n.dt.getDate() + ' ' + n.dt.toLocaleDateString('tr-TR', {month:'long'}) + ' ' + n.dt.getFullYear();
+            nobetHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+                    <div>
+                        <div style="font-weight:800; font-size:13px; color:var(--danger);">${nDate}</div>
+                        <div style="font-size:12px; color:var(--muted); margin-top:4px;">Kayıt: ${n.by}</div>
+                    </div>
+                    <div style="font-weight:900; font-size:16px; font-family:monospace; color:#fff;">${fmt(n.dt)}</div>
+                </div>`;
+        });
+    }
+    nobetHTML += `</div></details></div>`;
 
-    let currentMonthStatsHTML = buildStatsCardHTML(`${svgTrophy} ${monthName} Ayı İstatistikleri`, scores, statsData);
-    let prevMonthStatsHTML = buildStatsCardHTML(`${svgBarChart} Geçen Ayın İstatistikleri`, pScores, pStatsData);
-    let currentYearStatsHTML = buildStatsCardHTML(`${svgCalendar} ${currentYear} Yılı İstatistikleri`, yScores, yStatsData);
+    let currentMonthStatsHTML = buildStatsCardHTML(`${svgTrophy} ${monthName} Ayı İstatistikleri`, scores, statsData);
+    let prevMonthStatsHTML = buildStatsCardHTML(`${svgBarChart} Geçen Ayın İstatistikleri`, pScores, pStatsData);
+    let currentYearStatsHTML = buildStatsCardHTML(`${svgCalendar} ${currentYear} Yılı İstatistikleri`, yScores, yStatsData);
 
-    document.getElementById('extra-cards').innerHTML = currentMonthStatsHTML + nobetHTML + prevMonthStatsHTML + currentYearStatsHTML;
+    document.getElementById('extra-cards').innerHTML = currentMonthStatsHTML + nobetHTML + prevMonthStatsHTML + currentYearStatsHTML;
 
-    document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
+    document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
 
-    const appDetails = document.querySelectorAll('#app details');
-    appDetails.forEach(det => {
-        det.addEventListener('toggle', (e) => {
-            appDetails.forEach(d => {
-                if (d !== e.target && d.open !== e.target.open) {
-                    d.open = e.target.open;
-                }
-            });
-        });
-    });
+    const appDetails = document.querySelectorAll('#app details');
+    appDetails.forEach(det => {
+        det.addEventListener('toggle', (e) => {
+            appDetails.forEach(d => {
+                if (d !== e.target && d.open !== e.target.open) {
+                    d.open = e.target.open;
+                }
+            });
+        });
+    });
 }
 
 veriCek();
-setInterval(veriCek, 10000); 
-setInterval(saniyeTiktak, 1000); 
+setInterval(veriCek, 10000); 
+setInterval(saniyeTiktak, 1000); 
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') veriCek(); });
+</script>
+</body>
+</html>
+
+tüm kodu sen yazsana bi deniyim başka bir şeyi değiştirme ama arka plan resim linki <!doctype html>
+<html lang="tr">
+<head>
+<link rel="icon" type="image/png" href="https://i.ibb.co/VspddZY/app-icon-cropped-no-white-sides.png">
+<link rel="apple-touch-icon" href="https://i.ibb.co/VspddZY/app-icon-cropped-no-white-sides.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Minik İlaç">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<title>Minik Sağlık Paneli</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+  --bg: #0F1115; 
+  --card: #1E293B; 
+  --text: #F8FAFC; 
+  --muted: #94A3B8; 
+  --line: rgba(255,255,255,0.06);
+  
+  --accent: #10B981; 
+  --warning: #F59E0B; 
+  --danger: #F43F5E; 
+  --early: #3B82F6; 
+  --purple: #A78BFA;
+  
+  --vip-bg: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); 
+  --card-shadow: 0 8px 30px rgba(0,0,0,0.2); 
+  --wait-badge-bg: rgba(255,255,255,0.05); 
+}
+
+* { box-sizing: border-box; font-family: 'Inter', -apple-system, system-ui, sans-serif !important; }
+body{ margin:0; background:var(--bg); color:var(--text); padding:10px 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; overscroll-behavior-y: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
+/* GÜVENLİK KALKANI */
+.safety-shield { display: none; background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%); color: white; padding: 12px 14px; text-align: center; font-weight: 800; font-size: 14px; position: sticky; top: 0; z-index: 9999; border-radius: 16px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4); animation: pulse-red 2s infinite; letter-spacing: 0.5px; }
+
+/* YENİLEME ANİMASYONU EKLENDİ */
+@keyframes spin-anim { 100% { transform: rotate(360deg); } }
+.spin { display: inline-flex; animation: spin-anim 1s linear infinite; }
+
+/* EN ÜSTTEKİ SABİT PERDE VE BUTON (YENİ STICKY) */
+.sticky-top-wrapper { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 12px 0 6px 0; margin-top: -12px; }
+.header-compact { text-align: center; margin-bottom: 5px; background: var(--vip-bg); padding: 18px 12px; border-radius: 20px; border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(0,0,0,0.2); user-select: none; transition: transform 0.15s ease, opacity 0.15s ease; touch-action: manipulation; }
+.header-compact:active { transform: scale(0.96) !important; opacity: 0.9 !important; }
+.app-title { font-size: 20px; font-weight: 900; letter-spacing: -0.2px; margin-bottom: 6px; color: #fff; display: flex; align-items: center; justify-content: center; }
+.header-sub { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 12px; transition: color 0.3s; }
+.header-info { display: flex; justify-content: center; align-items: center; gap: 12px; }
+.clock-text { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); }
+.sync-badge { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 10px; background: rgba(0,0,0,0.3); display: flex; align-items: center;}
+
+/* GÜNLÜK ÇİZELGE */
+.daily-container { background: var(--card); border-radius: 20px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--line); box-shadow: var(--card-shadow); }
+.daily-title { font-size: 16px; font-weight: 900; color: var(--muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+.daily-row { display: flex; justify-content: space-between; gap: 6px; }
+
+/* GÜNCEL HİZALANMIŞ DAILY PILL */
+.daily-pill { flex: 1 1 0; min-width: 0; text-align: center; padding: 10px 1px; border-radius: 14px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--bg); min-height: 100px; }
+.pill-name { font-size: 13px; color: #fff; font-weight: 800; letter-spacing: 0.5px; }
+.pill-time { color: var(--muted); font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; letter-spacing: -0.5px; }
+/* GÜNCEL HİZALANMIŞ PILL STATUS (TAŞMA ÖNLENDİ) */
+.pill-status-text { font-size: 8.5px; font-weight: 900; letter-spacing: -0.3px; padding: 4px 1px; border-radius: 6px; margin: 0 1px; display: flex; align-items: center; justify-content: center; min-height: 34px; text-align: center; line-height: 1.05; word-wrap: break-word; }
+
+/* PERFORMANS BARI */
+.perf-compact { display: flex; flex-direction: column; gap: 10px; background: var(--card); border-radius: 20px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--line); box-shadow: var(--card-shadow); }
+.perf-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.perf-label { font-size: 14px; font-weight: 800; white-space: nowrap; display: flex; align-items: center; }
+.bar-bg { width: 100%; background: var(--bg); height: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); } 
+.bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; border-radius: 3px; }
+.perf-val { font-size: 16px; font-weight: 900; font-family: ui-monospace, monospace; }
+
+/* Kapsül Renkleri */
+.pill-stable { border-color: rgba(16, 185, 129, 0.4); } .pill-stable .pill-status-text { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
+.pill-early { border-color: rgba(96, 165, 250, 0.4); } .pill-early .pill-status-text { background: rgba(96, 165, 250, 0.15); color: var(--early); }
+.pill-delayed { border-color: rgba(245, 158, 11, 0.4); } .pill-delayed .pill-status-text { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+.pill-missed { border-color: rgba(244, 63, 94, 0.4); } .pill-missed .pill-status-text { background: rgba(244, 63, 94, 0.15); color: var(--danger); }
+.pill-waiting { border-color: var(--line); } .pill-waiting .pill-status-text { color: var(--muted); background: var(--wait-badge-bg); }
+
+/* İLAÇ KARTLARI */
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.card { background: var(--card); border-radius: 20px; padding: 16px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--card-shadow); }
+.drug-name { font-size: 18px; font-weight: 800; display: flex; align-items: center; margin-bottom: 10px; color: #fff; letter-spacing: -0.3px;}
+.badge { align-self: flex-start; padding: 6px 10px; border-radius: 8px; font-weight: 800; font-size: 11px; text-transform: uppercase; margin-bottom: 14px; letter-spacing: 0.3px; display: inline-flex; align-items: center; justify-content: center; }
+.badge-safe { background: rgba(16, 185, 129, 0.1); color: var(--accent); }
+.badge-due { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.badge-late { background: rgba(244, 63, 94, 0.1); color: var(--danger); }
+.info-group { margin-bottom: 12px; }
+.label { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;}
+.val-primary { font-size: 15px; font-weight: 800; color: #fff; }
+.val-sub { font-size: 15px; color: var(--muted); font-weight: 700; letter-spacing: 0px; } 
+.timer-box { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
+.timer { font-weight: 900; color: var(--accent); font-size: 18px; font-family: ui-monospace, monospace; }
+.timer.urgent { color: var(--warning); }
+
+/* GÖSTER/GİZLE ÖZELLİKLERİ VE GENİŞ TIKLAMA ALANI */
+details { margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 8px; }
+summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 700; list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin: -12px 0; -webkit-tap-highlight-color: transparent; }
+summary::-webkit-details-marker { display: none; }
+
+/* GÜNCEL HİZALANMIŞ GEÇMİŞ LİSTESİ */
+.history-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 14px; color: var(--muted); border-bottom: 1px solid rgba(255,255,255,0.02);}
+.history-item:last-child { border-bottom: none; }
+.history-item span.mono { margin-right: 8px; flex: 0 0 auto; text-align: left; }
+.history-item span:last-child { font-weight: 700; flex: 1 1 auto; text-align: right; }
+.mono { font-family: ui-monospace, monospace; }
+
+/* EKSTRA KARTLAR */
+.extra-card { background: var(--card); border-radius: 20px; padding: 18px; border: 1px solid var(--line); margin-bottom: 12px; box-shadow: var(--card-shadow); }
+.extra-card details { margin-top: 0; border-top: none; padding-top: 0; }
+.extra-card summary { font-size: 15px; font-weight: 800; color: #fff; padding: 12px 0; margin: -12px 0; border: none; letter-spacing: 0.3px; display: flex; align-items: center; justify-content: space-between; -webkit-tap-highlight-color: transparent; } 
+.extra-card summary .show-text { font-size: 12px; color: var(--muted); font-weight: 700; white-space: nowrap; }
+
+/* DİNAMİK GÖSTER/GİZLE YAZISI CSS İLE OTOMATİZE EDİLDİ */
+summary .show-text::after { content: "Göster ▼"; }
+details[open] summary .show-text::after { content: "Gizle ▲"; color: var(--accent); }
+
+.score-row { display: flex; align-items: center; margin-bottom: 10px; }
+.score-rank { width: 30px; font-weight: 900; font-size: 16px; } 
+.score-name { flex: 1; font-weight: 800; font-size: 16px; color: #fff; } 
+.score-val { font-weight: 900; font-size: 18px; font-family: ui-monospace, monospace; } 
+
+@keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+@keyframes pulse-yellow { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+</style>
+</head>
+<body>
+
+<div id="safety-shield" class="safety-shield"></div>
+
+<div class="sticky-top-wrapper">
+    <div class="header-compact" id="main-header-card">
+        <div class="app-title" id="app-title-container">
+            </div>
+        <div class="header-sub" id="update-text">Güncellemek İçin Aşağı Kaydırın</div>
+        <div class="header-info">
+            <div id="clock" class="clock-text">--:--</div>
+            <div id="last-sync" class="sync-badge">Bağlanıyor...</div>
+        </div>
+    </div>
+</div>
+
+<div class="daily-container">
+    <div class="daily-title">Bugünkü Dozlar</div>
+    <div id="status-grid" class="daily-row"></div>
+</div>
+
+<div class="perf-compact">
+    <div class="perf-header">
+        <div class="perf-label" id="perf-title-text">Başarı Durumu</div>
+        <div id="perf-pct" class="perf-val">%0</div>
+    </div>
+    <div class="bar-bg"><div id="perf-bar" class="bar-fill" style="width: 0%"></div></div>
+</div>
+
+<div id="app" class="cards-grid"></div>
+
+<div id="extra-cards"></div>
+
+<script>
+// PREMIUM NATIVE SVG İKONLAR
+const svgPet = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/><path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"/></svg>`;
+const svgSync = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>`;
+const svgWait = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+const svgChart = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>`;
+const svgTrophy = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`;
+const svgBarChart = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`; 
+const svgCalendar = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+const svgSyringe = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.4 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>`;
+const svgPill = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>`;
+
+const dotGreen = `<span style="display:inline-block; width:10px; height:10px; background:#10b981; border-radius:50%; margin-right:6px;"></span>`;
+const dotYellow = `<span style="display:inline-block; width:10px; height:10px; background:#f59e0b; border-radius:50%; margin-right:6px;"></span>`;
+const dotRed = `<span style="display:inline-block; width:10px; height:10px; background:#f43f5e; border-radius:50%; margin-right:6px;"></span>`;
+
+// Başlık İkonu Yerleştirme
+document.getElementById('app-title-container').innerHTML = `${svgPet} MİNİK İLAÇ TAKİBİ <span id="sync-icon-container" style="margin-left:8px; display:inline-flex; align-items:center;">${svgSync}</span>`;
+
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzbS3DIUOcmpUBLgvfuFhi3zIhsougq7JB93ccmnwLlGbURtHLZknu5vl6FcxSWJndIZA/exec";
+let sonBasariZamani = 0;
+let hamVeri = [];
+let fetchDevamEdiyor = false;
+
+// KEPPRA 4 SAAT, ENALAPRIL 6 SAAT KURALI (w: window/pencere)
+const allPlans = [
+    {n:'Keppra',h:7,m:0, w:4},
+    {n:'Enalapril',h:10,m:30, w:6},
+    {n:'Keppra',h:15,m:0, w:4},
+    {n:'Enalapril',h:22,m:30, w:6},
+    {n:'Keppra',h:23,m:0, w:4}
+];
+
+async function veriCek() {
+    if (fetchDevamEdiyor) return;
+    fetchDevamEdiyor = true;
+    
+    // GÖRSEL GERİBİLDİRİM (ANİMASYON) BAŞLATMA
+    const updateText = document.getElementById('update-text');
+    const syncIcon = document.getElementById('sync-icon-container');
+    const headerCard = document.getElementById('main-header-card');
+    
+    if(updateText) { updateText.innerHTML = `${svgWait} Veriler Tazeleniyor...`; updateText.style.color = "var(--accent)"; }
+    if(syncIcon) syncIcon.firstElementChild.classList.add("spin");
+    if(headerCard) headerCard.style.transform = "scale(0.96)";
+
+    try {
+        const response = await fetch(SHEET_URL);
+        if (!response.ok) throw new Error("Ağ Hatası");
+        hamVeri = await response.json();
+        sonBasariZamani = Date.now();
+        ekraniCiz(); 
+    } catch(e) { 
+        console.error(e); 
+    } finally { 
+        fetchDevamEdiyor = false; 
+        
+        // GÖRSEL GERİBİLDİRİM (ANİMASYON) BİTİRME
+        if(updateText) { updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın"; updateText.style.color = "var(--muted)"; }
+        if(syncIcon) syncIcon.firstElementChild.classList.remove("spin");
+        if(headerCard) headerCard.style.transform = "scale(1)";
+    }
+}
+
+// --- PULL TO REFRESH (Aşağı Kaydırarak Yenileme) MANTIĞI ---
+let touchStartY = 0;
+const pullThreshold = 70; // 70 pixel aşağı kaydırmak yenilemek için yeterli
+
+window.addEventListener('touchstart', e => {
+    if (window.scrollY <= 5 && !fetchDevamEdiyor) {
+        touchStartY = e.touches[0].clientY;
+    }
+}, {passive: true});
+
+window.addEventListener('touchmove', e => {
+    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
+        let currentY = e.touches[0].clientY;
+        let diffY = currentY - touchStartY;
+        
+        if (diffY > 30) {
+            const updateText = document.getElementById('update-text');
+            if (updateText) {
+                updateText.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;">${svgSync} Bırakın Güncellensin...</span>`;
+                updateText.style.color = "var(--warning)";
+            }
+        }
+    }
+}, {passive: true});
+
+window.addEventListener('touchend', e => {
+    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
+        let currentY = e.changedTouches[0].clientY;
+        let diffY = currentY - touchStartY;
+        
+        if (diffY > pullThreshold) {
+            veriCek();
+        } else {
+            const updateText = document.getElementById('update-text');
+            if (updateText) {
+                updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın";
+                updateText.style.color = "var(--muted)";
+            }
+        }
+    }
+    touchStartY = 0;
+});
+// -----------------------------------------------------------
+
+function saniyeTiktak() {
+    const syncElement = document.getElementById('last-sync');
+    const clockElement = document.getElementById('clock');
+    if (!syncElement) return;
+
+    const simdi = Date.now();
+    const farkSaniye = sonBasariZamani > 0 ? Math.floor((simdi - sonBasariZamani) / 1000) : 999;
+    const dNow = new Date();
+    
+    if(clockElement) {
+        clockElement.textContent = dNow.getDate() + " " + dNow.toLocaleDateString('tr-TR', {month:'short'}) + " • " + String(dNow.getHours()).padStart(2,'0') + ':' + String(dNow.getMinutes()).padStart(2,'0');
+    }
+
+    if (sonBasariZamani === 0) {
+        syncElement.innerHTML = `${dotYellow} Sisteme Bağlanıyor...`;
+        syncElement.style.color = "var(--text)";
+    } else if (farkSaniye < 20) {
+        const d = new Date(sonBasariZamani);
+        const sn = String(d.getSeconds()).padStart(2,'0');
+        syncElement.innerHTML = `${dotGreen} Canlı (${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${sn})`;
+        syncElement.style.color = "var(--text)";
+    } else if (farkSaniye < 60) {
+        syncElement.innerHTML = `${dotYellow} Gecikme: ${farkSaniye} sn`;
+        syncElement.style.color = "var(--text)";
+    } else {
+        syncElement.innerHTML = `${dotRed} Bağlantı Yok`;
+        syncElement.style.color = "var(--text)";
+    }
+}
+
+function ekraniCiz() {
+    if (hamVeri.length === 0) return;
+    const detailsState = {};
+    document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
+
+    let rawLogs = hamVeri
+        .filter(l => !l.i.toLowerCase().includes('nöbet'))
+        .map(l => ({
+            dt: new Date(l.dt),
+            drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
+            dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
+            by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase()
+        })).sort((a, b) => a.dt - b.dt);
+
+    let validLogs = [];
+    let mappedTargets = new Set();
+    rawLogs.forEach(l => {
+        let matchedTargetKey = null;
+        let lDate = new Date(l.dt.getFullYear(), l.dt.getMonth(), l.dt.getDate());
+        
+        for(let off of [-1, 0, 1]) {
+            let checkDate = new Date(lDate.getTime() + (off * 86400000));
+            for(let p of allPlans) {
+                if (p.n.toLowerCase() === l.drug) {
+                    let pt = new Date(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate(), p.h, p.m);
+                    if (Math.abs(l.dt - pt) < (p.w * 3600000)) {
+                        matchedTargetKey = `${p.n}_${pt.getTime()}`;
+                        break;
+                    }
+                }
+            }
+            if (matchedTargetKey) break;
+        }
+
+        if (matchedTargetKey) {
+            if (!mappedTargets.has(matchedTargetKey)) {
+                mappedTargets.add(matchedTargetKey);
+                validLogs.push(l);
+            }
+        } else {
+            validLogs.push(l);
+        }
+    });
+
+    const logs = validLogs.sort((a, b) => b.dt - a.dt);
+    const now = new Date();
+    const GRACE_MIN = 30;
+    const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    const isToday = (d) => d.toDateString() === now.toDateString();
+
+    const shield = document.getElementById('safety-shield');
+    const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
+    if (son60dk.length > 0) {
+        shield.innerHTML = son60dk.map(r => {
+            const dkOnce = Math.floor((now - r.dt) / 60000);
+            return `<div style="padding: 4px 0;">🚨 DİKKAT: <b>${r.dRaw}</b>, ${r.by} tarafından ${dkOnce === 0 ? 'az önce' : dkOnce+' dk önce'} verildi!</div>`;
+        }).join('<div style="height:1px; background:rgba(255,255,255,0.3); margin:4px 0;"></div>');
+        shield.style.display = 'block';
+    } else { shield.style.display = 'none'; }
+
+    function getNextSmart(name) {
+        const targetPlans = allPlans.filter(p => p.n.toLowerCase() === name.toLowerCase());
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        let cands = [];
+        [-1, 0, 1].forEach(off => { targetPlans.forEach(t => { cands.push({ dt: new Date(today.getTime() + (off * 86400000) + (t.h*3600 + t.m*60)*1000), w: t.w }); }); });
+        cands.sort((a,b) => a.dt - b.dt);
+        
+        let found = cands.find(c => {
+            const wasDone = logs.find(l => l.drug === name.toLowerCase() && Math.abs(l.dt - c.dt) < (c.w * 3600000));
+            return !wasDone && c.dt > now.getTime() - (GRACE_MIN*60000);
+        });
+        return found ? found.dt : cands.find(c => c.dt > now).dt;
+    }
+
+    function renderDrug(name, icon) {
+        const dLogs = logs.filter(l => l.drug === name.toLowerCase());
+        const last = dLogs[0]; const next = getNextSmart(name);
+        const diffMin = Math.round((next - now) / 60000);
+
+        let status = { text: "BEKLEMEDE", class: "badge-safe" };
+        if (last && (now - last.dt) >= 0 && (now - last.dt) < (GRACE_MIN * 60000)) status = { text: "YENİ VERİLDİ", class: "badge-safe" };
+        else if (diffMin <= 0 && diffMin >= -GRACE_MIN) status = { text: "VAKTİ GELDİ", class: "badge-due" };
+        else if (diffMin < -GRACE_MIN) status = { text: "GECİKTİ", class: "badge-late" };
+
+        const h = Math.floor(Math.abs(diffMin) / 60);
+        const m = Math.abs(diffMin) % 60;
+        const diffStr = diffMin < 0 ? "Geçti!" : (h > 0 ? `${h}sa ${m}d` : `${m}dk`);
+        const dateStr = last ? (isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)) : '';
+        const timeStr = last ? fmt(last.dt) : '--';
+        const lastGivenStr = last ? `${dateStr} <span style="font-size: 20px; font-weight: 900; letter-spacing: 0px;">${timeStr}</span>` : '--';
+
+        return `
+            <div class="card">
+                <div class="drug-name">${icon} ${name}</div>
+                <div class="badge ${status.class}">${status.text}</div>
+                <div class="info-group">
+                    <div class="label">Son Veriliş</div>
+                    <div class="val-primary">${lastGivenStr} <span class="val-sub">${last ? '('+last.by+')' : ''}</span></div>
+                </div>
+                <div class="timer-box">
+                    <div class="label">Sıradaki (${fmt(next)})</div>
+                    <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffStr}</div>
+                </div>
+                <details>
+                    <summary><span>Geçmiş</span> <span class="show-text"></span></summary>
+                    <ul style="list-style:none; padding:0; margin-top:5px">
+                        ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
+                    </ul>
+                </details>
+            </div>`;
+    }
+
+    document.getElementById('app').innerHTML = renderDrug('Keppra', svgSyringe) + renderDrug('Enalapril', svgPill);
+
+    let grid = "";
+    allPlans.forEach(p => {
+        const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
+        const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+        
+        let tagText = "BEKLİYOR"; let pClass = "pill-waiting";
+        if (log) {
+            const diffMin = (log.dt - pt) / 60000;
+            if (diffMin < -30) { tagText = "ERKEN<br>VERİLDİ"; pClass = "pill-early"; }
+            else if (diffMin >= -30 && diffMin <= 30) { tagText = "ZAMANINDA<br>VERİLDİ"; pClass = "pill-stable"; }
+            else { tagText = "GEÇ<br>VERİLDİ"; pClass = "pill-delayed"; }
+        } else if (now > new Date(pt.getTime() + 30*60000)) {
+            tagText = "GECİKTİ"; pClass = "pill-missed";
+        }
+        let shortName = p.n.substring(0,3).toUpperCase();
+        grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
+    });
+    
+    const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
+    document.getElementById('perf-title-text').innerHTML = `${svgChart} ${monthName} Ayı Doz Zamanlama Başarısı`;
+
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    let currentMonthLogs = logs.filter(l => l.dt.getMonth() === currentMonth && l.dt.getFullYear() === currentYear);
+    let startDay = currentMonthLogs.length > 0 ? currentMonthLogs[currentMonthLogs.length - 1].dt.getDate() : now.getDate();
+
+    const daysInCompetition = daysInMonth - startDay + 1;
+    const totalMonthDoses = daysInCompetition * 5; 
+    const ptsPerDose = totalMonthDoses > 0 ? (100 / totalMonthDoses) : 0;
+
+    let successScore = 100; 
+    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let statsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+
+    for(let d=startDay; d<=now.getDate(); d++) {
+        allPlans.forEach(p => {
+            const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
+            if (pt > now) return; 
+            
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let earnedPts = ptsPerDose; 
+                let penaltyPts = 0;
+                let byName = log.by;
+
+                if(!statsData[byName]) statsData[byName] = {t:0, o:0, l:0};
+                statsData[byName].t++;
+
+                if (diffMin < -30 || diffMin > 30) { 
+                    earnedPts = ptsPerDose * 0.75; 
+                    penaltyPts = ptsPerDose * 0.25; 
+                    statsData[byName].l++;
+                } else {
+                    statsData[byName].o++;
+                }
+                
+                successScore -= penaltyPts;
+                if(scores[byName] === undefined) scores[byName] = 0;
+                scores[byName] += earnedPts;
+            } else {
+                if (now > new Date(pt.getTime() + 30 * 60000)) {
+                    successScore -= ptsPerDose;
+                }
+            }
+        });
+    }
+
+    if (successScore < 0) successScore = 0;
+    const clr = successScore >= 80 ? "var(--accent)" : (successScore >= 50 ? "var(--warning)" : "var(--danger)");
+    let displayScore = parseFloat(successScore.toFixed(1)); 
+    document.getElementById('perf-pct').textContent = '%' + displayScore;
+    document.getElementById('perf-pct').style.color = clr;
+    document.getElementById('perf-bar').style.width = displayScore + '%'; 
+    document.getElementById('perf-bar').style.backgroundColor = clr;
+    document.getElementById('status-grid').innerHTML = grid;
+
+    const pMonthDate = new Date(currentYear, currentMonth - 1, 1);
+    const pMonth = pMonthDate.getMonth();
+    const pYear = pMonthDate.getFullYear();
+    const pDaysInMonth = new Date(pYear, pMonth + 1, 0).getDate();
+
+    let pLogs = logs.filter(l => l.dt.getMonth() === pMonth && l.dt.getFullYear() === pYear);
+    let pStartDay = pLogs.length > 0 ? pLogs[pLogs.length - 1].dt.getDate() : 1;
+    const pDaysInComp = pDaysInMonth - pStartDay + 1;
+    const pTotalDoses = pDaysInComp * 5;
+    const pPtsPerDose = pTotalDoses > 0 ? (100 / pTotalDoses) : 0;
+
+    let pScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let pStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+
+    for(let d=pStartDay; d<=pDaysInMonth; d++) {
+        allPlans.forEach(p => {
+            const pt = new Date(pYear, pMonth, d, p.h, p.m);
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let earnedPts = pPtsPerDose;
+                let byName = log.by;
+
+                if(!pStatsData[byName]) pStatsData[byName] = {t:0, o:0, l:0};
+                pStatsData[byName].t++;
+
+                if (diffMin < -30 || diffMin > 30) {
+                    earnedPts = pPtsPerDose * 0.75;
+                    pStatsData[byName].l++;
+                } else {
+                    pStatsData[byName].o++;
+                }
+
+                if(pScores[byName] === undefined) pScores[byName] = 0;
+                pScores[byName] += earnedPts;
+            }
+        });
+    }
+
+    let yStartDt;
+    if (currentYear === 2026) {
+        yStartDt = new Date(2026, 1, 27);
+    } else {
+        yStartDt = new Date(currentYear, 0, 1);
+    }
+
+    const endOfYearDt = new Date(currentYear, 11, 31);
+    const yDaysInYear = Math.round((endOfYearDt - yStartDt) / 86400000) + 1;
+    const yTotalDosesInYear = yDaysInYear * 5;
+    const yPtsPerDose = yTotalDosesInYear > 0 ? (100 / yTotalDosesInYear) : 0;
+
+    let todayDt = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let yScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let yStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+
+    let loopStartDt = new Date(yStartDt);
+    if (todayDt >= loopStartDt) {
+        for(let loopDt = new Date(loopStartDt); loopDt <= todayDt; loopDt.setDate(loopDt.getDate() + 1)) {
+            let y = loopDt.getFullYear();
+            let m = loopDt.getMonth();
+            let d = loopDt.getDate();
+            allPlans.forEach(p => {
+                const pt = new Date(y, m, d, p.h, p.m);
+                if (pt > now) return;
+
+                const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+                if (log) {
+                    const diffMin = (log.dt - pt) / 60000;
+                    let earnedPts = yPtsPerDose;
+                    let byName = log.by;
+
+                    if(!yStatsData[byName]) yStatsData[byName] = {t:0, o:0, l:0};
+                    yStatsData[byName].t++;
+
+                    if (diffMin < -30 || diffMin > 30) {
+                        earnedPts = yPtsPerDose * 0.75; 
+                        yStatsData[byName].l++;
+                    } else {
+                        yStatsData[byName].o++;
+                    }
+
+                    if(yScores[byName] === undefined) yScores[byName] = 0;
+                    yScores[byName] += earnedPts;
+                }
+            });
+        }
+    }
+
+    function buildStatsCardHTML(title, scoresObj, statsObj) {
+        let sortedUsers = Object.keys(scoresObj).map(k => ({name: k, score: scoresObj[k]})).sort((a,b) => b.score - a.score);
+        let validUsers = sortedUsers.filter(u => statsObj[u.name] && statsObj[u.name].t > 0);
+
+        let html = `
+        <div class="extra-card">
+            <details>
+                <summary>
+                    <div style="display:flex; align-items:center;">
+                        <span>${title}</span>
+                    </div>
+                    <span class="show-text"></span>
+                </summary>
+                <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:16px;">`;
+
+        if (validUsers.length === 0) {
+             html += `<div style="text-align:center; color:var(--muted); font-size:14px; padding:6px 0;">Henüz veri yok.</div>`;
+        } else {
+            const medals = ["var(--warning)", "var(--muted)", "#b45309"];
+            const trophy = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`; 
+
+            validUsers.forEach((s, idx) => {
+                let color = medals[idx] || "var(--accent)";
+                let d = statsObj[s.name];
+                let borderStyle = idx === validUsers.length - 1 ? '' : 'border-bottom:1px solid rgba(255,255,255,0.03); margin-bottom:16px; padding-bottom:16px;';
+                let medalHTML = idx === 0 ? trophy : `<div class="score-rank" style="color:${color};">#${idx+1}</div>`;
+
+                html += `
+                    <div style="${borderStyle}">
+                        <div class="score-row" style="margin-bottom:8px;">
+                            ${medalHTML}
+                            <div class="score-name">${s.name}</div>
+                            <div class="score-val" style="color:${color};">${parseFloat(s.score.toFixed(1))} Puan</div>
+                        </div>
+                        <div class="bar-bg" style="height:6px; margin-bottom:16px;">
+                            <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
+                        </div>
+                        <div style="display:flex; gap:12px;">
+                            <div style="flex:1; background:var(--bg); border:1px solid var(--line); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Toplam</div>
+                                <div style="font-size:18px; color:#fff; font-weight:900;">${d.t}</div>
+                            </div>
+                            <div style="flex:1; background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--accent); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Zamanında</div>
+                                <div style="font-size:18px; color:var(--accent); font-weight:900;">${d.o}</div>
+                            </div>
+                            <div style="flex:1; background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.2); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--danger); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Geç/Erken</div>
+                                <div style="font-size:18px; color:var(--danger); font-weight:900;">${d.l}</div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+        html += `</div></details></div>`;
+        return html;
+    }
+
+    const nobetLogs = hamVeri
+        .filter(l => l.i.toLowerCase().includes('nöbet'))
+        .map(l => ({ dt: new Date(l.dt), by: l.k }))
+        .sort((a, b) => b.dt - a.dt);
+
+    let daysBadgeHTML = "";
+    if (nobetLogs.length > 0) {
+        const lastNobet = nobetLogs[0].dt;
+        const diffDays = Math.floor((now - lastNobet) / (1000 * 60 * 60 * 24));
+        
+        let dayColor = "var(--accent)"; 
+        if (diffDays > 30 && diffDays <= 60) dayColor = "var(--warning)";
+        else if (diffDays > 60) dayColor = "var(--danger)"; 
+
+        // GÜNCELLENMİŞ SAYAÇ TASARIMI (Sayı büyütüldü ve dikeyde tam ortalandı)
+        daysBadgeHTML = `<div style="color:${dayColor}; font-size:14px; font-weight:700; background:rgba(255,255,255,0.05); border: 1px solid var(--line); padding:0 12px; border-radius:12px; white-space:nowrap; display:inline-flex; align-items:center; justify-content:center; gap:6px; height:34px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"><span style="font-size:26px; font-weight:900; line-height:1; display:inline-block; transform:translateY(1px);">${diffDays}</span> Gün</div>`;
+    }
+
+    const nobetAlert = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; color: var(--danger);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`; 
+
+    // GÜNCELLENMİŞ HİZALAMA VE KELİME BÖLÜNMEMESİ
+    let nobetHTML = `
+    <div class="extra-card">
+        <details>
+            <summary style="flex-direction: column; align-items: stretch; gap: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display:flex; align-items:center; white-space:nowrap; font-size:16px;">
+                        ${nobetAlert} Minik Nöbet Günlüğü
+                    </div>
+                    <span class="show-text"></span>
+                </div>
+                ${daysBadgeHTML ? `<div style="display: flex; justify-content: center; width: 100%;">${daysBadgeHTML}</div>` : ''}
+            </summary>
+            <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:12px;">`;
+
+    if (nobetLogs.length === 0) {
+        nobetHTML += `<div style="text-align:center; color:var(--muted); font-size:13px; padding:6px 0;">Çok şükür, henüz kayıt yok! 🧿</div>`;
+    } else {
+        nobetLogs.forEach(n => {
+            const nDate = n.dt.getDate() + ' ' + n.dt.toLocaleDateString('tr-TR', {month:'long'}) + ' ' + n.dt.getFullYear();
+            nobetHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+                    <div>
+                        <div style="font-weight:800; font-size:13px; color:var(--danger);">${nDate}</div>
+                        <div style="font-size:12px; color:var(--muted); margin-top:4px;">Kayıt: ${n.by}</div>
+                    </div>
+                    <div style="font-weight:900; font-size:16px; font-family:monospace; color:#fff;">${fmt(n.dt)}</div>
+                </div>`;
+        });
+    }
+    nobetHTML += `</div></details></div>`;
+
+    let currentMonthStatsHTML = buildStatsCardHTML(`${svgTrophy} ${monthName} Ayı İstatistikleri`, scores, statsData);
+    let prevMonthStatsHTML = buildStatsCardHTML(`${svgBarChart} Geçen Ayın İstatistikleri`, pScores, pStatsData);
+    let currentYearStatsHTML = buildStatsCardHTML(`${svgCalendar} ${currentYear} Yılı İstatistikleri`, yScores, yStatsData);
+
+    document.getElementById('extra-cards').innerHTML = currentMonthStatsHTML + nobetHTML + prevMonthStatsHTML + currentYearStatsHTML;
+
+    document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
+
+    const appDetails = document.querySelectorAll('#app details');
+    appDetails.forEach(det => {
+        det.addEventListener('toggle', (e) => {
+            appDetails.forEach(d => {
+                if (d !== e.target && d.open !== e.target.open) {
+                    d.open = e.target.open;
+                }
+            });
+        });
+    });
+}
+
+veriCek();
+setInterval(veriCek, 10000); 
+setInterval(saniyeTiktak, 1000); 
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') veriCek(); });
+</script>
+</body>
+</html>
+
+tüm kodu sen yazsana bi deniyim başka bir şeyi değiştirme ama arka plan resim linki <!doctype html>
+<html lang="tr">
+<head>
+<link rel="icon" type="image/png" href="https://i.ibb.co/VspddZY/app-icon-cropped-no-white-sides.png">
+<link rel="apple-touch-icon" href="https://i.ibb.co/VspddZY/app-icon-cropped-no-white-sides.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Minik İlaç">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<title>Minik Sağlık Paneli</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+  --bg: #0F1115; 
+  --card: #1E293B; 
+  --text: #F8FAFC; 
+  --muted: #94A3B8; 
+  --line: rgba(255,255,255,0.06);
+  
+  --accent: #10B981; 
+  --warning: #F59E0B; 
+  --danger: #F43F5E; 
+  --early: #3B82F6; 
+  --purple: #A78BFA;
+  
+  --vip-bg: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); 
+  --card-shadow: 0 8px 30px rgba(0,0,0,0.2); 
+  --wait-badge-bg: rgba(255,255,255,0.05); 
+}
+
+* { box-sizing: border-box; font-family: 'Inter', -apple-system, system-ui, sans-serif !important; }
+body{ margin:0; background:var(--bg); color:var(--text); padding:10px 16px; -webkit-font-smoothing: antialiased; overflow-x: hidden; overscroll-behavior-y: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
+/* GÜVENLİK KALKANI */
+.safety-shield { display: none; background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%); color: white; padding: 12px 14px; text-align: center; font-weight: 800; font-size: 14px; position: sticky; top: 0; z-index: 9999; border-radius: 16px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4); animation: pulse-red 2s infinite; letter-spacing: 0.5px; }
+
+/* YENİLEME ANİMASYONU EKLENDİ */
+@keyframes spin-anim { 100% { transform: rotate(360deg); } }
+.spin { display: inline-flex; animation: spin-anim 1s linear infinite; }
+
+/* EN ÜSTTEKİ SABİT PERDE VE BUTON (YENİ STICKY) */
+.sticky-top-wrapper { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 12px 0 6px 0; margin-top: -12px; }
+.header-compact { text-align: center; margin-bottom: 5px; background: var(--vip-bg); padding: 18px 12px; border-radius: 20px; border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(0,0,0,0.2); user-select: none; transition: transform 0.15s ease, opacity 0.15s ease; touch-action: manipulation; }
+.header-compact:active { transform: scale(0.96) !important; opacity: 0.9 !important; }
+.app-title { font-size: 20px; font-weight: 900; letter-spacing: -0.2px; margin-bottom: 6px; color: #fff; display: flex; align-items: center; justify-content: center; }
+.header-sub { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 12px; transition: color 0.3s; }
+.header-info { display: flex; justify-content: center; align-items: center; gap: 12px; }
+.clock-text { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); }
+.sync-badge { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 10px; background: rgba(0,0,0,0.3); display: flex; align-items: center;}
+
+/* GÜNLÜK ÇİZELGE */
+.daily-container { background: var(--card); border-radius: 20px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--line); box-shadow: var(--card-shadow); }
+.daily-title { font-size: 16px; font-weight: 900; color: var(--muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+.daily-row { display: flex; justify-content: space-between; gap: 6px; }
+
+/* GÜNCEL HİZALANMIŞ DAILY PILL */
+.daily-pill { flex: 1 1 0; min-width: 0; text-align: center; padding: 10px 1px; border-radius: 14px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--bg); min-height: 100px; }
+.pill-name { font-size: 13px; color: #fff; font-weight: 800; letter-spacing: 0.5px; }
+.pill-time { color: var(--muted); font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; letter-spacing: -0.5px; }
+/* GÜNCEL HİZALANMIŞ PILL STATUS (TAŞMA ÖNLENDİ) */
+.pill-status-text { font-size: 8.5px; font-weight: 900; letter-spacing: -0.3px; padding: 4px 1px; border-radius: 6px; margin: 0 1px; display: flex; align-items: center; justify-content: center; min-height: 34px; text-align: center; line-height: 1.05; word-wrap: break-word; }
+
+/* PERFORMANS BARI */
+.perf-compact { display: flex; flex-direction: column; gap: 10px; background: var(--card); border-radius: 20px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--line); box-shadow: var(--card-shadow); }
+.perf-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.perf-label { font-size: 14px; font-weight: 800; white-space: nowrap; display: flex; align-items: center; }
+.bar-bg { width: 100%; background: var(--bg); height: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); } 
+.bar-fill { height: 100%; transition: width 1s ease-in-out, background-color 0.5s; border-radius: 3px; }
+.perf-val { font-size: 16px; font-weight: 900; font-family: ui-monospace, monospace; }
+
+/* Kapsül Renkleri */
+.pill-stable { border-color: rgba(16, 185, 129, 0.4); } .pill-stable .pill-status-text { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
+.pill-early { border-color: rgba(96, 165, 250, 0.4); } .pill-early .pill-status-text { background: rgba(96, 165, 250, 0.15); color: var(--early); }
+.pill-delayed { border-color: rgba(245, 158, 11, 0.4); } .pill-delayed .pill-status-text { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+.pill-missed { border-color: rgba(244, 63, 94, 0.4); } .pill-missed .pill-status-text { background: rgba(244, 63, 94, 0.15); color: var(--danger); }
+.pill-waiting { border-color: var(--line); } .pill-waiting .pill-status-text { color: var(--muted); background: var(--wait-badge-bg); }
+
+/* İLAÇ KARTLARI */
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.card { background: var(--card); border-radius: 20px; padding: 16px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--card-shadow); }
+.drug-name { font-size: 18px; font-weight: 800; display: flex; align-items: center; margin-bottom: 10px; color: #fff; letter-spacing: -0.3px;}
+.badge { align-self: flex-start; padding: 6px 10px; border-radius: 8px; font-weight: 800; font-size: 11px; text-transform: uppercase; margin-bottom: 14px; letter-spacing: 0.3px; display: inline-flex; align-items: center; justify-content: center; }
+.badge-safe { background: rgba(16, 185, 129, 0.1); color: var(--accent); }
+.badge-due { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.badge-late { background: rgba(244, 63, 94, 0.1); color: var(--danger); }
+.info-group { margin-bottom: 12px; }
+.label { color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;}
+.val-primary { font-size: 15px; font-weight: 800; color: #fff; }
+.val-sub { font-size: 15px; color: var(--muted); font-weight: 700; letter-spacing: 0px; } 
+.timer-box { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
+.timer { font-weight: 900; color: var(--accent); font-size: 18px; font-family: ui-monospace, monospace; }
+.timer.urgent { color: var(--warning); }
+
+/* GÖSTER/GİZLE ÖZELLİKLERİ VE GENİŞ TIKLAMA ALANI */
+details { margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 8px; }
+summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 700; list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin: -12px 0; -webkit-tap-highlight-color: transparent; }
+summary::-webkit-details-marker { display: none; }
+
+/* GÜNCEL HİZALANMIŞ GEÇMİŞ LİSTESİ */
+.history-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 14px; color: var(--muted); border-bottom: 1px solid rgba(255,255,255,0.02);}
+.history-item:last-child { border-bottom: none; }
+.history-item span.mono { margin-right: 8px; flex: 0 0 auto; text-align: left; }
+.history-item span:last-child { font-weight: 700; flex: 1 1 auto; text-align: right; }
+.mono { font-family: ui-monospace, monospace; }
+
+/* EKSTRA KARTLAR */
+.extra-card { background: var(--card); border-radius: 20px; padding: 18px; border: 1px solid var(--line); margin-bottom: 12px; box-shadow: var(--card-shadow); }
+.extra-card details { margin-top: 0; border-top: none; padding-top: 0; }
+.extra-card summary { font-size: 15px; font-weight: 800; color: #fff; padding: 12px 0; margin: -12px 0; border: none; letter-spacing: 0.3px; display: flex; align-items: center; justify-content: space-between; -webkit-tap-highlight-color: transparent; } 
+.extra-card summary .show-text { font-size: 12px; color: var(--muted); font-weight: 700; white-space: nowrap; }
+
+/* DİNAMİK GÖSTER/GİZLE YAZISI CSS İLE OTOMATİZE EDİLDİ */
+summary .show-text::after { content: "Göster ▼"; }
+details[open] summary .show-text::after { content: "Gizle ▲"; color: var(--accent); }
+
+.score-row { display: flex; align-items: center; margin-bottom: 10px; }
+.score-rank { width: 30px; font-weight: 900; font-size: 16px; } 
+.score-name { flex: 1; font-weight: 800; font-size: 16px; color: #fff; } 
+.score-val { font-weight: 900; font-size: 18px; font-family: ui-monospace, monospace; } 
+
+@keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+@keyframes pulse-yellow { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+</style>
+</head>
+<body>
+
+<div id="safety-shield" class="safety-shield"></div>
+
+<div class="sticky-top-wrapper">
+    <div class="header-compact" id="main-header-card">
+        <div class="app-title" id="app-title-container">
+            </div>
+        <div class="header-sub" id="update-text">Güncellemek İçin Aşağı Kaydırın</div>
+        <div class="header-info">
+            <div id="clock" class="clock-text">--:--</div>
+            <div id="last-sync" class="sync-badge">Bağlanıyor...</div>
+        </div>
+    </div>
+</div>
+
+<div class="daily-container">
+    <div class="daily-title">Bugünkü Dozlar</div>
+    <div id="status-grid" class="daily-row"></div>
+</div>
+
+<div class="perf-compact">
+    <div class="perf-header">
+        <div class="perf-label" id="perf-title-text">Başarı Durumu</div>
+        <div id="perf-pct" class="perf-val">%0</div>
+    </div>
+    <div class="bar-bg"><div id="perf-bar" class="bar-fill" style="width: 0%"></div></div>
+</div>
+
+<div id="app" class="cards-grid"></div>
+
+<div id="extra-cards"></div>
+
+<script>
+// PREMIUM NATIVE SVG İKONLAR
+const svgPet = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/><path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"/></svg>`;
+const svgSync = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>`;
+const svgWait = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+const svgChart = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>`;
+const svgTrophy = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`;
+const svgBarChart = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`; 
+const svgCalendar = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+const svgSyringe = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.4 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>`;
+const svgPill = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>`;
+
+const dotGreen = `<span style="display:inline-block; width:10px; height:10px; background:#10b981; border-radius:50%; margin-right:6px;"></span>`;
+const dotYellow = `<span style="display:inline-block; width:10px; height:10px; background:#f59e0b; border-radius:50%; margin-right:6px;"></span>`;
+const dotRed = `<span style="display:inline-block; width:10px; height:10px; background:#f43f5e; border-radius:50%; margin-right:6px;"></span>`;
+
+// Başlık İkonu Yerleştirme
+document.getElementById('app-title-container').innerHTML = `${svgPet} MİNİK İLAÇ TAKİBİ <span id="sync-icon-container" style="margin-left:8px; display:inline-flex; align-items:center;">${svgSync}</span>`;
+
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzbS3DIUOcmpUBLgvfuFhi3zIhsougq7JB93ccmnwLlGbURtHLZknu5vl6FcxSWJndIZA/exec";
+let sonBasariZamani = 0;
+let hamVeri = [];
+let fetchDevamEdiyor = false;
+
+// KEPPRA 4 SAAT, ENALAPRIL 6 SAAT KURALI (w: window/pencere)
+const allPlans = [
+    {n:'Keppra',h:7,m:0, w:4},
+    {n:'Enalapril',h:10,m:30, w:6},
+    {n:'Keppra',h:15,m:0, w:4},
+    {n:'Enalapril',h:22,m:30, w:6},
+    {n:'Keppra',h:23,m:0, w:4}
+];
+
+async function veriCek() {
+    if (fetchDevamEdiyor) return;
+    fetchDevamEdiyor = true;
+    
+    // GÖRSEL GERİBİLDİRİM (ANİMASYON) BAŞLATMA
+    const updateText = document.getElementById('update-text');
+    const syncIcon = document.getElementById('sync-icon-container');
+    const headerCard = document.getElementById('main-header-card');
+    
+    if(updateText) { updateText.innerHTML = `${svgWait} Veriler Tazeleniyor...`; updateText.style.color = "var(--accent)"; }
+    if(syncIcon) syncIcon.firstElementChild.classList.add("spin");
+    if(headerCard) headerCard.style.transform = "scale(0.96)";
+
+    try {
+        const response = await fetch(SHEET_URL);
+        if (!response.ok) throw new Error("Ağ Hatası");
+        hamVeri = await response.json();
+        sonBasariZamani = Date.now();
+        ekraniCiz(); 
+    } catch(e) { 
+        console.error(e); 
+    } finally { 
+        fetchDevamEdiyor = false; 
+        
+        // GÖRSEL GERİBİLDİRİM (ANİMASYON) BİTİRME
+        if(updateText) { updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın"; updateText.style.color = "var(--muted)"; }
+        if(syncIcon) syncIcon.firstElementChild.classList.remove("spin");
+        if(headerCard) headerCard.style.transform = "scale(1)";
+    }
+}
+
+// --- PULL TO REFRESH (Aşağı Kaydırarak Yenileme) MANTIĞI ---
+let touchStartY = 0;
+const pullThreshold = 70; // 70 pixel aşağı kaydırmak yenilemek için yeterli
+
+window.addEventListener('touchstart', e => {
+    if (window.scrollY <= 5 && !fetchDevamEdiyor) {
+        touchStartY = e.touches[0].clientY;
+    }
+}, {passive: true});
+
+window.addEventListener('touchmove', e => {
+    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
+        let currentY = e.touches[0].clientY;
+        let diffY = currentY - touchStartY;
+        
+        if (diffY > 30) {
+            const updateText = document.getElementById('update-text');
+            if (updateText) {
+                updateText.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;">${svgSync} Bırakın Güncellensin...</span>`;
+                updateText.style.color = "var(--warning)";
+            }
+        }
+    }
+}, {passive: true});
+
+window.addEventListener('touchend', e => {
+    if (touchStartY > 0 && window.scrollY <= 5 && !fetchDevamEdiyor) {
+        let currentY = e.changedTouches[0].clientY;
+        let diffY = currentY - touchStartY;
+        
+        if (diffY > pullThreshold) {
+            veriCek();
+        } else {
+            const updateText = document.getElementById('update-text');
+            if (updateText) {
+                updateText.innerHTML = "Güncellemek İçin Aşağı Kaydırın";
+                updateText.style.color = "var(--muted)";
+            }
+        }
+    }
+    touchStartY = 0;
+});
+// -----------------------------------------------------------
+
+function saniyeTiktak() {
+    const syncElement = document.getElementById('last-sync');
+    const clockElement = document.getElementById('clock');
+    if (!syncElement) return;
+
+    const simdi = Date.now();
+    const farkSaniye = sonBasariZamani > 0 ? Math.floor((simdi - sonBasariZamani) / 1000) : 999;
+    const dNow = new Date();
+    
+    if(clockElement) {
+        clockElement.textContent = dNow.getDate() + " " + dNow.toLocaleDateString('tr-TR', {month:'short'}) + " • " + String(dNow.getHours()).padStart(2,'0') + ':' + String(dNow.getMinutes()).padStart(2,'0');
+    }
+
+    if (sonBasariZamani === 0) {
+        syncElement.innerHTML = `${dotYellow} Sisteme Bağlanıyor...`;
+        syncElement.style.color = "var(--text)";
+    } else if (farkSaniye < 20) {
+        const d = new Date(sonBasariZamani);
+        const sn = String(d.getSeconds()).padStart(2,'0');
+        syncElement.innerHTML = `${dotGreen} Canlı (${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${sn})`;
+        syncElement.style.color = "var(--text)";
+    } else if (farkSaniye < 60) {
+        syncElement.innerHTML = `${dotYellow} Gecikme: ${farkSaniye} sn`;
+        syncElement.style.color = "var(--text)";
+    } else {
+        syncElement.innerHTML = `${dotRed} Bağlantı Yok`;
+        syncElement.style.color = "var(--text)";
+    }
+}
+
+function ekraniCiz() {
+    if (hamVeri.length === 0) return;
+    const detailsState = {};
+    document.querySelectorAll('details').forEach((d, i) => detailsState[i] = d.open);
+
+    let rawLogs = hamVeri
+        .filter(l => !l.i.toLowerCase().includes('nöbet'))
+        .map(l => ({
+            dt: new Date(l.dt),
+            drug: l.i.toLowerCase().includes('kep') ? 'keppra' : 'enalapril',
+            dRaw: l.i.toLowerCase().includes('kep') ? 'Keppra' : 'Enalapril',
+            by: l.k.charAt(0).toUpperCase() + l.k.slice(1).toLowerCase()
+        })).sort((a, b) => a.dt - b.dt);
+
+    let validLogs = [];
+    let mappedTargets = new Set();
+    rawLogs.forEach(l => {
+        let matchedTargetKey = null;
+        let lDate = new Date(l.dt.getFullYear(), l.dt.getMonth(), l.dt.getDate());
+        
+        for(let off of [-1, 0, 1]) {
+            let checkDate = new Date(lDate.getTime() + (off * 86400000));
+            for(let p of allPlans) {
+                if (p.n.toLowerCase() === l.drug) {
+                    let pt = new Date(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate(), p.h, p.m);
+                    if (Math.abs(l.dt - pt) < (p.w * 3600000)) {
+                        matchedTargetKey = `${p.n}_${pt.getTime()}`;
+                        break;
+                    }
+                }
+            }
+            if (matchedTargetKey) break;
+        }
+
+        if (matchedTargetKey) {
+            if (!mappedTargets.has(matchedTargetKey)) {
+                mappedTargets.add(matchedTargetKey);
+                validLogs.push(l);
+            }
+        } else {
+            validLogs.push(l);
+        }
+    });
+
+    const logs = validLogs.sort((a, b) => b.dt - a.dt);
+    const now = new Date();
+    const GRACE_MIN = 30;
+    const fmt = d => String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    const isToday = (d) => d.toDateString() === now.toDateString();
+
+    const shield = document.getElementById('safety-shield');
+    const son60dk = logs.filter(l => (now - l.dt) >= 0 && (now - l.dt) < (60 * 60000));
+    if (son60dk.length > 0) {
+        shield.innerHTML = son60dk.map(r => {
+            const dkOnce = Math.floor((now - r.dt) / 60000);
+            return `<div style="padding: 4px 0;">🚨 DİKKAT: <b>${r.dRaw}</b>, ${r.by} tarafından ${dkOnce === 0 ? 'az önce' : dkOnce+' dk önce'} verildi!</div>`;
+        }).join('<div style="height:1px; background:rgba(255,255,255,0.3); margin:4px 0;"></div>');
+        shield.style.display = 'block';
+    } else { shield.style.display = 'none'; }
+
+    function getNextSmart(name) {
+        const targetPlans = allPlans.filter(p => p.n.toLowerCase() === name.toLowerCase());
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        let cands = [];
+        [-1, 0, 1].forEach(off => { targetPlans.forEach(t => { cands.push({ dt: new Date(today.getTime() + (off * 86400000) + (t.h*3600 + t.m*60)*1000), w: t.w }); }); });
+        cands.sort((a,b) => a.dt - b.dt);
+        
+        let found = cands.find(c => {
+            const wasDone = logs.find(l => l.drug === name.toLowerCase() && Math.abs(l.dt - c.dt) < (c.w * 3600000));
+            return !wasDone && c.dt > now.getTime() - (GRACE_MIN*60000);
+        });
+        return found ? found.dt : cands.find(c => c.dt > now).dt;
+    }
+
+    function renderDrug(name, icon) {
+        const dLogs = logs.filter(l => l.drug === name.toLowerCase());
+        const last = dLogs[0]; const next = getNextSmart(name);
+        const diffMin = Math.round((next - now) / 60000);
+
+        let status = { text: "BEKLEMEDE", class: "badge-safe" };
+        if (last && (now - last.dt) >= 0 && (now - last.dt) < (GRACE_MIN * 60000)) status = { text: "YENİ VERİLDİ", class: "badge-safe" };
+        else if (diffMin <= 0 && diffMin >= -GRACE_MIN) status = { text: "VAKTİ GELDİ", class: "badge-due" };
+        else if (diffMin < -GRACE_MIN) status = { text: "GECİKTİ", class: "badge-late" };
+
+        const h = Math.floor(Math.abs(diffMin) / 60);
+        const m = Math.abs(diffMin) % 60;
+        const diffStr = diffMin < 0 ? "Geçti!" : (h > 0 ? `${h}sa ${m}d` : `${m}dk`);
+        const dateStr = last ? (isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)) : '';
+        const timeStr = last ? fmt(last.dt) : '--';
+        const lastGivenStr = last ? `${dateStr} <span style="font-size: 20px; font-weight: 900; letter-spacing: 0px;">${timeStr}</span>` : '--';
+
+        return `
+            <div class="card">
+                <div class="drug-name">${icon} ${name}</div>
+                <div class="badge ${status.class}">${status.text}</div>
+                <div class="info-group">
+                    <div class="label">Son Veriliş</div>
+                    <div class="val-primary">${lastGivenStr} <span class="val-sub">${last ? '('+last.by+')' : ''}</span></div>
+                </div>
+                <div class="timer-box">
+                    <div class="label">Sıradaki (${fmt(next)})</div>
+                    <div class="timer ${diffMin < 60 ? 'urgent' : ''}">${diffStr}</div>
+                </div>
+                <details>
+                    <summary><span>Geçmiş</span> <span class="show-text"></span></summary>
+                    <ul style="list-style:none; padding:0; margin-top:5px">
+                        ${dLogs.slice(0,4).map(h => `<li class="history-item"><span class="mono">${h.dt.getDate()}/${h.dt.getMonth()+1} ${fmt(h.dt)}</span><span style="font-weight:700">${h.by}</span></li>`).join('')}
+                    </ul>
+                </details>
+            </div>`;
+    }
+
+    document.getElementById('app').innerHTML = renderDrug('Keppra', svgSyringe) + renderDrug('Enalapril', svgPill);
+
+    let grid = "";
+    allPlans.forEach(p => {
+        const pt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), p.h, p.m);
+        const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+        
+        let tagText = "BEKLİYOR"; let pClass = "pill-waiting";
+        if (log) {
+            const diffMin = (log.dt - pt) / 60000;
+            if (diffMin < -30) { tagText = "ERKEN<br>VERİLDİ"; pClass = "pill-early"; }
+            else if (diffMin >= -30 && diffMin <= 30) { tagText = "ZAMANINDA<br>VERİLDİ"; pClass = "pill-stable"; }
+            else { tagText = "GEÇ<br>VERİLDİ"; pClass = "pill-delayed"; }
+        } else if (now > new Date(pt.getTime() + 30*60000)) {
+            tagText = "GECİKTİ"; pClass = "pill-missed";
+        }
+        let shortName = p.n.substring(0,3).toUpperCase();
+        grid += `<div class="daily-pill ${pClass}"><span class="pill-name">${shortName}</span><span class="pill-time">${fmt(pt)}</span><span class="pill-status-text">${tagText}</span></div>`;
+    });
+    
+    const monthName = now.toLocaleDateString('tr-TR', {month:'long'});
+    document.getElementById('perf-title-text').innerHTML = `${svgChart} ${monthName} Ayı Doz Zamanlama Başarısı`;
+
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    let currentMonthLogs = logs.filter(l => l.dt.getMonth() === currentMonth && l.dt.getFullYear() === currentYear);
+    let startDay = currentMonthLogs.length > 0 ? currentMonthLogs[currentMonthLogs.length - 1].dt.getDate() : now.getDate();
+
+    const daysInCompetition = daysInMonth - startDay + 1;
+    const totalMonthDoses = daysInCompetition * 5; 
+    const ptsPerDose = totalMonthDoses > 0 ? (100 / totalMonthDoses) : 0;
+
+    let successScore = 100; 
+    let scores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let statsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+
+    for(let d=startDay; d<=now.getDate(); d++) {
+        allPlans.forEach(p => {
+            const pt = new Date(currentYear, currentMonth, d, p.h, p.m);
+            if (pt > now) return; 
+            
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let earnedPts = ptsPerDose; 
+                let penaltyPts = 0;
+                let byName = log.by;
+
+                if(!statsData[byName]) statsData[byName] = {t:0, o:0, l:0};
+                statsData[byName].t++;
+
+                if (diffMin < -30 || diffMin > 30) { 
+                    earnedPts = ptsPerDose * 0.75; 
+                    penaltyPts = ptsPerDose * 0.25; 
+                    statsData[byName].l++;
+                } else {
+                    statsData[byName].o++;
+                }
+                
+                successScore -= penaltyPts;
+                if(scores[byName] === undefined) scores[byName] = 0;
+                scores[byName] += earnedPts;
+            } else {
+                if (now > new Date(pt.getTime() + 30 * 60000)) {
+                    successScore -= ptsPerDose;
+                }
+            }
+        });
+    }
+
+    if (successScore < 0) successScore = 0;
+    const clr = successScore >= 80 ? "var(--accent)" : (successScore >= 50 ? "var(--warning)" : "var(--danger)");
+    let displayScore = parseFloat(successScore.toFixed(1)); 
+    document.getElementById('perf-pct').textContent = '%' + displayScore;
+    document.getElementById('perf-pct').style.color = clr;
+    document.getElementById('perf-bar').style.width = displayScore + '%'; 
+    document.getElementById('perf-bar').style.backgroundColor = clr;
+    document.getElementById('status-grid').innerHTML = grid;
+
+    const pMonthDate = new Date(currentYear, currentMonth - 1, 1);
+    const pMonth = pMonthDate.getMonth();
+    const pYear = pMonthDate.getFullYear();
+    const pDaysInMonth = new Date(pYear, pMonth + 1, 0).getDate();
+
+    let pLogs = logs.filter(l => l.dt.getMonth() === pMonth && l.dt.getFullYear() === pYear);
+    let pStartDay = pLogs.length > 0 ? pLogs[pLogs.length - 1].dt.getDate() : 1;
+    const pDaysInComp = pDaysInMonth - pStartDay + 1;
+    const pTotalDoses = pDaysInComp * 5;
+    const pPtsPerDose = pTotalDoses > 0 ? (100 / pTotalDoses) : 0;
+
+    let pScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let pStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+
+    for(let d=pStartDay; d<=pDaysInMonth; d++) {
+        allPlans.forEach(p => {
+            const pt = new Date(pYear, pMonth, d, p.h, p.m);
+            const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+            if (log) {
+                const diffMin = (log.dt - pt) / 60000;
+                let earnedPts = pPtsPerDose;
+                let byName = log.by;
+
+                if(!pStatsData[byName]) pStatsData[byName] = {t:0, o:0, l:0};
+                pStatsData[byName].t++;
+
+                if (diffMin < -30 || diffMin > 30) {
+                    earnedPts = pPtsPerDose * 0.75;
+                    pStatsData[byName].l++;
+                } else {
+                    pStatsData[byName].o++;
+                }
+
+                if(pScores[byName] === undefined) pScores[byName] = 0;
+                pScores[byName] += earnedPts;
+            }
+        });
+    }
+
+    let yStartDt;
+    if (currentYear === 2026) {
+        yStartDt = new Date(2026, 1, 27);
+    } else {
+        yStartDt = new Date(currentYear, 0, 1);
+    }
+
+    const endOfYearDt = new Date(currentYear, 11, 31);
+    const yDaysInYear = Math.round((endOfYearDt - yStartDt) / 86400000) + 1;
+    const yTotalDosesInYear = yDaysInYear * 5;
+    const yPtsPerDose = yTotalDosesInYear > 0 ? (100 / yTotalDosesInYear) : 0;
+
+    let todayDt = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let yScores = { "Göker": 0, "Nurten": 0, "Alper": 0 };
+    let yStatsData = { "Göker": {t:0, o:0, l:0}, "Nurten": {t:0, o:0, l:0}, "Alper": {t:0, o:0, l:0} };
+
+    let loopStartDt = new Date(yStartDt);
+    if (todayDt >= loopStartDt) {
+        for(let loopDt = new Date(loopStartDt); loopDt <= todayDt; loopDt.setDate(loopDt.getDate() + 1)) {
+            let y = loopDt.getFullYear();
+            let m = loopDt.getMonth();
+            let d = loopDt.getDate();
+            allPlans.forEach(p => {
+                const pt = new Date(y, m, d, p.h, p.m);
+                if (pt > now) return;
+
+                const log = logs.find(l => l.drug === p.n.toLowerCase() && Math.abs(l.dt - pt) < (p.w * 3600000));
+                if (log) {
+                    const diffMin = (log.dt - pt) / 60000;
+                    let earnedPts = yPtsPerDose;
+                    let byName = log.by;
+
+                    if(!yStatsData[byName]) yStatsData[byName] = {t:0, o:0, l:0};
+                    yStatsData[byName].t++;
+
+                    if (diffMin < -30 || diffMin > 30) {
+                        earnedPts = yPtsPerDose * 0.75; 
+                        yStatsData[byName].l++;
+                    } else {
+                        yStatsData[byName].o++;
+                    }
+
+                    if(yScores[byName] === undefined) yScores[byName] = 0;
+                    yScores[byName] += earnedPts;
+                }
+            });
+        }
+    }
+
+    function buildStatsCardHTML(title, scoresObj, statsObj) {
+        let sortedUsers = Object.keys(scoresObj).map(k => ({name: k, score: scoresObj[k]})).sort((a,b) => b.score - a.score);
+        let validUsers = sortedUsers.filter(u => statsObj[u.name] && statsObj[u.name].t > 0);
+
+        let html = `
+        <div class="extra-card">
+            <details>
+                <summary>
+                    <div style="display:flex; align-items:center;">
+                        <span>${title}</span>
+                    </div>
+                    <span class="show-text"></span>
+                </summary>
+                <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:16px;">`;
+
+        if (validUsers.length === 0) {
+             html += `<div style="text-align:center; color:var(--muted); font-size:14px; padding:6px 0;">Henüz veri yok.</div>`;
+        } else {
+            const medals = ["var(--warning)", "var(--muted)", "#b45309"];
+            const trophy = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`; 
+
+            validUsers.forEach((s, idx) => {
+                let color = medals[idx] || "var(--accent)";
+                let d = statsObj[s.name];
+                let borderStyle = idx === validUsers.length - 1 ? '' : 'border-bottom:1px solid rgba(255,255,255,0.03); margin-bottom:16px; padding-bottom:16px;';
+                let medalHTML = idx === 0 ? trophy : `<div class="score-rank" style="color:${color};">#${idx+1}</div>`;
+
+                html += `
+                    <div style="${borderStyle}">
+                        <div class="score-row" style="margin-bottom:8px;">
+                            ${medalHTML}
+                            <div class="score-name">${s.name}</div>
+                            <div class="score-val" style="color:${color};">${parseFloat(s.score.toFixed(1))} Puan</div>
+                        </div>
+                        <div class="bar-bg" style="height:6px; margin-bottom:16px;">
+                            <div class="bar-fill" style="width:${s.score}%; background-color:${color};"></div>
+                        </div>
+                        <div style="display:flex; gap:12px;">
+                            <div style="flex:1; background:var(--bg); border:1px solid var(--line); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Toplam</div>
+                                <div style="font-size:18px; color:#fff; font-weight:900;">${d.t}</div>
+                            </div>
+                            <div style="flex:1; background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--accent); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Zamanında</div>
+                                <div style="font-size:18px; color:var(--accent); font-weight:900;">${d.o}</div>
+                            </div>
+                            <div style="flex:1; background:rgba(244, 63, 94, 0.05); border:1px solid rgba(244, 63, 94, 0.2); padding:10px; border-radius:12px; text-align:center;">
+                                <div style="font-size:11px; color:var(--danger); font-weight:800; text-transform:uppercase; margin-bottom:4px;">Geç/Erken</div>
+                                <div style="font-size:18px; color:var(--danger); font-weight:900;">${d.l}</div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+        html += `</div></details></div>`;
+        return html;
+    }
+
+    const nobetLogs = hamVeri
+        .filter(l => l.i.toLowerCase().includes('nöbet'))
+        .map(l => ({ dt: new Date(l.dt), by: l.k }))
+        .sort((a, b) => b.dt - a.dt);
+
+    let daysBadgeHTML = "";
+    if (nobetLogs.length > 0) {
+        const lastNobet = nobetLogs[0].dt;
+        const diffDays = Math.floor((now - lastNobet) / (1000 * 60 * 60 * 24));
+        
+        let dayColor = "var(--accent)"; 
+        if (diffDays > 30 && diffDays <= 60) dayColor = "var(--warning)";
+        else if (diffDays > 60) dayColor = "var(--danger)"; 
+
+        // GÜNCELLENMİŞ SAYAÇ TASARIMI (Sayı büyütüldü ve dikeyde tam ortalandı)
+        daysBadgeHTML = `<div style="color:${dayColor}; font-size:14px; font-weight:700; background:rgba(255,255,255,0.05); border: 1px solid var(--line); padding:0 12px; border-radius:12px; white-space:nowrap; display:inline-flex; align-items:center; justify-content:center; gap:6px; height:34px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"><span style="font-size:26px; font-weight:900; line-height:1; display:inline-block; transform:translateY(1px);">${diffDays}</span> Gün</div>`;
+    }
+
+    const nobetAlert = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; color: var(--danger);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`; 
+
+    // GÜNCELLENMİŞ HİZALAMA VE KELİME BÖLÜNMEMESİ
+    let nobetHTML = `
+    <div class="extra-card">
+        <details>
+            <summary style="flex-direction: column; align-items: stretch; gap: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display:flex; align-items:center; white-space:nowrap; font-size:16px;">
+                        ${nobetAlert} Minik Nöbet Günlüğü
+                    </div>
+                    <span class="show-text"></span>
+                </div>
+                ${daysBadgeHTML ? `<div style="display: flex; justify-content: center; width: 100%;">${daysBadgeHTML}</div>` : ''}
+            </summary>
+            <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:12px;">`;
+
+    if (nobetLogs.length === 0) {
+        nobetHTML += `<div style="text-align:center; color:var(--muted); font-size:13px; padding:6px 0;">Çok şükür, henüz kayıt yok! 🧿</div>`;
+    } else {
+        nobetLogs.forEach(n => {
+            const nDate = n.dt.getDate() + ' ' + n.dt.toLocaleDateString('tr-TR', {month:'long'}) + ' ' + n.dt.getFullYear();
+            nobetHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+                    <div>
+                        <div style="font-weight:800; font-size:13px; color:var(--danger);">${nDate}</div>
+                        <div style="font-size:12px; color:var(--muted); margin-top:4px;">Kayıt: ${n.by}</div>
+                    </div>
+                    <div style="font-weight:900; font-size:16px; font-family:monospace; color:#fff;">${fmt(n.dt)}</div>
+                </div>`;
+        });
+    }
+    nobetHTML += `</div></details></div>`;
+
+    let currentMonthStatsHTML = buildStatsCardHTML(`${svgTrophy} ${monthName} Ayı İstatistikleri`, scores, statsData);
+    let prevMonthStatsHTML = buildStatsCardHTML(`${svgBarChart} Geçen Ayın İstatistikleri`, pScores, pStatsData);
+    let currentYearStatsHTML = buildStatsCardHTML(`${svgCalendar} ${currentYear} Yılı İstatistikleri`, yScores, yStatsData);
+
+    document.getElementById('extra-cards').innerHTML = currentMonthStatsHTML + nobetHTML + prevMonthStatsHTML + currentYearStatsHTML;
+
+    document.querySelectorAll('details').forEach((d, i) => { if (detailsState[i]) d.open = true; });
+
+    const appDetails = document.querySelectorAll('#app details');
+    appDetails.forEach(det => {
+        det.addEventListener('toggle', (e) => {
+            appDetails.forEach(d => {
+                if (d !== e.target && d.open !== e.target.open) {
+                    d.open = e.target.open;
+                }
+            });
+        });
+    });
+}
+
+veriCek();
+setInterval(veriCek, 10000); 
+setInterval(saniyeTiktak, 1000); 
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') veriCek(); });
 </script>
 </body>
