@@ -657,14 +657,14 @@ function ekraniCiz() {
     let nobetHTML = `
     <div class="extra-card">
         <details>
-            <summary>
-                <div style="display:flex; align-items:center; flex-wrap:wrap; gap:12px; flex:1;">
+            <summary style="flex-direction: column; align-items: stretch; gap: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                     <div style="display:flex; align-items:center; white-space:nowrap; font-size:16px;">
                         ${nobetAlert} Minik Nöbet Günlüğü
                     </div>
-                    ${daysBadgeHTML}
+                    <span class="show-text"></span>
                 </div>
-                <span class="show-text" style="margin-left: 8px; flex-shrink: 0;"></span>
+                ${daysBadgeHTML ? `<div style="display: flex; justify-content: center; width: 100%;">${daysBadgeHTML}</div>` : ''}
             </summary>
             <div style="margin-top:16px; border-top:1px dashed var(--line); padding-top:12px;">`;
 
