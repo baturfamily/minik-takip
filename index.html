@@ -383,7 +383,7 @@ function ekraniCiz() {
         const diffStr = diffMin < 0 ? "Geçti!" : (h > 0 ? `${h}sa ${m}d` : `${m}dk`);
         const dateStr = last ? (isToday(last.dt) ? "Bugün" : last.dt.getDate()+'/'+(last.dt.getMonth()+1)) : '';
         const timeStr = last ? fmt(last.dt) : '--';
-        const lastGivenStr = last ? `${dateStr} <span style="font-size: 20px; font-weight: 900; letter-spacing: 0px;">${timeStr}</span>` : '--';
+        const lastGivenStr = last ? `${dateStr} <span style="font-size: 28px; font-weight: 900; letter-spacing: 0px; margin-left: 4px;">${timeStr}</span>` : '--';
 
         return `
             <div class="card">
@@ -391,7 +391,10 @@ function ekraniCiz() {
                 <div class="badge ${status.class}">${status.text}</div>
                 <div class="info-group">
                     <div class="label">Son Veriliş</div>
-                    <div class="val-primary">${lastGivenStr} <span class="val-sub">${last ? '('+last.by+')' : ''}</span></div>
+                    <div class="val-primary" style="display: flex; align-items: baseline; flex-wrap: wrap;">
+                        ${lastGivenStr} 
+                        <span class="val-sub" style="font-size: 18px; font-weight: 800; margin-left: 8px;">${last ? '('+last.by+')' : ''}</span>
+                    </div>
                 </div>
                 <div class="timer-box">
                     <div class="label">Sıradaki (${fmt(next)})</div>
